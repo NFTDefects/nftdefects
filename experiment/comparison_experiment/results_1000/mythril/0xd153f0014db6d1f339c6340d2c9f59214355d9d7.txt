@@ -1,0 +1,17 @@
+mythril.interfaces.cli [ERROR]: Traceback (most recent call last):
+  File "/home/sujzh3/venv/lib/python3.6/site-packages/mythril/interfaces/cli.py", line 1016, in parse_args_and_execute
+    address = load_code(disassembler, args)
+  File "/home/sujzh3/venv/lib/python3.6/site-packages/mythril/interfaces/cli.py", line 759, in load_code
+    args.solidity_files
+  File "/home/sujzh3/venv/lib/python3.6/site-packages/mythril/mythril/mythril_disassembler.py", line 198, in load_from_solidity
+    solc_binary=self.solc_binary,
+  File "/home/sujzh3/venv/lib/python3.6/site-packages/mythril/solidity/soliditycontract.py", line 76, in get_contracts_from_file
+    solc_binary=solc_binary,
+  File "/home/sujzh3/venv/lib/python3.6/site-packages/mythril/solidity/soliditycontract.py", line 90, in __init__
+    self.solc_indices = self.get_solc_indices(data)
+  File "/home/sujzh3/venv/lib/python3.6/site-packages/mythril/solidity/soliditycontract.py", line 162, in get_solc_indices
+    code = f.read()
+  File "/home/sujzh3/venv/lib/python3.6/encodings/ascii.py", line 26, in decode
+    return codecs.ascii_decode(input, self.errors)[0]
+UnicodeDecodeError: 'ascii' codec can't decode byte 0xc2 in position 226: ordinal not in range(128)
+ 

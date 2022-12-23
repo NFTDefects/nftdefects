@@ -1,0 +1,64 @@
+mythril.interfaces.cli [ERROR]: Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 665, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 376, in _make_request
+    self._validate_conn(conn)
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 996, in _validate_conn
+    conn.connect()
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 389, in connect
+    cert = self.sock.getpeercert()
+  File "/usr/lib/python3.8/ssl.py", line 1123, in getpeercert
+    self._check_connected()
+  File "/usr/lib/python3.8/ssl.py", line 1088, in _check_connected
+    self.getpeername()
+OSError: [Errno 107] Transport endpoint is not connected
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 439, in send
+    resp = conn.urlopen(
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 719, in urlopen
+    retries = retries.increment(
+  File "/usr/lib/python3/dist-packages/urllib3/util/retry.py", line 400, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/usr/lib/python3/dist-packages/six.py", line 702, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 665, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 376, in _make_request
+    self._validate_conn(conn)
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 996, in _validate_conn
+    conn.connect()
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 389, in connect
+    cert = self.sock.getpeercert()
+  File "/usr/lib/python3.8/ssl.py", line 1123, in getpeercert
+    self._check_connected()
+  File "/usr/lib/python3.8/ssl.py", line 1088, in _check_connected
+    self.getpeername()
+urllib3.exceptions.ProtocolError: ('Connection aborted.', OSError(107, 'Transport endpoint is not connected'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/mythril-0.22.26-py3.8.egg/mythril/interfaces/cli.py", line 795, in parse_args_and_execute
+    disassembler = MythrilDisassembler(
+  File "/usr/local/lib/python3.8/dist-packages/mythril-0.22.26-py3.8.egg/mythril/mythril/mythril_disassembler.py", line 39, in __init__
+    self.solc_binary = self._init_solc_binary(solc_version)
+  File "/usr/local/lib/python3.8/dist-packages/mythril-0.22.26-py3.8.egg/mythril/mythril/mythril_disassembler.py", line 74, in _init_solc_binary
+    solc_binary = util.solc_exists(version)
+  File "/usr/local/lib/python3.8/dist-packages/mythril-0.22.26-py3.8.egg/mythril/ethereum/util.py", line 144, in solc_exists
+    solcx.install_solc("v" + version)
+  File "/usr/local/lib/python3.8/dist-packages/py_solc_x-1.0.0-py3.8.egg/solcx/install.py", line 436, in install_solc
+    data = requests.get(BINARY_DOWNLOAD_BASE.format(_get_os_name(), "list.json"))
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 75, in get
+    return request('get', url, params=params, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 498, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', OSError(107, 'Transport endpoint is not connected'))

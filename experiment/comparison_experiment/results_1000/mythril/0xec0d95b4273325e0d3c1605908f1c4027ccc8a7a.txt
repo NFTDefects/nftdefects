@@ -1,0 +1,59 @@
+mythril.interfaces.cli [ERROR]: Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 159, in _new_conn
+    conn = connection.create_connection(
+  File "/usr/lib/python3/dist-packages/urllib3/util/connection.py", line 61, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+  File "/usr/lib/python3.8/socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name or service not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 665, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 376, in _make_request
+    self._validate_conn(conn)
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 996, in _validate_conn
+    conn.connect()
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 314, in connect
+    conn = self._new_conn()
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 171, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.VerifiedHTTPSConnection object at 0x7fde49995af0>: Failed to establish a new connection: [Errno -2] Name or service not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 439, in send
+    resp = conn.urlopen(
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 719, in urlopen
+    retries = retries.increment(
+  File "/usr/lib/python3/dist-packages/urllib3/util/retry.py", line 436, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='solc-bin.ethereum.org', port=443): Max retries exceeded with url: /linux-amd64/list.json (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7fde49995af0>: Failed to establish a new connection: [Errno -2] Name or service not known'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/mythril-0.22.36-py3.8.egg/mythril/interfaces/cli.py", line 948, in parse_args_and_execute
+    disassembler = MythrilDisassembler(
+  File "/usr/local/lib/python3.8/dist-packages/mythril-0.22.36-py3.8.egg/mythril/mythril/mythril_disassembler.py", line 38, in __init__
+    self.solc_binary = self._init_solc_binary(solc_version)
+  File "/usr/local/lib/python3.8/dist-packages/mythril-0.22.36-py3.8.egg/mythril/mythril/mythril_disassembler.py", line 71, in _init_solc_binary
+    solc_binary = util.solc_exists(version)
+  File "/usr/local/lib/python3.8/dist-packages/mythril-0.22.36-py3.8.egg/mythril/ethereum/util.py", line 129, in solc_exists
+    solcx.install_solc("v" + version)
+  File "/usr/local/lib/python3.8/dist-packages/solcx/install.py", line 441, in install_solc
+    data = requests.get(BINARY_DOWNLOAD_BASE.format(_get_os_name(), "list.json"))
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 75, in get
+    return request('get', url, params=params, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='solc-bin.ethereum.org', port=443): Max retries exceeded with url: /linux-amd64/list.json (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7fde49995af0>: Failed to establish a new connection: [Errno -2] Name or service not known'))

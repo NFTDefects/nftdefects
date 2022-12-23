@@ -1,0 +1,70 @@
+mythril.interfaces.cli [ERROR]: Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 665, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 421, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 416, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/lib/python3.8/http/client.py", line 1344, in getresponse
+    response.begin()
+  File "/usr/lib/python3.8/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.8/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 439, in send
+    resp = conn.urlopen(
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 719, in urlopen
+    retries = retries.increment(
+  File "/usr/lib/python3/dist-packages/urllib3/util/retry.py", line 400, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/usr/lib/python3/dist-packages/six.py", line 702, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 665, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 421, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 416, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/lib/python3.8/http/client.py", line 1344, in getresponse
+    response.begin()
+  File "/usr/lib/python3.8/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.8/http/client.py", line 276, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/mythril-0.22.26-py3.8.egg/mythril/interfaces/cli.py", line 795, in parse_args_and_execute
+    disassembler = MythrilDisassembler(
+  File "/usr/local/lib/python3.8/dist-packages/mythril-0.22.26-py3.8.egg/mythril/mythril/mythril_disassembler.py", line 39, in __init__
+    self.solc_binary = self._init_solc_binary(solc_version)
+  File "/usr/local/lib/python3.8/dist-packages/mythril-0.22.26-py3.8.egg/mythril/mythril/mythril_disassembler.py", line 74, in _init_solc_binary
+    solc_binary = util.solc_exists(version)
+  File "/usr/local/lib/python3.8/dist-packages/mythril-0.22.26-py3.8.egg/mythril/ethereum/util.py", line 144, in solc_exists
+    solcx.install_solc("v" + version)
+  File "/usr/local/lib/python3.8/dist-packages/py_solc_x-1.0.0-py3.8.egg/solcx/install.py", line 447, in install_solc
+    _install_solc_unix(version, filename, show_progress, solcx_binary_path)
+  File "/usr/local/lib/python3.8/dist-packages/py_solc_x-1.0.0-py3.8.egg/solcx/install.py", line 597, in _install_solc_unix
+    content = _download_solc(download, show_progress)
+  File "/usr/local/lib/python3.8/dist-packages/py_solc_x-1.0.0-py3.8.egg/solcx/install.py", line 566, in _download_solc
+    response = requests.get(url, stream=show_progress)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 75, in get
+    return request('get', url, params=params, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 498, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))

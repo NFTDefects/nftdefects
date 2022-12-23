@@ -1,0 +1,352 @@
+==== Dependence on tx.origin ====
+SWC ID: 115
+Severity: Low
+Contract: DjEnerates
+Function name: reserveDjens()
+PC address: 2322
+Estimated Gas Usage: 1110 - 1535
+Use of tx.origin as a part of authorization control.
+The tx.origin environment variable has been found to influence a control flow decision. Note that using tx.origin as a security control might cause a situation where a user inadvertently authorizes a smart contract to perform an action on their behalf. It is recommended to use msg.sender instead.
+--------------------
+In file: /tmp/6b5f93ddcbb927a84603de59ccdd333f.sol:573
+
+ress(0);
+    }
+
+    /**
+     * @dev Transfers ownership of the contr
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x3, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x0, nonce:0, storage:{}
+Account: [SOMEGUY], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , value: 0x0
+Caller: [ATTACKER], function: reserveDjens(), txdata: 0x088e0a27, value: 0x0
+
+==== Dependence on tx.origin ====
+SWC ID: 115
+Severity: Low
+Contract: DjEnerates
+Function name: setStartClaimDate(uint256)
+PC address: 3863
+Estimated Gas Usage: 1392 - 1817
+Use of tx.origin as a part of authorization control.
+The tx.origin environment variable has been found to influence a control flow decision. Note that using tx.origin as a security control might cause a situation where a user inadvertently authorizes a smart contract to perform an action on their behalf. It is recommended to use msg.sender instead.
+--------------------
+In file: /tmp/6b5f93ddcbb927a84603de59ccdd333f.sol:573
+
+ress(0);
+    }
+
+    /**
+     * @dev Transfers ownership of the contr
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x500011504, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x1, nonce:0, storage:{}
+Account: [SOMEGUY], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , value: 0x0
+Caller: [ATTACKER], function: setStartClaimDate(uint256), txdata: 0x23ab18f10000000000000000000000000000000000000000000000000000000000000000, value: 0x0
+
+==== Dependence on tx.origin ====
+SWC ID: 115
+Severity: Low
+Contract: DjEnerates
+Function name: withdraw()
+PC address: 4243
+Estimated Gas Usage: 1109 - 1534
+Use of tx.origin as a part of authorization control.
+The tx.origin environment variable has been found to influence a control flow decision. Note that using tx.origin as a security control might cause a situation where a user inadvertently authorizes a smart contract to perform an action on their behalf. It is recommended to use msg.sender instead.
+--------------------
+In file: /tmp/6b5f93ddcbb927a84603de59ccdd333f.sol:573
+
+ress(0);
+    }
+
+    /**
+     * @dev Transfers ownership of the contr
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x3, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x0, nonce:0, storage:{}
+Account: [SOMEGUY], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , value: 0x0
+Caller: [ATTACKER], function: withdraw(), txdata: 0x3ccfd60b, value: 0x0
+
+==== Dependence on tx.origin ====
+SWC ID: 115
+Severity: Low
+Contract: DjEnerates
+Function name: claimToken()
+PC address: 4722
+Estimated Gas Usage: 222 - 317
+Use of tx.origin as a part of authorization control.
+The tx.origin environment variable has been found to influence a control flow decision. Note that using tx.origin as a security control might cause a situation where a user inadvertently authorizes a smart contract to perform an action on their behalf. It is recommended to use msg.sender instead.
+--------------------
+In file: /tmp/6b5f93ddcbb927a84603de59ccdd333f.sol:1138
+
+**
+     * Sets the collaborators of the project with their cuts
+  
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x3, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x0, nonce:0, storage:{}
+Account: [SOMEGUY], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , value: 0x0
+Caller: [ATTACKER], function: claimToken(), txdata: 0x4451d89f, value: 0x0
+
+==== Dependence on predictable environment variable ====
+SWC ID: 116
+Severity: Low
+Contract: DjEnerates
+Function name: claimToken()
+PC address: 4806
+Estimated Gas Usage: 1881 - 1976
+A control flow decision is made based on The block.timestamp environment variable.
+The block.timestamp environment variable is used to determine a control flow decision. Note that the values of variables like coinbase, gaslimit, block number and timestamp are predictable and can be manipulated by a malicious miner. Also keep in mind that attackers know hashes of earlier blocks. Don't use any of those environment variables as sources of randomness and be aware that use of these variables introduces a certain level of trust into miners.
+--------------------
+In file: /tmp/6b5f93ddcbb927a84603de59ccdd333f.sol:1141
+
+laborators)
+        external
+        onlyOwner
+    {
+        require(collaborators.length == 0, "Collaborators were already
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x3, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x0, nonce:0, storage:{}
+Account: [SOMEGUY], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , value: 0x0
+Caller: [ATTACKER], function: claimToken(), txdata: 0x4451d89f, value: 0x0
+
+==== Dependence on tx.origin ====
+SWC ID: 115
+Severity: Low
+Contract: DjEnerates
+Function name: claimTokens(uint256)
+PC address: 5316
+Estimated Gas Usage: 504 - 599
+Use of tx.origin as a part of authorization control.
+The tx.origin environment variable has been found to influence a control flow decision. Note that using tx.origin as a security control might cause a situation where a user inadvertently authorizes a smart contract to perform an action on their behalf. It is recommended to use msg.sender instead.
+--------------------
+In file: /tmp/6b5f93ddcbb927a84603de59ccdd333f.sol:1138
+
+**
+     * Sets the collaborators of the project with their cuts
+  
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x3, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x1, nonce:0, storage:{}
+Account: [SOMEGUY], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , value: 0x0
+Caller: [ATTACKER], function: claimTokens(uint256), txdata: 0x46e04a2f0000000000000000000000000000000000000000000000000000000000000000, value: 0x0
+
+==== Dependence on predictable environment variable ====
+SWC ID: 116
+Severity: Low
+Contract: DjEnerates
+Function name: claimTokens(uint256)
+PC address: 5400
+Estimated Gas Usage: 2163 - 2258
+A control flow decision is made based on The block.timestamp environment variable.
+The block.timestamp environment variable is used to determine a control flow decision. Note that the values of variables like coinbase, gaslimit, block number and timestamp are predictable and can be manipulated by a malicious miner. Also keep in mind that attackers know hashes of earlier blocks. Don't use any of those environment variables as sources of randomness and be aware that use of these variables introduces a certain level of trust into miners.
+--------------------
+In file: /tmp/6b5f93ddcbb927a84603de59ccdd333f.sol:1141
+
+laborators)
+        external
+        onlyOwner
+    {
+        require(collaborators.length == 0, "Collaborators were already
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x1000080100020, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x1, nonce:0, storage:{}
+Account: [SOMEGUY], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , value: 0x0
+Caller: [ATTACKER], function: claimTokens(uint256), txdata: 0x46e04a2f0000000000000000000000000000000000000000000000000000000000000000, value: 0x0
+
+==== Dependence on tx.origin ====
+SWC ID: 115
+Severity: Low
+Contract: DjEnerates
+Function name: setClaimPrice(uint256)
+PC address: 6249
+Estimated Gas Usage: 1392 - 1817
+Use of tx.origin as a part of authorization control.
+The tx.origin environment variable has been found to influence a control flow decision. Note that using tx.origin as a security control might cause a situation where a user inadvertently authorizes a smart contract to perform an action on their behalf. It is recommended to use msg.sender instead.
+--------------------
+In file: /tmp/6b5f93ddcbb927a84603de59ccdd333f.sol:573
+
+ress(0);
+    }
+
+    /**
+     * @dev Transfers ownership of the contr
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x10000000000000080, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x1, nonce:0, storage:{}
+Account: [SOMEGUY], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , value: 0x0
+Caller: [ATTACKER], function: setClaimPrice(uint256), txdata: 0x51f468c00000000000000000000000000000000000000000000000000000000000000000, value: 0x0
+
+==== Dependence on tx.origin ====
+SWC ID: 115
+Severity: Low
+Contract: DjEnerates
+Function name: renounceOwnership() or renounceOwnership() or renounceOwnership()
+PC address: 6745
+Estimated Gas Usage: 1131 - 1556
+Use of tx.origin as a part of authorization control.
+The tx.origin environment variable has been found to influence a control flow decision. Note that using tx.origin as a security control might cause a situation where a user inadvertently authorizes a smart contract to perform an action on their behalf. It is recommended to use msg.sender instead.
+--------------------
+In file: /tmp/6b5f93ddcbb927a84603de59ccdd333f.sol:573
+
+ress(0);
+    }
+
+    /**
+     * @dev Transfers ownership of the contr
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x3, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x0, nonce:0, storage:{}
+Account: [SOMEGUY], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , value: 0x0
+Caller: [ATTACKER], function: renounceOwnership(), txdata: 0x715018a6, value: 0x0
+
+==== Dependence on tx.origin ====
+SWC ID: 115
+Severity: Low
+Contract: DjEnerates
+Function name: setApprovalForAll(address,bool) or setApprovalForAll(address,bool) or setApprovalForAll(address,bool) or setApprovalForAll(address,bool) or setApprovalForAll(address,bool)
+PC address: 7240
+Estimated Gas Usage: 727 - 822
+Use of tx.origin as a part of authorization control.
+The tx.origin environment variable has been found to influence a control flow decision. Note that using tx.origin as a security control might cause a situation where a user inadvertently authorizes a smart contract to perform an action on their behalf. It is recommended to use msg.sender instead.
+--------------------
+In file: /tmp/6b5f93ddcbb927a84603de59ccdd333f.sol:789
+
+er(), tokenId),
+            "ERC721: transfer caller is not ow
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x1000000, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x0, nonce:0, storage:{}
+Account: [SOMEGUY], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , value: 0x0
+Caller: [CREATOR], function: setApprovalForAll(address,bool), txdata: 0xa22cb46500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000, value: 0x0
+
+==== Dependence on tx.origin ====
+SWC ID: 115
+Severity: Low
+Contract: DjEnerates
+Function name: addAvailableTokens(uint16,uint16)
+PC address: 8203
+Estimated Gas Usage: 1595 - 2020
+Use of tx.origin as a part of authorization control.
+The tx.origin environment variable has been found to influence a control flow decision. Note that using tx.origin as a security control might cause a situation where a user inadvertently authorizes a smart contract to perform an action on their behalf. It is recommended to use msg.sender instead.
+--------------------
+In file: /tmp/6b5f93ddcbb927a84603de59ccdd333f.sol:573
+
+ress(0);
+    }
+
+    /**
+     * @dev Transfers ownership of the contr
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x10, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x10, nonce:0, storage:{}
+Account: [SOMEGUY], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , value: 0x0
+Caller: [ATTACKER], function: addAvailableTokens(uint16,uint16), txdata: 0xefb3d00800000000000000000000000000000000000000000000000000000000000008080000000000000000000000000000000000000000000000000000000000000000, value: 0x0
+
+==== Dependence on tx.origin ====
+SWC ID: 115
+Severity: Low
+Contract: DjEnerates
+Function name: transferOwnership(address) or transferOwnership(address) or transferOwnership(address)
+PC address: 8446
+Estimated Gas Usage: 1483 - 1908
+Use of tx.origin as a part of authorization control.
+The tx.origin environment variable has been found to influence a control flow decision. Note that using tx.origin as a security control might cause a situation where a user inadvertently authorizes a smart contract to perform an action on their behalf. It is recommended to use msg.sender instead.
+--------------------
+In file: /tmp/6b5f93ddcbb927a84603de59ccdd333f.sol:573
+
+ress(0);
+    }
+
+    /**
+     * @dev Transfers ownership of the contr
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x102, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x1, nonce:0, storage:{}
+Account: [SOMEGUY], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , value: 0x0
+Caller: [ATTACKER], function: transferOwnership(address), txdata: 0xf2fde38b0000000000000000000000000000000000000000000000000000000000000000, value: 0x0

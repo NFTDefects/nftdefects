@@ -1,0 +1,61 @@
+﻿defect,url,type,loss,views
+Risky Mutable Proxy,https://twitter.com/0xQuit/status/1488908463669350400,report,$11 million,
+Risky Mutable Proxy,https://tldr.tech/crypto/newsletter/2022-02-17,report,,
+ERC-721 Re-entrancy,https://www.theblock.co/post/156800/hacker-drains-1-4-million-worth-of-eth-from-nft-lender-omni,report,$1.4 million,
+ERC-721 Re-entrancy,https://learnblockchain.cn/article/2939,report,,
+ERC-721 Re-entrancy,https://blocksecteam.medium.com/when-safemint-becomes-unsafe-lessons-from-the-hypebears-security-incident-2965209bda2a,report,,
+ERC-721 Re-entrancy,https://medium.com/@cryptoburgernft/a-tough-day-for-crypto-burgers-b371da577c8b,report,$770k,
+ERC-721 Re-entrancy,https://docs.google.com/document/d/1FfeF-epgBUwZBhdwMQ_rtvVjLtQ8f09pukSmZZ-GsI8/edit,report,$70k,
+ERC-721 Re-entrancy,https://www.tehparadox.net/cryptocurrency-news/2761829-nft-protocol-omni-suffers-reentrancy-attack-loses-1-300-eth-in-testing-funds.html,report,$1.4 million,
+ERC-721 Re-entrancy,https://samczsun.com/the-dangers-of-surprising-code/,report,,
+ERC-721 Re-entrancy,https://samczsun.com/the-dangers-of-surprising-code/,report,,
+ERC-721 Re-entrancy,https://twitter.com/BlockSecTeam/status/1509544742723649537,report,$2 million,
+ERC-721 Re-entrancy,https://stackoverflow.com/questions/71646570/how-to-implement-onerc721received-function,post,,3k
+ERC-721 Re-entrancy,https://stackoverflow.com/questions/70775529/guarantee-a-contract-can-only-receive-one-type-of-erc721-nft,post,,305
+ERC-721 Re-entrancy,https://stackoverflow.com/questions/71597113/erc1155-sell-buy-nft-solidity,post,,2k
+ERC-721 Re-entrancy,https://web3isgoinggreat.com/single/cryptoburgers-hacked,report,,
+ERC-721 Re-entrancy,https://stackoverflow.com/questions/72036381/deploy-erc721-contracts-from-a-simple-or-factory-contract,post,,465
+Unlimited Minting,https://mirror.xyz/ninjak.eth/_buBOQflWtHDpLbg18Fp8zLe8AmLiPka2y-UhppK_u0,report,,
+Unlimited Minting,https://stackoverflow.com/questions/71678110/how-can-i-set-2-max-supplys-in-a-erc721,post,,900
+Unlimited Minting,https://stackoverflow.com/questions/71899314/how-to-fix-undeclared-identifier-even-though-its-present-in-erc721enumerable,post,,691
+Unlimited Minting,https://stackoverflow.com/questions/69408191/erc-721-smart-contract-is-minting-2-nfts-at-a-time,post,,2k
+Missing Requirements,https://stackoverflow.com/questions/69302320/erc721-transfer-caller-is-not-owner-nor-approved,post,,12k
+Missing Requirements,https://stackoverflow.com/questions/69171562/using-ipfs-to-mint-an-nft-the-safe-way,post,,342
+Missing Requirements,https://stackoverflow.com/questions/67317392/how-to-transfer-a-nft-from-one-account-to-another-using-erc721,post,,16k
+Missing Requirements,https://stackoverflow.com/questions/70913808/transfer-erc721-from-owner-to-buyer,post,,522
+Missing Requirements,https://stackoverflow.com/questions/72294104/check-owner-is-msg-sender-but-still-gives-erc721-transfer-caller-is-not-owner,post,,405
+Missing Requirements,https://stackoverflow.com/questions/69779171/this-function-reverted-with-reason-string-erc721-transfer-caller-is-not-owner,post,,2k
+Missing Requirements,https://stackoverflow.com/questions/71539232/setapprovalforall-not-owner-nor-approved,post,,1k
+Missing Requirements,https://stackoverflow.com/questions/70770785/internal-json-rpc-error-with-metamask-on-polygon-blockchain-erc721-transfer-c,post,,4k
+Missing Requirements,https://stackoverflow.com/questions/71063058/my-buy-function-in-smart-contract-file-keep-making-error,post,,468
+Missing Requirements,https://stackoverflow.com/questions/70001835/do-i-need-to-use-approve-method-in-erc721,post,,2k
+Missing Requirements,https://stackoverflow.com/questions/67611716/why-does-the-minting-function-of-erc721-have-an-access-control,post,,4k
+Missing Requirements,https://stackoverflow.com/questions/71666255/how-to-transfer-a-nft-to-another-smart-contract,post,,3k
+Missing Requirements,https://stackoverflow.com/questions/69193720/erc721-nft-creating-a-function-to-buy-sell-nfts-that-have-been-preminted-by-the,post,,824
+Public Burn,https://stackoverflow.com/questions/71914170/how-to-burn-erc721-token,post,,2k
+Public Burn,https://slowmist.medium.com/the-vulnerability-behind-the-sandbox-land-migration-2abf68933170,report,,
+Public Burn,https://twitter.com/CertiKCommunity/status/1482930661547782148,report,$770k,
+unclassifiable,https://stackoverflow.com/questions/68639104/not-able-to-access-erc721-openzeppelin-nfts-from-separate-contract-that-inherits,post,,318
+unclassifiable,https://stackoverflow.com/questions/70139247/solidity-0-8-0-override-virtual-typeerror-derived-contract-must-override-fu,post,,7k
+unclassifiable,https://stackoverflow.com/questions/67803090/how-to-get-erc-721-tokenid,post,,12k
+unclassifiable,https://stackoverflow.com/questions/70583249/nft-collections-and-supply-erc721-vs-erc-1155,post,,1k
+unclassifiable,https://stackoverflow.com/questions/70745661/lock-transfer-of-erc721-nft,post,,2k
+unclassifiable,https://stackoverflow.com/questions/71757994/add-royalty-to-solidity-nft-smart-contract,post,,2k
+unclassifiable,https://stackoverflow.com/questions/71254617/set-token-uri-function,post,,4k
+unclassifiable,https://stackoverflow.com/questions/68320225/how-to-only-allow-smart-contract-erc-721-airdrops-to-be-from-one-address,post,,766
+unclassifiable,https://stackoverflow.com/questions/73480903/solidity-transferfrom-function-not-working-making-an-nft-marketplace-that-ac,post,,114
+unclassifiable,https://stackoverflow.com/questions/72914296/how-to-airdrop-nfts-to-specific-nft-owners,post,,246
+unclassifiable,https://twitter.com/AudiusProject/status/1551377708722008065,report,$1.1 million,
+unclassifiable,https://twitter.com/BeosinAlert/status/1542493260114931712,report,$130k,
+unclassifiable,https://twitter.com/XCarnival_Lab/status/1541060630748479488,report,1620ETH,
+unclassifiable,https://twitter.com/ownlyio/status/1524149988837580800,report,115BNB,
+unclassifiable,https://www.ccvalue.cn/article/1396448.html,report,11539.5ETH,
+unclassifiable,https://twitter.com/wilburforce_/status/1504437189979119622,report,$500k,
+unclassifiable,https://www.coindesk.com/tech/2022/03/03/stolen-smol-brains-nfts-returned-to-users-hours-after-treasure-exploit/,report,,
+unclassifiable,https://twitter.com/PeckShieldAlert/status/1485547426467364864,report,347ETH,
+unclassifiable,http://chainb.com/?P=Cont&id=32317,report,$100k,
+unclassifiable,https://blocksecteam.medium.com/how-akutar-nft-loses-34m-usd-60d6cb053dff,report,$34 million,
+unclassifiable,https://blocksecteam.medium.com/how-to-verify-a-signature-in-a-wrong-way-the-associationnft-case-5a913e9b8a1d,report,,
+unclassifiable,https://twitter.com/BlockSecTeam/status/1499321063372898304,report,,
+unclassifiable,https://twitter.com/BlockSecTeam/status/1504488061459398658,report,,
+unclassifiable,https://twitter.com/BlockSecTeam/status/1517769222365270017,report,,

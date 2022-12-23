@@ -1,0 +1,122 @@
+Environment variable LD_LIBRARY_PATH not set. Setting it up...
+[0;31mSeverity:    INFO
+Pattern:     Constable State Variables
+Description: State variables that do not change should be declared as
+             constants.
+Type:        Violation
+Contract:    LCLbeacon
+Line:        23
+Source: 
+> contract LCLbeacon { 
+>   string  public name     = "www.xn--tfa.club";
+>      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   string  public symbol   = "LCLbeacon";
+
+[0m
+[0;31mSeverity:    INFO
+Pattern:     Constable State Variables
+Description: State variables that do not change should be declared as
+             constants.
+Type:        Violation
+Contract:    LCLbeacon
+Line:        24
+Source: 
+>   string  public name     = "www.xn--tfa.club";
+>   string  public symbol   = "LCLbeacon";
+>      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   uint8   public decimals = 18;
+
+[0m
+[0;31mSeverity:    INFO
+Pattern:     Constable State Variables
+Description: State variables that do not change should be declared as
+             constants.
+Type:        Violation
+Contract:    LCLbeacon
+Line:        25
+Source: 
+>   string  public symbol   = "LCLbeacon";
+>   uint8   public decimals = 18;
+>      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   uint    public supply   = 0;
+
+[0m
+[0;31mSeverity:    INFO
+Pattern:     Constable State Variables
+Description: State variables that do not change should be declared as
+             constants.
+Type:        Violation
+Contract:    LCLbeacon
+Line:        26
+Source: 
+>   uint8   public decimals = 18;
+>   uint    public supply   = 0;
+>      ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 
+
+[0m
+[0;31mSeverity:    LOW
+Pattern:     Solidity pragma directives
+Description: Avoid complex solidity version pragma statements.
+Type:        Violation
+Contract:    None
+Line:        20
+Source: 
+> 
+> pragma solidity ^0.8.4;
+>    ^^^^^^^^^^^^^^^^^^^^
+> 
+
+[0m
+[0;31mSeverity:    INFO
+Pattern:     Unused State Variable
+Description: Unused state variables should be removed.
+Type:        Violation
+Contract:    LCLbeacon
+Line:        23
+Source: 
+> contract LCLbeacon { 
+>   string  public name     = "www.xn--tfa.club";
+>      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   string  public symbol   = "LCLbeacon";
+
+[0m
+[0;31mSeverity:    INFO
+Pattern:     Unused State Variable
+Description: Unused state variables should be removed.
+Type:        Violation
+Contract:    LCLbeacon
+Line:        24
+Source: 
+>   string  public name     = "www.xn--tfa.club";
+>   string  public symbol   = "LCLbeacon";
+>      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   uint8   public decimals = 18;
+
+[0m
+[0;31mSeverity:    INFO
+Pattern:     Unused State Variable
+Description: Unused state variables should be removed.
+Type:        Violation
+Contract:    LCLbeacon
+Line:        25
+Source: 
+>   string  public symbol   = "LCLbeacon";
+>   uint8   public decimals = 18;
+>      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   uint    public supply   = 0;
+
+[0m
+[0;31mSeverity:    INFO
+Pattern:     Unused State Variable
+Description: Unused state variables should be removed.
+Type:        Violation
+Contract:    LCLbeacon
+Line:        26
+Source: 
+>   uint8   public decimals = 18;
+>   uint    public supply   = 0;
+>      ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 
+
+[0m

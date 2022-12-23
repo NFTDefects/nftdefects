@@ -1,0 +1,27 @@
+*.disasm
+*.evm
+*.log
+*.pyc
+*.report
+*.json
+# *.txt
+# *.md
+
+.DS_Store
+
+.idea/dist/
+
+contract_data
+dist/
+tmp/
+
+current_test.pickle
+
+bytecode
+bytecode.1
+
+!tests/contracts/*/*
+web/vendor/
+
+.vscode
+__pycache__

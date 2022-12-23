@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/GPUFS/sysu_zbzheng_1/sujzh3/mythril-develop/venv/bin/securify", line 33, in <module>
+    sys.exit(load_entry_point('securify', 'console_scripts', 'securify')())
+  File "/sec/securify/__main__.py", line 246, in main
+    contract = fix_pragma(contract)
+  File "/sec/securify/__main__.py", line 219, in fix_pragma
+    if semantic_version.Version(solidity_version) >= semantic_version.Version(installed_version):
+  File "/GPUFS/sysu_zbzheng_1/sujzh3/mythril-develop/venv/lib/python3.8/site-packages/semantic_version/base.py", line 105, in __init__
+    major, minor, patch, prerelease, build = self.parse(version_string, partial)
+  File "/GPUFS/sysu_zbzheng_1/sujzh3/mythril-develop/venv/lib/python3.8/site-packages/semantic_version/base.py", line 311, in parse
+    raise ValueError('Invalid version string: %r' % version_string)
+ValueError: Invalid version string: '0.8.'

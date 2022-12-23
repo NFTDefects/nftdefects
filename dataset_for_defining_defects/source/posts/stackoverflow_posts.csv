@@ -1,0 +1,673 @@
+﻿title,url
+Send a NFT together with Tokens,https://stackoverflow.com/questions/73729684/send-a-nft-together-with-tokens
+I am not be able to transfer NFT using @hashgraph/sdk hedera npm. How to transfer nft using @hashgraph/sdk's in built method?,https://stackoverflow.com/questions/73727734/i-am-not-be-able-to-transfer-nft-using-hashgraph-sdk-hedera-npm-how-to-transfe
+Error in compiling and migrating ERC721 contract?,https://stackoverflow.com/questions/73687459/error-in-compiling-and-migrating-erc721-contract
+State Overrides: OverflowError: Python int too large to convert to C ssize_t,https://stackoverflow.com/questions/73681122/state-overrides-overflowerror-python-int-too-large-to-convert-to-c-ssize-t
+How to see the most recent bids on different marketplaces for ERC721 token?,https://stackoverflow.com/questions/73673782/how-to-see-the-most-recent-bids-on-different-marketplaces-for-erc721-token
+Deployed NFT contract with wrong Alchemy key,https://stackoverflow.com/questions/73644891/deployed-nft-contract-with-wrong-alchemy-key
+ERC721 Metadata not passed from NFT minting contract,https://stackoverflow.com/questions/73618491/erc721-metadata-not-passed-from-nft-minting-contract
+"ParserError: Source ""project:/src/contracts/Interfaces/Libraries/IERC165.sol"" not found",https://stackoverflow.com/questions/73616945/parsererror-source-project-src-contracts-interfaces-libraries-ierc165-sol-no
+How to Find Candy Machine V2 on SolScan,https://stackoverflow.com/questions/73615868/how-to-find-candy-machine-v2-on-solscan
+How can I find on-chain data for NFT collections?,https://stackoverflow.com/questions/73613732/how-can-i-find-on-chain-data-for-nft-collections
+Can I burn an NFT via smart contract using the Wallet address when an owner gives permission?,https://stackoverflow.com/questions/73610089/can-i-burn-an-nft-via-smart-contract-using-the-wallet-address-when-an-owner-give
+Sending SPL tokens on solana network,https://stackoverflow.com/questions/73604529/sending-spl-tokens-on-solana-network
+Proving ownership of a NFT collection minted on Opensea,https://stackoverflow.com/questions/73589892/proving-ownership-of-a-nft-collection-minted-on-opensea
+IPFS Infura ERROR Failed to load resource: the server responded with a status of 401 (Unauthorized) (POST REQUEST),https://stackoverflow.com/questions/73582531/ipfs-infura-error-failed-to-load-resource-the-server-responded-with-a-status-of
+canvas package import throws error while installation,https://stackoverflow.com/questions/73580492/canvas-package-import-throws-error-while-installation
+Is there an API to retrieve ERC-721 listings/bids from different marketplaces?,https://stackoverflow.com/questions/73579374/is-there-an-api-to-retrieve-erc-721-listings-bids-from-different-marketplaces
+How to reserve specific range of token IDs for whitelisted sale in solidity smart contract,https://stackoverflow.com/questions/73577943/how-to-reserve-specific-range-of-token-ids-for-whitelisted-sale-in-solidity-smar
+File not being recognized as such,https://stackoverflow.com/questions/73572655/file-not-being-recognized-as-such
+How do I declare the identifier in this smart contract?,https://stackoverflow.com/questions/73572292/how-do-i-declare-the-identifier-in-this-smart-contract
+How can we interact with smart contract contract through coinbase wallet or connect wallet through mobile?,https://stackoverflow.com/questions/73569157/how-can-we-interact-with-smart-contract-contract-through-coinbase-wallet-or-conn
+How did I fix the Moralis load module script error after I installed it?,https://stackoverflow.com/questions/73548513/how-did-i-fix-the-moralis-load-module-script-error-after-i-installed-it
+"How to get all NFTs in a Collection? (Solana, Metaplex)",https://stackoverflow.com/questions/73531778/how-to-get-all-nfts-in-a-collection-solana-metaplex
+How do I update an NFTs creator list?,https://stackoverflow.com/questions/73517799/how-do-i-update-an-nfts-creator-list
+What's the difference between Metaplex's set_and_verify_collection and set_and_verify_sized_collection_item?,https://stackoverflow.com/questions/73491733/whats-the-difference-between-metaplexs-set-and-verify-collection-and-set-and-v
+Internal JSON-RPC error. “execution reverted” when using safeTransferFrom with a fee,https://stackoverflow.com/questions/73483520/internal-json-rpc-error-execution-reverted-when-using-safetransferfrom-with-a
+Solidity TransferFrom() function not working / Making an nft marketplace that accepts custom tokens,https://stackoverflow.com/questions/73480903/solidity-transferfrom-function-not-working-making-an-nft-marketplace-that-ac
+Blockchain - create multiple collections,https://stackoverflow.com/questions/73479932/blockchain-create-multiple-collections
+Timeout when communicating with Web3 Provider,https://stackoverflow.com/questions/73472391/timeout-when-communicating-with-web3-provider
+What do we have to use to implement instant sales market with the metaplex?,https://stackoverflow.com/questions/73454540/what-do-we-have-to-use-to-implement-instant-sales-market-with-the-metaplex
+Metaplex: Mint standard Edition,https://stackoverflow.com/questions/73442802/metaplex-mint-standard-edition
+why there's a difference with the number of listed items between opensea and in-app marketplace,https://stackoverflow.com/questions/73439818/why-theres-a-difference-with-the-number-of-listed-items-between-opensea-and-in
+How to check whether user has any ERC1155 of specific contract in solidity?,https://stackoverflow.com/questions/73429742/how-to-check-whether-user-has-any-erc1155-of-specific-contract-in-solidity
+NFT marketplace images not retrieving,https://stackoverflow.com/questions/73410358/nft-marketplace-images-not-retrieving
+Smart Contract NFT Issue,https://stackoverflow.com/questions/73404641/smart-contract-nft-issue
+Metaplex Javascript SDK CreateNft fees and cost estimation,https://stackoverflow.com/questions/73400893/metaplex-javascript-sdk-createnft-fees-and-cost-estimation
+Get past transactions on a contract using web3.php,https://stackoverflow.com/questions/73398947/get-past-transactions-on-a-contract-using-web3-php
+Using Sugar To Create Candy Machine for NFT Launch,https://stackoverflow.com/questions/73382256/using-sugar-to-create-candy-machine-for-nft-launch
+issues importing ethers.getcontractfactory,https://stackoverflow.com/questions/73379533/issues-importing-ethers-getcontractfactory
+Cannot enquire balance of ERC1155 smart contract,https://stackoverflow.com/questions/73366595/cannot-enquire-balance-of-erc1155-smart-contract
+How to prevent Users from calling my Smart Contract Function While still being able to call it in my dApp,https://stackoverflow.com/questions/73365543/how-to-prevent-users-from-calling-my-smart-contract-function-while-still-being-a
+SmartContract/Solidity: The transaction has been reverted to the initial state,https://stackoverflow.com/questions/73364556/smartcontract-solidity-the-transaction-has-been-reverted-to-the-initial-state
+Opensea Api returns Asset does not exist when creating an offer,https://stackoverflow.com/questions/73364065/opensea-api-returns-asset-does-not-exist-when-creating-an-offer
+How to Retrieve TRAITS of NFT from OpenSea with JavaScript?,https://stackoverflow.com/questions/73361211/how-to-retrieve-traits-of-nft-from-opensea-with-javascript
+Reading JSON metadata of NFT from it's contract,https://stackoverflow.com/questions/73333099/reading-json-metadata-of-nft-from-its-contract
+Website Button to transfer NFT from my wallet to user's wallet,https://stackoverflow.com/questions/73332841/website-button-to-transfer-nft-from-my-wallet-to-users-wallet
+"Query Loopring NFTs using the GraphQL ""Playground""",https://stackoverflow.com/questions/73327256/query-loopring-nfts-using-the-graphql-playground
+NFT contract balance not increasing after minting nft,https://stackoverflow.com/questions/73320453/nft-contract-balance-not-increasing-after-minting-nft
+How to get the tokenids of certain ERC721 tokens for a adress? using Web3py,https://stackoverflow.com/questions/73317165/how-to-get-the-tokenids-of-certain-erc721-tokens-for-a-adress-using-web3py
+Where do I find nft.storage authentication token for Metaplex Sugar?,https://stackoverflow.com/questions/73299224/where-do-i-find-nft-storage-authentication-token-for-metaplex-sugar
+I want to create a nft as a hotel room ticket. Is it possible?,https://stackoverflow.com/questions/73278578/i-want-to-create-a-nft-as-a-hotel-room-ticket-is-it-possible
+How to write a burn function in smart contract for NFT?,https://stackoverflow.com/questions/73271419/how-to-write-a-burn-function-in-smart-contract-for-nft
+Is there a way to check if msg.sender owns some collection?,https://stackoverflow.com/questions/73267710/is-there-a-way-to-check-if-msg-sender-owns-some-collection
+How to let the minted NFT load instantly after being minted?,https://stackoverflow.com/questions/73262599/how-to-let-the-minted-nft-load-instantly-after-being-minted
+Call smart contract function by connecting contract address in hardhat (ethers),https://stackoverflow.com/questions/73237625/call-smart-contract-function-by-connecting-contract-address-in-hardhat-ethers
+Can I get nft metadata from the <AccountInfo> address in solana rust program?,https://stackoverflow.com/questions/73228906/can-i-get-nft-metadata-from-the-accountinfo-address-in-solana-rust-program
+Ganache doesn't connect to the network,https://stackoverflow.com/questions/73224954/ganache-doesnt-connect-to-the-network
+How to send already minted nft to the dynamic address,https://stackoverflow.com/questions/73203081/how-to-send-already-minted-nft-to-the-dynamic-address
+Is it possible to create an erc721 contract without using openzepplin library and render it on opensea?,https://stackoverflow.com/questions/73181327/is-it-possible-to-create-an-erc721-contract-without-using-openzepplin-library-an
+Error encountered during Ethereum solidity NFT contract execution [Out of gas]?,https://stackoverflow.com/questions/73177503/error-encountered-during-ethereum-solidity-nft-contract-execution-out-of-gas
+How to get historical floor price data for an NFT collection?,https://stackoverflow.com/questions/73167776/how-to-get-historical-floor-price-data-for-an-nft-collection
+"How to update minted NFTs maxSupply to avoid 'none""?",https://stackoverflow.com/questions/73162669/how-to-update-minted-nfts-maxsupply-to-avoid-none
+How to make an auction with the new metaplex js sdk?,https://stackoverflow.com/questions/73155229/how-to-make-an-auction-with-the-new-metaplex-js-sdk
+how to get the cheapest NFT in a collection using Magic Eden API,https://stackoverflow.com/questions/73151481/how-to-get-the-cheapest-nft-in-a-collection-using-magic-eden-api
+Why can't I see my image and audio in Testnet Opensea?,https://stackoverflow.com/questions/73139799/why-cant-i-see-my-image-and-audio-in-testnet-opensea
+Get all nft's data request,https://stackoverflow.com/questions/73137781/get-all-nfts-data-request
+Getting Rank List from OpenSea,https://stackoverflow.com/questions/73136506/getting-rank-list-from-opensea
+I am unable to transfer funds to the owner of my NFT,https://stackoverflow.com/questions/73135048/i-am-unable-to-transfer-funds-to-the-owner-of-my-nft
+Can we get NFT data from Blockchain Block Data using web3?,https://stackoverflow.com/questions/73120488/can-we-get-nft-data-from-blockchain-block-data-using-web3
+Solidity - Is there function to view list of holders addresses and each address attached tokens that it owns,https://stackoverflow.com/questions/73110654/solidity-is-there-function-to-view-list-of-holders-addresses-and-each-address
+"Solidity: deploy contract, mint 50 nfts, and send nft to 50 hard coded addresses all in one step possible?",https://stackoverflow.com/questions/73104749/solidity-deploy-contract-mint-50-nfts-and-send-nft-to-50-hard-coded-addresses
+Candy Machine Assets Skipping Numbers In File Names,https://stackoverflow.com/questions/73102982/candy-machine-assets-skipping-numbers-in-file-names
+List Rarible Lazy Minted Tokens on OpenSea,https://stackoverflow.com/questions/73092124/list-rarible-lazy-minted-tokens-on-opensea
+OpenSea Lazy Minting with Custom Contract,https://stackoverflow.com/questions/73092046/opensea-lazy-minting-with-custom-contract
+Duplicate images generating from randomly selected images,https://stackoverflow.com/questions/73089602/duplicate-images-generating-from-randomly-selected-images
+NFT staking smart contract flexible daily ROI change,https://stackoverflow.com/questions/73078706/nft-staking-smart-contract-flexible-daily-roi-change
+Error running command (re-run needed): AccountNotFound: solana,https://stackoverflow.com/questions/73068744/error-running-command-re-run-needed-accountnotfound-solana
+Error while related to big number in react for input in smart contract erc721,https://stackoverflow.com/questions/73066197/error-while-related-to-big-number-in-react-for-input-in-smart-contract-erc721
+"Implementing ""create NFT"" onClick using Metaplex",https://stackoverflow.com/questions/73054999/implementing-create-nft-onclick-using-metaplex
+How to make minting function that takes 0.1 ethereum in Solidity?,https://stackoverflow.com/questions/73053421/how-to-make-minting-function-that-takes-0-1-ethereum-in-solidity
+Transaction Signature Verification failed,https://stackoverflow.com/questions/73052807/transaction-signature-verification-failed
+Digital Signing Smart Contract ERC721,https://stackoverflow.com/questions/73044316/digital-signing-smart-contract-erc721
+NFT whitelist: How to make a variable mint allowance per address,https://stackoverflow.com/questions/73017970/nft-whitelist-how-to-make-a-variable-mint-allowance-per-address
+Can I use smart contract to mint my NFT without confirmation?,https://stackoverflow.com/questions/73007979/can-i-use-smart-contract-to-mint-my-nft-without-confirmation
+How to update a NFT mint price by ethereum price in USD?,https://stackoverflow.com/questions/72992643/how-to-update-a-nft-mint-price-by-ethereum-price-in-usd
+"Solana , Signature verification error magic eden",https://stackoverflow.com/questions/72990514/solana-signature-verification-error-magic-eden
+How to delete NFT listing if the NFT is transferred out of the owner wallet,https://stackoverflow.com/questions/72990068/how-to-delete-nft-listing-if-the-nft-is-transferred-out-of-the-owner-wallet
+Candy Machine V2 Limit WL Token Usage to a certain number,https://stackoverflow.com/questions/72987613/candy-machine-v2-limit-wl-token-usage-to-a-certain-number
+Ensure that verified creators signed the tx,https://stackoverflow.com/questions/72986700/ensure-that-verified-creators-signed-the-tx
+Install Minty npm packages for IPFS,https://stackoverflow.com/questions/72986515/install-minty-npm-packages-for-ipfs
+Metaplex Cache file disappeared,https://stackoverflow.com/questions/72963498/metaplex-cache-file-disappeared
+JSON nested folders when generating NFTs,https://stackoverflow.com/questions/72948069/json-nested-folders-when-generating-nfts
+How to Return an Array of structs from Solidity?,https://stackoverflow.com/questions/72943448/how-to-return-an-array-of-structs-from-solidity
+What is the purpose of symbol and name in ERC721?,https://stackoverflow.com/questions/72937134/what-is-the-purpose-of-symbol-and-name-in-erc721
+Can you make an ERC1155 contract receive an ERC721 token?,https://stackoverflow.com/questions/72936189/can-you-make-an-erc1155-contract-receive-an-erc721-token
+Does anyone know how to make my solana collection connect with opensea?,https://stackoverflow.com/questions/72934957/does-anyone-know-how-to-make-my-solana-collection-connect-with-opensea
+How to create different hashtags for different NFTs,https://stackoverflow.com/questions/72932762/how-to-create-different-hashtags-for-different-nfts
+Update Metadata of Solana NFT Collection,https://stackoverflow.com/questions/72919479/update-metadata-of-solana-nft-collection
+Error with modules gumdrop-cli.ts metaplex,https://stackoverflow.com/questions/72917751/error-with-modules-gumdrop-cli-ts-metaplex
+How to airdrop NFTs to specific NFT owners?,https://stackoverflow.com/questions/72914296/how-to-airdrop-nfts-to-specific-nft-owners
+Get all transactions for an NFT on Solana,https://stackoverflow.com/questions/72903266/get-all-transactions-for-an-nft-on-solana
+How to filter lazy minted NFTs of OpenSea through API?,https://stackoverflow.com/questions/72895850/how-to-filter-lazy-minted-nfts-of-opensea-through-api
+Need help adding function to NFT minting dapp built with next.js,https://stackoverflow.com/questions/72887031/need-help-adding-function-to-nft-minting-dapp-built-with-next-js
+Change Hedera NFT metadata after minting,https://stackoverflow.com/questions/72881345/change-hedera-nft-metadata-after-minting
+Don't you need centralised database to verify NFT authenthicity,https://stackoverflow.com/questions/72866560/dont-you-need-centralised-database-to-verify-nft-authenthicity
+Cannot test smart contract because tutorial is out of date (`npm_config_argv` is gone),https://stackoverflow.com/questions/72862661/cannot-test-smart-contract-because-tutorial-is-out-of-date-npm-config-argv-is
+Should each NFT have a separate smart contract,https://stackoverflow.com/questions/72860914/should-each-nft-have-a-separate-smart-contract
+MetaMask - RPC Error: execution reverted. Error: cannot estimate gas,https://stackoverflow.com/questions/72860787/metamask-rpc-error-execution-reverted-error-cannot-estimate-gas
+Trying to implement ERC1155OpenSeaGassLess but not able to understand the structure of the contract,https://stackoverflow.com/questions/72853874/trying-to-implement-erc1155openseagassless-but-not-able-to-understand-the-struct
+@ipld/car - carReader for large files (Content Addressed Archive),https://stackoverflow.com/questions/72849181/ipld-car-carreader-for-large-files-content-addressed-archive
+"Could not complete Bundlr tx upload successfully, exiting due to: Error: connect ETIMEDOUT 172.3 at TCPConnectWrap.afterConnect [as oncomplete]",https://stackoverflow.com/questions/72845892/could-not-complete-bundlr-tx-upload-successfully-exiting-due-to-error-connect
+check if a given NFT id on a contract is minted or not,https://stackoverflow.com/questions/72844963/check-if-a-given-nft-id-on-a-contract-is-minted-or-not
+"Solana transaction , unknown signer",https://stackoverflow.com/questions/72840130/solana-transaction-unknown-signer
+Create own NFTs only can be sold on own marketplace,https://stackoverflow.com/questions/72836435/create-own-nfts-only-can-be-sold-on-own-marketplace
+i cant transfer my erc 721 to my other wallet using metamask transaction,https://stackoverflow.com/questions/72832127/i-cant-transfer-my-erc-721-to-my-other-wallet-using-metamask-transaction
+Transaction failing while transferring NFT on solana: Error processing Instruction 0: custom program error: 0x1,https://stackoverflow.com/questions/72831975/transaction-failing-while-transferring-nft-on-solana-error-processing-instructi
+"Anchor test transaction failed with ""An account required by the instruction is missing""",https://stackoverflow.com/questions/72823707/anchor-test-transaction-failed-with-an-account-required-by-the-instruction-is-m
+Simple way to concatenate tokenID to tokenURI,https://stackoverflow.com/questions/72812392/simple-way-to-concatenate-tokenid-to-tokenuri
+Can I check the NFTs in a virtual machine wallet in remix?,https://stackoverflow.com/questions/72808629/can-i-check-the-nfts-in-a-virtual-machine-wallet-in-remix
+How to link my IPFS content to ERC721 contract?,https://stackoverflow.com/questions/72805188/how-to-link-my-ipfs-content-to-erc721-contract
+How to change metadata for solana nft collection on phantom wallet for candy machine,https://stackoverflow.com/questions/72800023/how-to-change-metadata-for-solana-nft-collection-on-phantom-wallet-for-candy-mac
+Error when calling web3.sendRawTransaction(signature.serialize()),https://stackoverflow.com/questions/72791740/error-when-calling-web3-sendrawtransactionsignature-serialize
+"ENOENT: no such file or directory, scandir 'smart",https://stackoverflow.com/questions/72775235/enoent-no-such-file-or-directory-scandir-smart
+Setting up a WL wallet based approach with Candy Machine V2,https://stackoverflow.com/questions/72766385/setting-up-a-wl-wallet-based-approach-with-candy-machine-v2
+Are there any ways to update off-chain metadata attributes or property of a solana metaplex nft through api calls?,https://stackoverflow.com/questions/72766083/are-there-any-ways-to-update-off-chain-metadata-attributes-or-property-of-a-sola
+Is frontend better or backend for integration with smart contract (erc721)?,https://stackoverflow.com/questions/72763463/is-frontend-better-or-backend-for-integration-with-smart-contract-erc721
+Metamask-mobile browser not working on server side sessions and exchange the session ids via cookies,https://stackoverflow.com/questions/72755160/metamask-mobile-browser-not-working-on-server-side-sessions-and-exchange-the-ses
+Why are there 2 creators in the metadata in my NFT on Solana?,https://stackoverflow.com/questions/72750586/why-are-there-2-creators-in-the-metadata-in-my-nft-on-solana
+Cannot get Metaplex NFT collection information from metadata,https://stackoverflow.com/questions/72749628/cannot-get-metaplex-nft-collection-information-from-metadata
+how can i add rarity percentage in opensea?,https://stackoverflow.com/questions/72748643/how-can-i-add-rarity-percentage-in-opensea
+NFT Not Showing up properly in Phantom Wallet,https://stackoverflow.com/questions/72747715/nft-not-showing-up-properly-in-phantom-wallet
+Checking that nft is selling on opensea,https://stackoverflow.com/questions/72747376/checking-that-nft-is-selling-on-opensea
+Add image and name to existing WL spl-token,https://stackoverflow.com/questions/72735749/add-image-and-name-to-existing-wl-spl-token
+"LazyMint (NFT, ERC-721), ethers.js signMessage or _signTypedData?",https://stackoverflow.com/questions/72724997/lazymint-nft-erc-721-ethers-js-signmessage-or-signtypeddata
+Getting ABI of both base contract and proxy contract,https://stackoverflow.com/questions/72718809/getting-abi-of-both-base-contract-and-proxy-contract
+Display/render Array contents organized with react or in a Web3UIkit component,https://stackoverflow.com/questions/72717130/display-render-array-contents-organized-with-react-or-in-a-web3uikit-component
+Add NFT to Collection on solana,https://stackoverflow.com/questions/72716507/add-nft-to-collection-on-solana
+Using Ethers estimateGas function with no arguments,https://stackoverflow.com/questions/72711785/using-ethers-estimategas-function-with-no-arguments
+Need help on building a function that creates a new edition nft from a master edition nft,https://stackoverflow.com/questions/72709581/need-help-on-building-a-function-that-creates-a-new-edition-nft-from-a-master-ed
+Why isn't crossmint integration not working?,https://stackoverflow.com/questions/72697694/why-isnt-crossmint-integration-not-working
+Getting error Erc721 : operator Query for non existent token,https://stackoverflow.com/questions/72695638/getting-error-erc721-operator-query-for-non-existent-token
+Passing props into URL in button using Nextjs,https://stackoverflow.com/questions/72693324/passing-props-into-url-in-button-using-nextjs
+Metaplex candy machine 2 unlimited sale,https://stackoverflow.com/questions/72693153/metaplex-candy-machine-2-unlimited-sale
+Submit New Contract to Opensea Not Working,https://stackoverflow.com/questions/72692154/submit-new-contract-to-opensea-not-working
+NFT is not displaying on opensea under goerli testnet [closed],https://stackoverflow.com/questions/72685740/nft-is-not-displaying-on-opensea-under-goerli-testnet
+How to get NFT's transfer history like polygonscan,https://stackoverflow.com/questions/72683092/how-to-get-nfts-transfer-history-like-polygonscan
+Modifying Solana Smart Contract,https://stackoverflow.com/questions/72681485/modifying-solana-smart-contract
+Warning: SPDX license identifier not provided in source file / However already inserted,https://stackoverflow.com/questions/72679367/warning-spdx-license-identifier-not-provided-in-source-file-however-already-i
+Are payable functions susceptible to 'out of gas' errors?,https://stackoverflow.com/questions/72677769/are-payable-functions-susceptible-to-out-of-gas-errors
+Unable to solve solidity error- ParserError: Expected ';' but got 'Number' --> first.sol:2:17: | 2 | Pragma solidity 0.8.7; | ^^^,https://stackoverflow.com/questions/72676707/unable-to-solve-solidity-error-parsererror-expected-but-got-number-f
+".map is not a function react, axios problem",https://stackoverflow.com/questions/72675844/map-is-not-a-function-react-axios-problem
+npm ERR! code 1 *happens when put command npm install*,https://stackoverflow.com/questions/72671174/npm-err-code-1-happens-when-put-command-npm-install
+Store PII information in a secure way in NFT token,https://stackoverflow.com/questions/72660542/store-pii-information-in-a-secure-way-in-nft-token
+'tokenURI' is not defined no-undef,https://stackoverflow.com/questions/72655473/tokenuri-is-not-defined-no-undef
+how to create smart contract for ntf for cronos chain,https://stackoverflow.com/questions/72653017/how-to-create-smart-contract-for-ntf-for-cronos-chain
+ReferenceError: process is not defined while trying mint in web3 in Reactjs [duplicate],https://stackoverflow.com/questions/72649336/referenceerror-process-is-not-defined-while-trying-mint-in-web3-in-reactjs
+Getting OpenSea collections by name,https://stackoverflow.com/questions/72640683/getting-opensea-collections-by-name
+How to create ripple effect using still image and apply it to 10000 of images making them animated gifs programmatically,https://stackoverflow.com/questions/72637525/how-to-create-ripple-effect-using-still-image-and-apply-it-to-10000-of-images-ma
+"Despite using the receive() function, my contract is not receiving payment in Remix",https://stackoverflow.com/questions/72635880/despite-using-the-receive-function-my-contract-is-not-receiving-payment-in-re
+ERC721 Sell/Buy NFT Solidity,https://stackoverflow.com/questions/72634270/erc721-sell-buy-nft-solidity
+How to mint unique NFTs,https://stackoverflow.com/questions/72623946/how-to-mint-unique-nfts
+NFT payment gateway django,https://stackoverflow.com/questions/72622249/nft-payment-gateway-django
+Getting 1020 Error when trying to access Opensea API,https://stackoverflow.com/questions/72620924/getting-1020-error-when-trying-to-access-opensea-api
+Minting NFTs on Hedera returns MAX_NFTS_IN_PRICE_REGIME_HAVE_BEEN_MINTED,https://stackoverflow.com/questions/72616105/minting-nfts-on-hedera-returns-max-nfts-in-price-regime-have-been-minted
+How do i securely sign a Transaction within my Solana Dapp,https://stackoverflow.com/questions/72613920/how-do-i-securely-sign-a-transaction-within-my-solana-dapp
+"Is it possible to connect MetaMask or other wallet, to a Xamarin app?",https://stackoverflow.com/questions/72608180/is-it-possible-to-connect-metamask-or-other-wallet-to-a-xamarin-app
+"Solidity: call a function of NFT contract from Marketplace contract, and only Marketplace has access to call it",https://stackoverflow.com/questions/72601947/solidity-call-a-function-of-nft-contract-from-marketplace-contract-and-only-ma
+Is it safe to Implement a Merkle tree proof getting function on front-end of my website?,https://stackoverflow.com/questions/72596162/is-it-safe-to-implement-a-merkle-tree-proof-getting-function-on-front-end-of-my
+How to list collection first holders?,https://stackoverflow.com/questions/72587268/how-to-list-collection-first-holders
+How to create a new candy machine after testing to test again within project?,https://stackoverflow.com/questions/72584673/how-to-create-a-new-candy-machine-after-testing-to-test-again-within-project
+Invalid contract specified in override list?,https://stackoverflow.com/questions/72582656/invalid-contract-specified-in-override-list
+Update NFT metadata on Opensea is not working for gif to png,https://stackoverflow.com/questions/72582598/update-nft-metadata-on-opensea-is-not-working-for-gif-to-png
+Solana devnet/testnet NFT marketplace,https://stackoverflow.com/questions/72560327/solana-devnet-testnet-nft-marketplace
+Paying gas fees through a particular wallet,https://stackoverflow.com/questions/72555703/paying-gas-fees-through-a-particular-wallet
+Alternatives to mapping in Solidity? or map data with another?,https://stackoverflow.com/questions/72548819/alternatives-to-mapping-in-solidity-or-map-data-with-another
+How do I accept an ERC20 token for Nft mint payment instead of ETH,https://stackoverflow.com/questions/72540628/how-do-i-accept-an-erc20-token-for-nft-mint-payment-instead-of-eth
+Candy Machine V2 Testing on Devnet....reset?,https://stackoverflow.com/questions/72535482/candy-machine-v2-testing-on-devnet-reset
+Convert an hashing function from Solidity to Javascript,https://stackoverflow.com/questions/72533971/convert-an-hashing-function-from-solidity-to-javascript
+Customizing the VanillaJS Crossmint button,https://stackoverflow.com/questions/72530310/customizing-the-vanillajs-crossmint-button
+Get NFT metadata of a whole collection,https://stackoverflow.com/questions/72517482/get-nft-metadata-of-a-whole-collection
+Integrating Flow Blockchain in Flutter,https://stackoverflow.com/questions/72515909/integrating-flow-blockchain-in-flutter
+How to transfer ERC-721 tokens from multiple wallets to a single wallet?,https://stackoverflow.com/questions/72512351/how-to-transfer-erc-721-tokens-from-multiple-wallets-to-a-single-wallet
+How to use Openseas SDK fullfillOrder and Metamask to prompt a user to buy NFTs through your frontend?,https://stackoverflow.com/questions/72511330/how-to-use-openseas-sdk-fullfillorder-and-metamask-to-prompt-a-user-to-buy-nfts
+Getting the transaction hash after sending a method to track the status,https://stackoverflow.com/questions/72509141/getting-the-transaction-hash-after-sending-a-method-to-track-the-status
+How to get NFTs Information by name with web3.js on solana network,https://stackoverflow.com/questions/72500301/how-to-get-nfts-information-by-name-with-web3-js-on-solana-network
+How to store multilingual data for an NFT on Solana with the Metaplex standard?,https://stackoverflow.com/questions/72490106/how-to-store-multilingual-data-for-an-nft-on-solana-with-the-metaplex-standard
+How to get the candy machine ID using a NFT created by the candy machine?,https://stackoverflow.com/questions/72484886/how-to-get-the-candy-machine-id-using-a-nft-created-by-the-candy-machine
+NFT from custom ERC-1155 smart contract not displaying correctly on Etherscan for Goerli test net,https://stackoverflow.com/questions/72483067/nft-from-custom-erc-1155-smart-contract-not-displaying-correctly-on-etherscan-fo
+How to use erc20 custom token on multiple chains?,https://stackoverflow.com/questions/72481938/how-to-use-erc20-custom-token-on-multiple-chains
+How to recognize and interact with contract of other chains?,https://stackoverflow.com/questions/72477241/how-to-recognize-and-interact-with-contract-of-other-chains
+Unable to mint from any wallet on Solana/metaplex candymachine V2 [closed],https://stackoverflow.com/questions/72473992/unable-to-mint-from-any-wallet-on-solana-metaplex-candymachine-v2
+How to find the owner Solana NFT in the past timestamp?,https://stackoverflow.com/questions/72471391/how-to-find-the-owner-solana-nft-in-the-past-timestamp
+I need help on to configure a Wordpress dApp to mint NFT,https://stackoverflow.com/questions/72469617/i-need-help-on-to-configure-a-wordpress-dapp-to-mint-nft
+Candy Machine -v2 error: mint live @ invalid date and undefined claims,https://stackoverflow.com/questions/72469265/candy-machine-v2-error-mint-live-invalid-date-and-undefined-claims
+How I can withdraw the balance deposit in a Participation Auction in Metaplex,https://stackoverflow.com/questions/72464793/how-i-can-withdraw-the-balance-deposit-in-a-participation-auction-in-metaplex
+What are the other NFT standards other then the ERC-721/1155?,https://stackoverflow.com/questions/72457233/what-are-the-other-nft-standards-other-then-the-erc-721-1155
+How to create a CSV File that will look Like This JSON File,https://stackoverflow.com/questions/72456718/how-to-create-a-csv-file-that-will-look-like-this-json-file
+"Solidity openzeppelin public mint ERC721 token function, is any arguments really neccessary? [duplicate]",https://stackoverflow.com/questions/72454466/solidity-openzeppelin-public-mint-erc721-token-function-is-any-arguments-really
+Is it possible to batch mint 10k NFTs in one transaction?,https://stackoverflow.com/questions/72446747/is-it-possible-to-batch-mint-10k-nfts-in-one-transaction
+Candy Machine V2 Whitelist Settings,https://stackoverflow.com/questions/72442180/candy-machine-v2-whitelist-settings
+Is payble keyword neccessary even if I am not taking any ether/matic?,https://stackoverflow.com/questions/72433091/is-payble-keyword-neccessary-even-if-i-am-not-taking-any-ether-matic
+Why NFT marketplace such as OpenSea can get all nft contracts?,https://stackoverflow.com/questions/72429435/why-nft-marketplace-such-as-opensea-can-get-all-nft-contracts
+Error: missing argument: in Contract constructor,https://stackoverflow.com/questions/72427187/error-missing-argument-in-contract-constructor
+Metaplex candymachine whitelist and gatekeeper challenge not compatible,https://stackoverflow.com/questions/72387964/metaplex-candymachine-whitelist-and-gatekeeper-challenge-not-compatible
+split mint money metaplex,https://stackoverflow.com/questions/72382573/split-mint-money-metaplex
+Instant sale feature in Metaplex NFTs?,https://stackoverflow.com/questions/72380759/instant-sale-feature-in-metaplex-nfts
+"On mainnet-beta, signMetadata() returns a program error, whereas it works on devnet",https://stackoverflow.com/questions/72370984/on-mainnet-beta-signmetadata-returns-a-program-error-whereas-it-works-on-dev
+Transfer NFT minted via Metaplex(candy machine),https://stackoverflow.com/questions/72364643/transfer-nft-minted-via-metaplexcandy-machine
+How to generate ERC20 coins into an NFT Marketplace when mint function is not available,https://stackoverflow.com/questions/72357490/how-to-generate-erc20-coins-into-an-nft-marketplace-when-mint-function-is-not-av
+What is the best way to randomize a selection of minted NFTs in Solidity?,https://stackoverflow.com/questions/72351730/what-is-the-best-way-to-randomize-a-selection-of-minted-nfts-in-solidity
+How to mint 3d model (.glb file) with metadata,https://stackoverflow.com/questions/72346899/how-to-mint-3d-model-glb-file-with-metadata
+How to Pass NFT Trait Property Securely To Smart Contract,https://stackoverflow.com/questions/72339602/how-to-pass-nft-trait-property-securely-to-smart-contract
+WalletConnectV1 kotlin JSON_RPC method doesn't show pop up on metamask,https://stackoverflow.com/questions/72334926/walletconnectv1-kotlin-json-rpc-method-doesnt-show-pop-up-on-metamask
+How to add Metaplex/Candymachine function to an existing website? [closed],https://stackoverflow.com/questions/72306737/how-to-add-metaplex-candymachine-function-to-an-existing-website
+"Error: 410 Gone: ""The RPC call or parameters have been disabled.""",https://stackoverflow.com/questions/72302043/error-410-gone-the-rpc-call-or-parameters-have-been-disabled
+is there a way to fix metaplex uploading issue?,https://stackoverflow.com/questions/72299836/is-there-a-way-to-fix-metaplex-uploading-issue
+Error: Missing required argument count for minting. Please provide the argument in the mintParams,https://stackoverflow.com/questions/72294510/error-missing-required-argument-count-for-minting-please-provide-the-argument
+What sort of NFT data is stored on Blockchain and what sort of metadata is stored on database?,https://stackoverflow.com/questions/72291272/what-sort-of-nft-data-is-stored-on-blockchain-and-what-sort-of-metadata-is-store
+how to verification address in solidity,https://stackoverflow.com/questions/72285587/how-to-verification-address-in-solidity
+invalid contract address or ENS name when creating Next.js Web3 OpenSea Clone,https://stackoverflow.com/questions/72262419/invalid-contract-address-or-ens-name-when-creating-next-js-web3-opensea-clone
+How to to prevent anyone from creating an smart contract/ NFT linking to the same URI?,https://stackoverflow.com/questions/72256864/how-to-to-prevent-anyone-from-creating-an-smart-contract-nft-linking-to-the-sam
+Solana NFT Trade Transaction Identification,https://stackoverflow.com/questions/72243599/solana-nft-trade-transaction-identification
+Mint ERC721 token to specific account,https://stackoverflow.com/questions/72234784/mint-erc721-token-to-specific-account
+"Documentation for ""api.sandbox.game"" server exposed APIs",https://stackoverflow.com/questions/72221679/documentation-for-api-sandbox-game-server-exposed-apis
+Using fxrand() for p5 project?,https://stackoverflow.com/questions/72221332/using-fxrand-for-p5-project
+trying to run an generate art configuration in metaplex and it keeps returning this. I have tried changing up just about everything,https://stackoverflow.com/questions/72209802/trying-to-run-an-generate-art-configuration-in-metaplex-and-it-keeps-returning-t
+How to get image data into nft data,https://stackoverflow.com/questions/72209440/how-to-get-image-data-into-nft-data
+Phantom wallet: Solana transactions debug,https://stackoverflow.com/questions/72201770/phantom-wallet-solana-transactions-debug
+"How to mint a smart contract in ""phases""?",https://stackoverflow.com/questions/72193800/how-to-mint-a-smart-contract-in-phases
+Retrieving list of NFT assets using web3 python module,https://stackoverflow.com/questions/72191085/retrieving-list-of-nft-assets-using-web3-python-module
+ERC721 contract deployed with create2 stops working after a particular function is called,https://stackoverflow.com/questions/72190423/erc721-contract-deployed-with-create2-stops-working-after-a-particular-function
+Solana: get NFT supply cap?,https://stackoverflow.com/questions/72168215/solana-get-nft-supply-cap
+Metaplex sign command metadata parameter,https://stackoverflow.com/questions/72164321/metaplex-sign-command-metadata-parameter
+how to swicth to a metamask pop up in chrome with a python selenium script,https://stackoverflow.com/questions/72148176/how-to-swicth-to-a-metamask-pop-up-in-chrome-with-a-python-selenium-script
+Why do sender and minter should be same on minting NFT?,https://stackoverflow.com/questions/72141993/why-do-sender-and-minter-should-be-same-on-minting-nft
+ERC721PresetMinterPauserAutoId tokenURL error,https://stackoverflow.com/questions/72110974/erc721presetminterpauserautoid-tokenurl-error
+NFT transfer with web3 signTransaction(),https://stackoverflow.com/questions/72106223/nft-transfer-with-web3-signtransaction
+Error: VM Exception while processing transaction: reverted with reason string 'ERC721: transfer caller is not owner nor approved',https://stackoverflow.com/questions/72093394/error-vm-exception-while-processing-transaction-reverted-with-reason-string-e
+Why do openSea fetching data from IPFS all of a sudden?,https://stackoverflow.com/questions/72075601/why-do-opensea-fetching-data-from-ipfs-all-of-a-sudden
+How to specify Metaplex NFT collection image in Phantom wallet,https://stackoverflow.com/questions/72071604/how-to-specify-metaplex-nft-collection-image-in-phantom-wallet
+"""Candy Machine v2"" - Solana uploading NFT assets failed - ""Transaction was not confirmed in 60.01 seconds"". Unknown ""Candy Machine PublicKey""",https://stackoverflow.com/questions/72064683/candy-machine-v2-solana-uploading-nft-assets-failed-transaction-was-not-c
+MACOS terminal - SyntaxError: Unexpected token ':' when compiling,https://stackoverflow.com/questions/72061038/macos-terminal-syntaxerror-unexpected-token-when-compiling
+It takes too long to send transaction to the smart contract which is already deployed. (Nethereum + Unity),https://stackoverflow.com/questions/72053763/it-takes-too-long-to-send-transaction-to-the-smart-contract-which-is-already-dep
+Is there possibility to postpone or stop secondary sale on opensea?,https://stackoverflow.com/questions/72043211/is-there-possibility-to-postpone-or-stop-secondary-sale-on-opensea
+I want to display the total amount of NFTs minted for an NFT project on the webpage using .jsx,https://stackoverflow.com/questions/72039394/i-want-to-display-the-total-amount-of-nfts-minted-for-an-nft-project-on-the-webp
+deploy erc721 contracts from a simple or factory contract,https://stackoverflow.com/questions/72036381/deploy-erc721-contracts-from-a-simple-or-factory-contract
+create two nft collections from one smart contract (erc1155) in OpenSea,https://stackoverflow.com/questions/72035695/create-two-nft-collections-from-one-smart-contract-erc1155-in-opensea
+Is it possible to get a metamask private key?,https://stackoverflow.com/questions/72030708/is-it-possible-to-get-a-metamask-private-key
+Why OpenZeppelin's ERC1155 contract is mintable from only owner?,https://stackoverflow.com/questions/72027335/why-openzeppelins-erc1155-contract-is-mintable-from-only-owner
+Why my ERC721 contract in Opensea can't work normally (Without any code of openzeppelin github),https://stackoverflow.com/questions/72017017/why-my-erc721-contract-in-opensea-cant-work-normally-without-any-code-of-openz
+Transaction failed with execution error while sending ether,https://stackoverflow.com/questions/72015057/transaction-failed-with-execution-error-while-sending-ether
+"Problem creating NFT ""erc721"" (name, symbol)",https://stackoverflow.com/questions/72006961/problem-creating-nft-erc721-name-symbol
+How to append fetched image URL to img src,https://stackoverflow.com/questions/72006216/how-to-append-fetched-image-url-to-img-src
+Problem authenticating via the OpenSea JDK,https://stackoverflow.com/questions/72000130/problem-authenticating-via-the-opensea-jdk
+Invalid type for argument in function call. Invalid implicit conversion from address to address payable requested.for msg.sender and adress 0,https://stackoverflow.com/questions/71993838/invalid-type-for-argument-in-function-call-invalid-implicit-conversion-from-add
+can I create a token that would be having an array of multiple tokens?,https://stackoverflow.com/questions/71988522/can-i-create-a-token-that-would-be-having-an-array-of-multiple-tokens
+Mint nft Collection from 0 to 9999,https://stackoverflow.com/questions/71963014/mint-nft-collection-from-0-to-9999
+NFT URI Permanence - Arwaeve - Network Persistence,https://stackoverflow.com/questions/71963011/nft-uri-permanence-arwaeve-network-persistence
+"ERC-721, Setup developer fees on each transfer",https://stackoverflow.com/questions/71962642/erc-721-setup-developer-fees-on-each-transfer
+How to get the last NFT minted on candy machine,https://stackoverflow.com/questions/71961434/how-to-get-the-last-nft-minted-on-candy-machine
+How to get the final value from Chainlink Data feeds in decimals?,https://stackoverflow.com/questions/71956838/how-to-get-the-final-value-from-chainlink-data-feeds-in-decimals
+"Why is my string showing me this error ""Expected pragma, import directive or contract/interface/library/struct/enum definition.""?",https://stackoverflow.com/questions/71947495/why-is-my-string-showing-me-this-error-expected-pragma-import-directive-or-con
+Transferring ERC721 Tokens using Python/Web3.py,https://stackoverflow.com/questions/71943527/transferring-erc721-tokens-using-python-web3-py
+How many NFTs can a smart contract hold,https://stackoverflow.com/questions/71943197/how-many-nfts-can-a-smart-contract-hold
+The Magic Eden API is only giving the symbol in the json response?,https://stackoverflow.com/questions/71926371/the-magic-eden-api-is-only-giving-the-symbol-in-the-json-response
+How do I get my NFT picture to show in Crossmint,https://stackoverflow.com/questions/71921324/how-do-i-get-my-nft-picture-to-show-in-crossmint
+Require user input when minting nft,https://stackoverflow.com/questions/71918840/require-user-input-when-minting-nft
+How to burn erc721 token?,https://stackoverflow.com/questions/71914170/how-to-burn-erc721-token
+"Constructor error, setter not working(Solidity)",https://stackoverflow.com/questions/71908238/constructor-error-setter-not-workingsolidity
+How to get information about an NFT contract using Alchemy web3 SDK?,https://stackoverflow.com/questions/71904576/how-to-get-information-about-an-nft-contract-using-alchemy-web3-sdk
+Solana response state - strange data - BN with 3 lenght,https://stackoverflow.com/questions/71901411/solana-response-state-strange-data-bn-with-3-lenght
+NFT linkage between token and digital product,https://stackoverflow.com/questions/71900267/nft-linkage-between-token-and-digital-product
+Transferring ownership of NFT(ERC721),https://stackoverflow.com/questions/71900260/transferring-ownership-of-nfterc721
+How to fix undeclared identifier even though its present in ERC721Enumerable,https://stackoverflow.com/questions/71899314/how-to-fix-undeclared-identifier-even-though-its-present-in-erc721enumerable
+How does OpenSea work with all the functions?,https://stackoverflow.com/questions/71893926/how-does-opensea-work-with-all-the-functions
+"I wrote a solidity that pays ERC-20 tokens for ERC-721 NFT transaction, but it doesn't work",https://stackoverflow.com/questions/71880843/i-wrote-a-solidity-that-pays-erc-20-tokens-for-erc-721-nft-transaction-but-it-d
+Find number of tokens for sale under a certain price using opensea api,https://stackoverflow.com/questions/71872280/find-number-of-tokens-for-sale-under-a-certain-price-using-opensea-api
+Developing NFT contract and receiveing external transactions,https://stackoverflow.com/questions/71869681/developing-nft-contract-and-receiveing-external-transactions
+When sending ether to another contract it sends it to the contract?,https://stackoverflow.com/questions/71868142/when-sending-ether-to-another-contract-it-sends-it-to-the-contract
+Staking multiple ERC721 NFTs at once,https://stackoverflow.com/questions/71859702/staking-multiple-erc721-nfts-at-once
+Can you easily move an existing NFT project to IPFS?,https://stackoverflow.com/questions/71854358/can-you-easily-move-an-existing-nft-project-to-ipfs
+"How to add ""collection"" field to metadata for Solana NFTs with Visual Studio Code",https://stackoverflow.com/questions/71842850/how-to-add-collection-field-to-metadata-for-solana-nfts-with-visual-studio-cod
+NFT not revealed on opensea mainnent but revealed on testnet,https://stackoverflow.com/questions/71840305/nft-not-revealed-on-opensea-mainnent-but-revealed-on-testnet
+Issue of IPFS url on https,https://stackoverflow.com/questions/71808782/issue-of-ipfs-url-on-https
+how to construct the parameters for wyvern protocol atomicMatch function,https://stackoverflow.com/questions/71795828/how-to-construct-the-parameters-for-wyvern-protocol-atomicmatch-function
+Is it possible to set the banner image on OpenSea through contract metadata?,https://stackoverflow.com/questions/71794376/is-it-possible-to-set-the-banner-image-on-opensea-through-contract-metadata
+"(hashlips_art_engine-1.1.2_patch_v5) The ""path"" argument must be of type string. Received undefined",https://stackoverflow.com/questions/71790267/hashlips-art-engine-1-1-2-patch-v5-the-path-argument-must-be-of-type-string
+How can I implement a lazy-minting smart contract that doesn't actually mint NFTs?,https://stackoverflow.com/questions/71783185/how-can-i-implement-a-lazy-minting-smart-contract-that-doesnt-actually-mint-nft
+How to Mint ERC1155 with my own ERC20 token,https://stackoverflow.com/questions/71774868/how-to-mint-erc1155-with-my-own-erc20-token
+"I tried using interface to get owner address from another NFT smart contract (ERC721), what have I done wrong?",https://stackoverflow.com/questions/71766525/i-tried-using-interface-to-get-owner-address-from-another-nft-smart-contract-er
+Smart contract - dividend cash payment,https://stackoverflow.com/questions/71764792/smart-contract-dividend-cash-payment
+How to handle transaction fees in auctions absed on smartcontracts in blockchain,https://stackoverflow.com/questions/71762551/how-to-handle-transaction-fees-in-auctions-absed-on-smartcontracts-in-blockchain
+Add Royalty to solidity NFT smart contract,https://stackoverflow.com/questions/71757994/add-royalty-to-solidity-nft-smart-contract
+Facing issue with smart contract APIs based on ExpressJS,https://stackoverflow.com/questions/71755125/facing-issue-with-smart-contract-apis-based-on-expressjs
+ERC721A smart contract,https://stackoverflow.com/questions/71754744/erc721a-smart-contract
+Is it considered good practice to use contract functions once when deployed?,https://stackoverflow.com/questions/71752162/is-it-considered-good-practice-to-use-contract-functions-once-when-deployed
+Store data inside an NFT using Solana,https://stackoverflow.com/questions/71751703/store-data-inside-an-nft-using-solana
+How opensea auction smart contract work without storing the ether,https://stackoverflow.com/questions/71747189/how-opensea-auction-smart-contract-work-without-storing-the-ether
+How do I create a List or Array of different data types from C# to be saved to JSON in Unity,https://stackoverflow.com/questions/71740417/how-do-i-create-a-list-or-array-of-different-data-types-from-c-sharp-to-be-saved
+using _hashTypedDataV4 in smart contract and _signTypedData(etherjs) in frontend is not working,https://stackoverflow.com/questions/71732049/using-hashtypeddatav4-in-smart-contract-and-signtypeddataetherjs-in-frontend
+How to remove zeros in tokenID in Solidity?,https://stackoverflow.com/questions/71731951/how-to-remove-zeros-in-tokenid-in-solidity
+Yet another (Probably SUPER IMPLE) Issue Python with Pillow for Image Generation,https://stackoverflow.com/questions/71731505/yet-another-probably-super-imple-issue-python-with-pillow-for-image-generation
+URL is being changed from webpage but no 301 (redirect) status code. How is this possible and how do I capture the new URL,https://stackoverflow.com/questions/71730993/url-is-being-changed-from-webpage-but-no-301-redirect-status-code-how-is-this
+Transfer SPL Token using Rust,https://stackoverflow.com/questions/71730814/transfer-spl-token-using-rust
+Error during minting with code from Opensea guide,https://stackoverflow.com/questions/71726859/error-during-minting-with-code-from-opensea-guide
+"Ethers.js - ""ERC721A: transfer from incorrect owner"" MetaMask Error",https://stackoverflow.com/questions/71719909/ethers-js-erc721a-transfer-from-incorrect-owner-metamask-error
+Definition of base has to precede definition of derived contract (ERC721 implementation),https://stackoverflow.com/questions/71718798/definition-of-base-has-to-precede-definition-of-derived-contract-erc721-impleme
+base64 encoded On-chain NFT not displaying on the Fronted,https://stackoverflow.com/questions/71715140/base64-encoded-on-chain-nft-not-displaying-on-the-fronted
+Moralis API can't find meta data,https://stackoverflow.com/questions/71712098/moralis-api-cant-find-meta-data
+Gas efficiency of totalSupply() vs. a tokenID counter | ERC-721,https://stackoverflow.com/questions/71708142/gas-efficiency-of-totalsupply-vs-a-tokenid-counter-erc-721
+NFT Marketplace cards using ReactJS,https://stackoverflow.com/questions/71702362/nft-marketplace-cards-using-reactjs
+Is there a function to list all SPL Tokens in a Wallet using Rust,https://stackoverflow.com/questions/71693211/is-there-a-function-to-list-all-spl-tokens-in-a-wallet-using-rust
+How can i set 2 max supply's in a ERC721,https://stackoverflow.com/questions/71678110/how-can-i-set-2-max-supplys-in-a-erc721
+Opensea Import smart contract not working for Polygon Testnet Mumbai,https://stackoverflow.com/questions/71676541/opensea-import-smart-contract-not-working-for-polygon-testnet-mumbai
+Easy way to view a list of the tokens owned by a user?,https://stackoverflow.com/questions/71670989/easy-way-to-view-a-list-of-the-tokens-owned-by-a-user
+How to directly interact with already deployed smart contracts?,https://stackoverflow.com/questions/71669119/how-to-directly-interact-with-already-deployed-smart-contracts
+How chainlink VRF be used in dynamic NFT drop rate similar to thetan box in thetan arena game,https://stackoverflow.com/questions/71667126/how-chainlink-vrf-be-used-in-dynamic-nft-drop-rate-similar-to-thetan-box-in-thet
+How to set price for all NFTs in a collection on opensea?,https://stackoverflow.com/questions/71666378/how-to-set-price-for-all-nfts-in-a-collection-on-opensea
+Any idea why images don't display sometimes ? (bot discord scraping python),https://stackoverflow.com/questions/71646654/any-idea-why-images-dont-display-sometimes-bot-discord-scraping-python
+Why am i getting an error on the array length in solidity?,https://stackoverflow.com/questions/71645939/why-am-i-getting-an-error-on-the-array-length-in-solidity
+How TokenURI function was called in opensea,https://stackoverflow.com/questions/71643267/how-tokenuri-function-was-called-in-opensea
+Interact with solana program directly,https://stackoverflow.com/questions/71640223/interact-with-solana-program-directly
+I can't pass through npm run check_txns --dir=minted,https://stackoverflow.com/questions/71635167/i-cant-pass-through-npm-run-check-txns-dir-minted
+Survey form with crypto address autofill,https://stackoverflow.com/questions/71634683/survey-form-with-crypto-address-autofill
+ERC1155 Sell/Buy NFT Solidity,https://stackoverflow.com/questions/71597113/erc1155-sell-buy-nft-solidity
+Gas estimation errored with the following message (see below). The transaction execution will likely fail,https://stackoverflow.com/questions/71582140/gas-estimation-errored-with-the-following-message-see-below-the-transaction-e
+Block OpenSea trading,https://stackoverflow.com/questions/71579675/block-opensea-trading
+Get Current Token Owner for a given NFT Contract,https://stackoverflow.com/questions/71579073/get-current-token-owner-for-a-given-nft-contract
+"I want to mint and transfer 1 erc20(custom) to the minter itself, just to track erc20 transaction",https://stackoverflow.com/questions/71576780/i-want-to-mint-and-transfer-1-erc20custom-to-the-minter-itself-just-to-track
+How to track transaction history in solidity?,https://stackoverflow.com/questions/71574163/how-to-track-transaction-history-in-solidity
+How can I mint a very limited number of NFTs on Kadena blockchain using pact smart contract?,https://stackoverflow.com/questions/71571676/how-can-i-mint-a-very-limited-number-of-nfts-on-kadena-blockchain-using-pact-sma
+I'm creating a smart contract to interact with specific NFTs. Is there a function to filter a specific NFT contract address?,https://stackoverflow.com/questions/71568116/im-creating-a-smart-contract-to-interact-with-specific-nfts-is-there-a-functio
+Not able to purchase the NFT I've created on Rarible (ropsten testnet),https://stackoverflow.com/questions/71566442/not-able-to-purchase-the-nft-ive-created-on-rarible-ropsten-testnet
+error while installing moralis metadata static app on OS Big Sur,https://stackoverflow.com/questions/71560433/error-while-installing-moralis-metadata-static-app-on-os-big-sur
+OpenSea ContractURI,https://stackoverflow.com/questions/71554693/opensea-contracturi
+Compiling an ERC721URIStorage contract,https://stackoverflow.com/questions/71554048/compiling-an-erc721uristorage-contract
+How do I develop an auto-staker for an NFT game with solidity?,https://stackoverflow.com/questions/71552700/how-do-i-develop-an-auto-staker-for-an-nft-game-with-solidity
+How do I get the Price an NFT sold (sells) for via the base NFT contract in solidity?,https://stackoverflow.com/questions/71551952/how-do-i-get-the-price-an-nft-sold-sells-for-via-the-base-nft-contract-in-soli
+does each item in ERC-1155 type is unique?,https://stackoverflow.com/questions/71550423/does-each-item-in-erc-1155-type-is-unique
+Get the info of transactions made by a specific wallet address - ethereum,https://stackoverflow.com/questions/71546646/get-the-info-of-transactions-made-by-a-specific-wallet-address-ethereum
+SetApprovalForAll: not owner nor approved,https://stackoverflow.com/questions/71539232/setapprovalforall-not-owner-nor-approved
+How to decode and parse ERC721 tokenURI in solidity smart contract?,https://stackoverflow.com/questions/71534499/how-to-decode-and-parse-erc721-tokenuri-in-solidity-smart-contract
+Can I connect solidity contract with backend Node.js,https://stackoverflow.com/questions/71515493/can-i-connect-solidity-contract-with-backend-node-js
+Can not set opensea.io royalties on a NFT Contract,https://stackoverflow.com/questions/71513603/can-not-set-opensea-io-royalties-on-a-nft-contract
+How to call _mint() on erc721 without emit Transfer,https://stackoverflow.com/questions/71506308/how-to-call-mint-on-erc721-without-emit-transfer
+"Is it possible to create one NFT one at a time, instead of all at once?",https://stackoverflow.com/questions/71505427/is-it-possible-to-create-one-nft-one-at-a-time-instead-of-all-at-once
+ERC1155 token is not showing in Metamask wallet,https://stackoverflow.com/questions/71493430/erc1155-token-is-not-showing-in-metamask-wallet
+Privilege for a list of addresses,https://stackoverflow.com/questions/71488667/privilege-for-a-list-of-addresses
+The relationship between file and token of NFT is 1-n relationship?,https://stackoverflow.com/questions/71476135/the-relationship-between-file-and-token-of-nft-is-1-n-relationship
+Prevent Smart Contracts to mint outside of the website [closed],https://stackoverflow.com/questions/71474649/prevent-smart-contracts-to-mint-outside-of-the-website
+"""Transaction failed"" When deploying contract with ob rinkeby",https://stackoverflow.com/questions/71474596/transaction-failed-when-deploying-contract-with-ob-rinkeby
+How to transfer (copy) NFTs from Rarible to OpenSea,https://stackoverflow.com/questions/71460877/how-to-transfer-copy-nfts-from-rarible-to-opensea
+CATCH ERROR: NOK: Transaction not found with hash: With codeSTACKr's NFT art generator,https://stackoverflow.com/questions/71435018/catch-error-nok-transaction-not-found-with-hash-with-codestackrs-nft-art-gen
+Migrate my users ERC1155 tokens to ERC721,https://stackoverflow.com/questions/71434503/migrate-my-users-erc1155-tokens-to-erc721
+"resold nfts still show up in inventory, ghost nft",https://stackoverflow.com/questions/71434438/resold-nfts-still-show-up-in-inventory-ghost-nft
+How to mint on OpenSea a collection initially on Rarible,https://stackoverflow.com/questions/71431574/how-to-mint-on-opensea-a-collection-initially-on-rarible
+_mintBach of ERC1155 not working properly on OpenSea integration,https://stackoverflow.com/questions/71420175/mintbach-of-erc1155-not-working-properly-on-opensea-integration
+"what's a better way to handle ""Timed out awaiting confirmation on transaction"" error on Metaplex CMv2?",https://stackoverflow.com/questions/71419088/whats-a-better-way-to-handle-timed-out-awaiting-confirmation-on-transaction-e
+How can I get a list of NFTs that I have minted?,https://stackoverflow.com/questions/71418749/how-can-i-get-a-list-of-nfts-that-i-have-minted
+"Ethereum Donation Function defining by tiers of NFT's (Reactjs, Web3)",https://stackoverflow.com/questions/71409987/ethereum-donation-function-defining-by-tiers-of-nfts-reactjs-web3
+Hardhat Compiling Error (_safeMint 'Undeclared identifier'),https://stackoverflow.com/questions/71407159/hardhat-compiling-error-safemint-undeclared-identifier
+Axie Infinity: query axie id from transaction information?,https://stackoverflow.com/questions/71403007/axie-infinity-query-axie-id-from-transaction-information
+is it possible to move an NFT?,https://stackoverflow.com/questions/71401521/is-it-possible-to-move-an-nft
+OpenSea API returning null when i want to fetch my data,https://stackoverflow.com/questions/71397588/opensea-api-returning-null-when-i-want-to-fetch-my-data
+what should i check first if i want to put metadata and nft image in opensea,https://stackoverflow.com/questions/71394341/what-should-i-check-first-if-i-want-to-put-metadata-and-nft-image-in-opensea
+"I'm going to use Opensea api to bring and show my assets on the web, but I can't",https://stackoverflow.com/questions/71391161/im-going-to-use-opensea-api-to-bring-and-show-my-assets-on-the-web-but-i-cant
+local variable 'Body' referenced before assignment- error being thrown up in code however cannot see the reason as 'Body' is defined,https://stackoverflow.com/questions/71380745/local-variable-body-referenced-before-assignment-error-being-thrown-up-in-cod
+NFT drop marketplace Smart Contract and show collections by type,https://stackoverflow.com/questions/71377725/nft-drop-marketplace-smart-contract-and-show-collections-by-type
+React contract error when click Mint button,https://stackoverflow.com/questions/71374833/react-contract-error-when-click-mint-button
+How to request transfer of NFT using @solana/web3.js,https://stackoverflow.com/questions/71374163/how-to-request-transfer-of-nft-using-solana-web3-js
+"Keep getting ""TSError: ⨯ Unable to compile TypeScript:"" error when trying to run code in CMv2",https://stackoverflow.com/questions/71368581/keep-getting-tserror-%e2%a8%af-unable-to-compile-typescript-error-when-trying-to-run
+Elrond mandos test elrond_wasm_debug::mandos_rs pass however erdpy contract test fail,https://stackoverflow.com/questions/71368221/elrond-mandos-test-elrond-wasm-debugmandos-rs-pass-however-erdpy-contract-test
+Whenever I try to run Chrome using selenium using Python I get this error,https://stackoverflow.com/questions/71367116/whenever-i-try-to-run-chrome-using-selenium-using-python-i-get-this-error
+Get NFTs by CandyMachineId always returning an empty array,https://stackoverflow.com/questions/71366392/get-nfts-by-candymachineid-always-returning-an-empty-array
+How get all the NFTs in a collection in Solana?,https://stackoverflow.com/questions/71359866/how-get-all-the-nfts-in-a-collection-in-solana
+How to Creator Earnings on Opensea (Polygon),https://stackoverflow.com/questions/71355026/how-to-creator-earnings-on-opensea-polygon
+Problem running npm install - newbie here,https://stackoverflow.com/questions/71353070/problem-running-npm-install-newbie-here
+python : image generator from a group in a range,https://stackoverflow.com/questions/71345434/python-image-generator-from-a-group-in-a-range
+ProviderError: transaction underpriced on Mumbai Testnet,https://stackoverflow.com/questions/71343598/providererror-transaction-underpriced-on-mumbai-testnet
+NFT URI hex vs decimal for opensea,https://stackoverflow.com/questions/71341947/nft-uri-hex-vs-decimal-for-opensea
+How to send already minted NFT using alchemy,https://stackoverflow.com/questions/71337704/how-to-send-already-minted-nft-using-alchemy
+NFT List Prices,https://stackoverflow.com/questions/71330857/nft-list-prices
+Is there a way to upload remote files to nft.storage,https://stackoverflow.com/questions/71326595/is-there-a-way-to-upload-remote-files-to-nft-storage
+"After I created my nft contract on rinkeby using remix, when I opened opensea on the testnet version it does not show up",https://stackoverflow.com/questions/71315639/after-i-created-my-nft-contract-on-rinkeby-using-remix-when-i-opened-opensea-on
+unable to upload nfts using metaplex,https://stackoverflow.com/questions/71314370/unable-to-upload-nfts-using-metaplex
+merkletreejs method getHexProof return empty string,https://stackoverflow.com/questions/71314127/merkletreejs-method-gethexproof-return-empty-string
+MerkleTreeJS - Leaf resolve error for whitelist verification,https://stackoverflow.com/questions/71313397/merkletreejs-leaf-resolve-error-for-whitelist-verification
+Creating Basic NFT Viewing App with ThirdWeb SDK,https://stackoverflow.com/questions/71312876/creating-basic-nft-viewing-app-with-thirdweb-sdk
+Metadata converter?,https://stackoverflow.com/questions/71310079/metadata-converter
+"Get historical Floor price, Volume, MCAP, Holders of an NFT collection like Opensea",https://stackoverflow.com/questions/71301047/get-historical-floor-price-volume-mcap-holders-of-an-nft-collection-like-open
+How can I use eth_estimateGas on a mint function when the public sale is closed?,https://stackoverflow.com/questions/71290176/how-can-i-use-eth-estimategas-on-a-mint-function-when-the-public-sale-is-closed
+Connecting to metamask with react and Next.js not working,https://stackoverflow.com/questions/71289450/connecting-to-metamask-with-react-and-next-js-not-working
+Testing NFT contract on polygon,https://stackoverflow.com/questions/71279279/testing-nft-contract-on-polygon
+How to mint multiple NFT token from Metaplex Candy Machine v2?,https://stackoverflow.com/questions/71277433/how-to-mint-multiple-nft-token-from-metaplex-candy-machine-v2
+Web3js : Error when trying to call methods from Angular,https://stackoverflow.com/questions/71267225/web3js-error-when-trying-to-call-methods-from-angular
+How does the contractAddress field work in Moralis when transfering NFTs?,https://stackoverflow.com/questions/71266901/how-does-the-contractaddress-field-work-in-moralis-when-transfering-nfts
+How can I reveal NFTs as they are minted?,https://stackoverflow.com/questions/71256984/how-can-i-reveal-nfts-as-they-are-minted
+set token URI function,https://stackoverflow.com/questions/71254617/set-token-uri-function
+Metadata not loading on Opensea,https://stackoverflow.com/questions/71251200/metadata-not-loading-on-opensea
+Is there any way to get the sale status of an NFT (listed on marketplaces like OpenSea) using their contract address?,https://stackoverflow.com/questions/71244249/is-there-any-way-to-get-the-sale-status-of-an-nft-listed-on-marketplaces-like-o
+How to get a public URL from MFS folder?,https://stackoverflow.com/questions/71234488/how-to-get-a-public-url-from-mfs-folder
+Does Solidity language has namespace?,https://stackoverflow.com/questions/71231369/does-solidity-language-has-namespace
+How to attach price to NFT mint?,https://stackoverflow.com/questions/71213040/how-to-attach-price-to-nft-mint
+error TS1252: Function declarations are not allowed inside blocks in strict mode when targeting 'ES3' or 'ES5'. Stacks.js,https://stackoverflow.com/questions/71210272/error-ts1252-function-declarations-are-not-allowed-inside-blocks-in-strict-mode
+Is it possible to allow general public to mint NFT without being whitelisted?,https://stackoverflow.com/questions/71209733/is-it-possible-to-allow-general-public-to-mint-nft-without-being-whitelisted
+How to get the listed NFT of a collection on OPENSEA,https://stackoverflow.com/questions/71200430/how-to-get-the-listed-nft-of-a-collection-on-opensea
+Estimating gas cost programmatically while minting NFT in web3.js,https://stackoverflow.com/questions/71195907/estimating-gas-cost-programmatically-while-minting-nft-in-web3-js
+insufficient funds for intrinsic transaction cost on test ropsten server,https://stackoverflow.com/questions/71193817/insufficient-funds-for-intrinsic-transaction-cost-on-test-ropsten-server
+Embedding Images into SVG file like Inkscape extensions using Python,https://stackoverflow.com/questions/71185969/embedding-images-into-svg-file-like-inkscape-extensions-using-python
+Unable to do transaction -ERC 721,https://stackoverflow.com/questions/71183722/unable-to-do-transaction-erc-721
+How to connect solana wallet in android?,https://stackoverflow.com/questions/71181886/how-to-connect-solana-wallet-in-android
+Turning bytes into string for concatenation,https://stackoverflow.com/questions/71181719/turning-bytes-into-string-for-concatenation
+Metaplex Candy machine mainnet NFT depoly issue,https://stackoverflow.com/questions/71181344/metaplex-candy-machine-mainnet-nft-depoly-issue
+what does _safeMint() do under the hood?,https://stackoverflow.com/questions/71180839/what-does-safemint-do-under-the-hood
+How am i getting insufficient_funds when Deploying NFT,https://stackoverflow.com/questions/71173363/how-am-i-getting-insufficient-funds-when-deploying-nft
+brownie : File outside of allowed directories,https://stackoverflow.com/questions/71171972/brownie-file-outside-of-allowed-directories
+"How do I fix NFT ""uploading"" error. NOK: Minting limit exceeded on polygon",https://stackoverflow.com/questions/71168797/how-do-i-fix-nft-uploading-error-nok-minting-limit-exceeded-on-polygon
+opensea api issue Access denied,https://stackoverflow.com/questions/71168064/opensea-api-issue-access-denied
+getting error when i deploy the NFT with ETH,https://stackoverflow.com/questions/71159017/getting-error-when-i-deploy-the-nft-with-eth
+Create NFT with self-built smart contract or OpenSea,https://stackoverflow.com/questions/71155155/create-nft-with-self-built-smart-contract-or-opensea
+Link NFT Collection to Opensea,https://stackoverflow.com/questions/71151176/link-nft-collection-to-opensea
+XRPL4J - Error in signing NFTokenMint transaction,https://stackoverflow.com/questions/71149010/xrpl4j-error-in-signing-nftokenmint-transaction
+How i can create more extended levels for NFT?,https://stackoverflow.com/questions/71145002/how-i-can-create-more-extended-levels-for-nft
+Hardhat issue UNPREDICTABLE_GAS_LIMIT in a script within ethereum development of ERC-721,https://stackoverflow.com/questions/71129884/hardhat-issue-unpredictable-gas-limit-in-a-script-within-ethereum-development-of
+Solidity NFT metadata loading issue,https://stackoverflow.com/questions/71121892/solidity-nft-metadata-loading-issue
+Can we transfer nft token with admin access/ transfer access,https://stackoverflow.com/questions/71110375/can-we-transfer-nft-token-with-admin-access-transfer-access
+how to detect wallet change in JS when i connect with Solflare extention,https://stackoverflow.com/questions/71088807/how-to-detect-wallet-change-in-js-when-i-connect-with-solflare-extention
+"This version of µWS is not compatible with your Node.js build: Error: node-loader. while running ""truffle console""",https://stackoverflow.com/questions/71081725/this-version-of-%c2%b5ws-is-not-compatible-with-your-node-js-build-error-node-loade
+ERC1155 NFT transfer using Ethers.js,https://stackoverflow.com/questions/71078115/erc1155-nft-transfer-using-ethers-js
+"My ""Buy"" function in smart contract file keep making error",https://stackoverflow.com/questions/71063058/my-buy-function-in-smart-contract-file-keep-making-error
+How to get list of meaningful name upon fetching minted NFTs list from Alchemy Api?,https://stackoverflow.com/questions/71061787/how-to-get-list-of-meaningful-name-upon-fetching-minted-nfts-list-from-alchemy-a
+Webscraping ranked volume data from opensea stats pages,https://stackoverflow.com/questions/71041537/webscraping-ranked-volume-data-from-opensea-stats-pages
+How to get a contract by a transaction uising web3j?,https://stackoverflow.com/questions/71038751/how-to-get-a-contract-by-a-transaction-uising-web3j
+How to retrieve all addresses with their relevant tokenIds,https://stackoverflow.com/questions/71027923/how-to-retrieve-all-addresses-with-their-relevant-tokenids
+Error while uploading (img+json) pairs on to Solana Devnet,https://stackoverflow.com/questions/71026269/error-while-uploading-imgjson-pairs-on-to-solana-devnet
+How do I get a specific token balance from a user's wallet? Then set state based on that balance to create conditional renders?,https://stackoverflow.com/questions/71024073/how-do-i-get-a-specific-token-balance-from-a-users-wallet-then-set-state-based
+Error in visual studio code whyle trying to upload NFTs to NFTPort,https://stackoverflow.com/questions/71023015/error-in-visual-studio-code-whyle-trying-to-upload-nfts-to-nftport
+"Mint preproduced tokenurl(file size in range 42:50 Kb) , using svg to store full metadata on chain , Erc-721 , polygon (test & main network)",https://stackoverflow.com/questions/71022437/mint-preproduced-tokenurlfile-size-in-range-4250-kb-using-svg-to-store-full
+Duplicated function in mint contract / solidity,https://stackoverflow.com/questions/71021003/duplicated-function-in-mint-contract-solidity
+is two different ERC721 contract can mint same NFT,https://stackoverflow.com/questions/71016977/is-two-different-erc721-contract-can-mint-same-nft
+Etherscan API: get the list of the Non-Fungible Token Transfers with API,https://stackoverflow.com/questions/71015962/etherscan-api-get-the-list-of-the-non-fungible-token-transfers-with-api
+ERC1155 Creating NFT,https://stackoverflow.com/questions/70996012/erc1155-creating-nft
+Smart Contract NFT how to add price by code to whole items in collection?,https://stackoverflow.com/questions/70988214/smart-contract-nft-how-to-add-price-by-code-to-whole-items-in-collection
+Magic Eden recipient adress,https://stackoverflow.com/questions/70984325/magic-eden-recipient-adress
+Bulk Minting NFTs with Hardhat on Polygon Mainnet not working on Testnet it is working fine,https://stackoverflow.com/questions/70975093/bulk-minting-nfts-with-hardhat-on-polygon-mainnet-not-working-on-testnet-it-is-w
+solana-web3.js Invalid param: unrecognized Token program id,https://stackoverflow.com/questions/70966950/solana-web3-js-invalid-param-unrecognized-token-program-id
+nft images not showing on testnets.opensea.io,https://stackoverflow.com/questions/70954913/nft-images-not-showing-on-testnets-opensea-io
+Metaplex V2 CandyMachine failed to mint,https://stackoverflow.com/questions/70953893/metaplex-v2-candymachine-failed-to-mint
+ERC721 Minted NFT not showing on Opensea.io testnet,https://stackoverflow.com/questions/70947724/erc721-minted-nft-not-showing-on-opensea-io-testnet
+"Recurring Error on NFT Art generator script, index.js: DNA Exists",https://stackoverflow.com/questions/70947130/recurring-error-on-nft-art-generator-script-index-js-dna-exists
+can't import module from solidity file to python file in brownie; ImportError: cannot import name 'AdvancedCollectible' from 'brownie',https://stackoverflow.com/questions/70943403/cant-import-module-from-solidity-file-to-python-file-in-brownie-importerror-c
+Best plan of attack for digital certificates for proof of completion on EVM,https://stackoverflow.com/questions/70929408/best-plan-of-attack-for-digital-certificates-for-proof-of-completion-on-evm
+How do add a generatiove IPFS file in HTML,https://stackoverflow.com/questions/70925749/how-do-add-a-generatiove-ipfs-file-in-html
+Solana spl token transfer python,https://stackoverflow.com/questions/70923875/solana-spl-token-transfer-python
+NFT_TRANSFER doesnt transfer token,https://stackoverflow.com/questions/70909621/nft-transfer-doesnt-transfer-token
+How to reward NFT Holders based on some metadata?,https://stackoverflow.com/questions/70908674/how-to-reward-nft-holders-based-on-some-metadata
+Is it possible to tell if a transaction involves an ERC721 token if the only information you have is the transaction address from Ethereum blockchain?,https://stackoverflow.com/questions/70903079/is-it-possible-to-tell-if-a-transaction-involves-an-erc721-token-if-the-only-inf
+Create two different instances of ERC-721 in the same smart contract,https://stackoverflow.com/questions/70901349/create-two-different-instances-of-erc-721-in-the-same-smart-contract
+Exclusive NFT per smart contract in SOLIDITY,https://stackoverflow.com/questions/70897461/exclusive-nft-per-smart-contract-in-solidity
+ERC721 with payable function,https://stackoverflow.com/questions/70891611/erc721-with-payable-function
+How to pass in arguments to a contract's constructor for initializing characters images and attributes,https://stackoverflow.com/questions/70886749/how-to-pass-in-arguments-to-a-contracts-constructor-for-initializing-characters
+How get nft-tokens of a contract which are available in a wallet address by web3,https://stackoverflow.com/questions/70886097/how-get-nft-tokens-of-a-contract-which-are-available-in-a-wallet-address-by-web3
+How to use nft.storage library in Angular 11 project,https://stackoverflow.com/questions/70866529/how-to-use-nft-storage-library-in-angular-11-project
+"How to get URLs of NFT via connecting with Metamask (ethers,web3,truffle,etc)",https://stackoverflow.com/questions/70865022/how-to-get-urls-of-nft-via-connecting-with-metamask-ethers-web3-truffle-etc
+Clarification on NFT digital assett file location,https://stackoverflow.com/questions/70861930/clarification-on-nft-digital-assett-file-location
+How to integrate a MetaMask Wallet into your Website,https://stackoverflow.com/questions/70859619/how-to-integrate-a-metamask-wallet-into-your-website
+Is it safe to use the first 22 characters of a NFT pubkey as a primary key for a DB,https://stackoverflow.com/questions/70849521/is-it-safe-to-use-the-first-22-characters-of-a-nft-pubkey-as-a-primary-key-for-a
+How prevent my user to pay trxn fees through metamask,https://stackoverflow.com/questions/70849388/how-prevent-my-user-to-pay-trxn-fees-through-metamask
+Is it possible to transfer minting authority of a Solana Token to another account using CLI?,https://stackoverflow.com/questions/70840774/is-it-possible-to-transfer-minting-authority-of-a-solana-token-to-another-accoun
+How to check if NFT is in a specific wallet,https://stackoverflow.com/questions/70834541/how-to-check-if-nft-is-in-a-specific-wallet
+Getting an error when trying to install Truffle on Windows Powershell,https://stackoverflow.com/questions/70828351/getting-an-error-when-trying-to-install-truffle-on-windows-powershell
+"Buy NFT from wallet1 which has all minted nft to the user wallet connected with phantom, Javascript, Solana",https://stackoverflow.com/questions/70811644/buy-nft-from-wallet1-which-has-all-minted-nft-to-the-user-wallet-connected-with
+Brownie compile ValueError: Invalid NPM block with OpenZeppelin,https://stackoverflow.com/questions/70807160/brownie-compile-valueerror-invalid-npm-block-with-openzeppelin
+Why is Solidity Vscode Intellisense only working if i explicitly specify an Open Zeppelin contract,https://stackoverflow.com/questions/70798513/why-is-solidity-vscode-intellisense-only-working-if-i-explicitly-specify-an-open
+How to force smart contract to accept ether when deployed on Polygon chain,https://stackoverflow.com/questions/70796942/how-to-force-smart-contract-to-accept-ether-when-deployed-on-polygon-chain
+Is there a way to get all activity since Rarible's launch using their api?,https://stackoverflow.com/questions/70795485/is-there-a-way-to-get-all-activity-since-raribles-launch-using-their-api
+How can I show the images immediately from opensea api when I stake or unstake in NFT staking website with moralis?,https://stackoverflow.com/questions/70779727/how-can-i-show-the-images-immediately-from-opensea-api-when-i-stake-or-unstake-i
+Guarantee a contract can only receive one type of ERC721 nft,https://stackoverflow.com/questions/70775529/guarantee-a-contract-can-only-receive-one-type-of-erc721-nft
+Minting NFTs in Solana. with rent pay per byte is size based on ledger metadata or NFT token size like image that will be sold,https://stackoverflow.com/questions/70772264/minting-nfts-in-solana-with-rent-pay-per-byte-is-size-based-on-ledger-metadata
+Internal JSON-RPC error with MetaMask on Polygon Blockchain. `ERC721: transfer caller is not owner nor approved.`,https://stackoverflow.com/questions/70770785/internal-json-rpc-error-with-metamask-on-polygon-blockchain-erc721-transfer-c
+How do I fix Enoent nft base on windows,https://stackoverflow.com/questions/70763721/how-do-i-fix-enoent-nft-base-on-windows
+Can't randomize an order of files in VS code with node.js,https://stackoverflow.com/questions/70760295/cant-randomize-an-order-of-files-in-vs-code-with-node-js
+Use external packages in eth-brownie?,https://stackoverflow.com/questions/70749072/use-external-packages-in-eth-brownie
+HTTP API to get the image of an nft based on contract and NFT ID?,https://stackoverflow.com/questions/70748096/http-api-to-get-the-image-of-an-nft-based-on-contract-and-nft-id
+Smart Contract on Polygon not showing proper cost?,https://stackoverflow.com/questions/70746090/smart-contract-on-polygon-not-showing-proper-cost
+Lock transfer of erc721 NFT,https://stackoverflow.com/questions/70745661/lock-transfer-of-erc721-nft
+How to transfer NFTs from Solana Wallet programmatically,https://stackoverflow.com/questions/70741947/how-to-transfer-nfts-from-solana-wallet-programmatically
+Meta Mask - burn transaction,https://stackoverflow.com/questions/70736425/meta-mask-burn-transaction
+How to mint NFT in Magic Eden by rpc or web3,https://stackoverflow.com/questions/70721961/how-to-mint-nft-in-magic-eden-by-rpc-or-web3
+"What is the ""mint"" key referring to in Metaplex SDK JS's token burning function parameters?",https://stackoverflow.com/questions/70720648/what-is-the-mint-key-referring-to-in-metaplex-sdk-jss-token-burning-function
+What is the difference between minting NFT's on Solana and Ethereum?,https://stackoverflow.com/questions/70715590/what-is-the-difference-between-minting-nfts-on-solana-and-ethereum
+How Can a Owner Add a Function to Already Deployed Smart Contract,https://stackoverflow.com/questions/70710023/how-can-a-owner-add-a-function-to-already-deployed-smart-contract
+How to mint NFT in Magic Eden by rpc or web3,https://stackoverflow.com/questions/70721961/how-to-mint-nft-in-magic-eden-by-rpc-or-web3
+"What is the ""mint"" key referring to in Metaplex SDK JS's token burning function parameters?",https://stackoverflow.com/questions/70720648/what-is-the-mint-key-referring-to-in-metaplex-sdk-jss-token-burning-function
+What is the difference between minting NFT's on Solana and Ethereum?,https://stackoverflow.com/questions/70715590/what-is-the-difference-between-minting-nfts-on-solana-and-ethereum
+How Can a Owner Add a Function to Already Deployed Smart Contract,https://stackoverflow.com/questions/70710023/how-can-a-owner-add-a-function-to-already-deployed-smart-contract
+Cannot show an image from Pinata IPFS in react,https://stackoverflow.com/questions/70708020/cannot-show-an-image-from-pinata-ipfs-in-react
+Error: Cannot find module './candy-machine-cli.ts',https://stackoverflow.com/questions/70706327/error-cannot-find-module-candy-machine-cli-ts
+"Burning Deployed ERC Tokens In an NFT Mint Function - Compiles, but Transaction Fails",https://stackoverflow.com/questions/70705439/burning-deployed-erc-tokens-in-an-nft-mint-function-compiles-but-transaction
+How to get all CIDs from Pinata IPFS?,https://stackoverflow.com/questions/70704274/how-to-get-all-cids-from-pinata-ipfs
+Creating generative audio mp3 files using Node.js,https://stackoverflow.com/questions/70701755/creating-generative-audio-mp3-files-using-node-js
+"How to include ""Created by X"" information below the name of an OpenSea collection",https://stackoverflow.com/questions/70696764/how-to-include-created-by-x-information-below-the-name-of-an-opensea-collectio
+"DelegateCall for multi transaction for minting, approving and putting on a marketplace of NFT",https://stackoverflow.com/questions/70693335/delegatecall-for-multi-transaction-for-minting-approving-and-putting-on-a-marke
+"What is type (like ""object"") in ERC721 Metadata JSON schema",https://stackoverflow.com/questions/70690913/what-is-type-like-object-in-erc721-metadata-json-schema
+How to display NFTs of Torus wallet?,https://stackoverflow.com/questions/70690702/how-to-display-nfts-of-torus-wallet
+How to register name and log in my solana token on devnet,https://stackoverflow.com/questions/70670584/how-to-register-name-and-log-in-my-solana-token-on-devnet
+"How to include ""Created by..."" information (e.g. on the OpenSea listing) on an NFT that you're minting programatically through a smart contract",https://stackoverflow.com/questions/70669842/how-to-include-created-by-information-e-g-on-the-opensea-listing-on-an-n
+Is it possible to call a ERC20 function inside a ERC721 contract?,https://stackoverflow.com/questions/70666107/is-it-possible-to-call-a-erc20-function-inside-a-erc721-contract
+How to verify polygon smart contract using truffle?,https://stackoverflow.com/questions/70663279/how-to-verify-polygon-smart-contract-using-truffle
+Verify Opensea NFT ownership via API,https://stackoverflow.com/questions/70655143/verify-opensea-nft-ownership-via-api
+How to connect a ERC-721 smart contract with another smart contract,https://stackoverflow.com/questions/70650791/how-to-connect-a-erc-721-smart-contract-with-another-smart-contract
+What should I write in token decimal while importing NFT in Metamask,https://stackoverflow.com/questions/70647188/what-should-i-write-in-token-decimal-while-importing-nft-in-metamask
+node utils\updatebaseUri.js,https://stackoverflow.com/questions/70644430/node-utils-updatebaseuri-js
+Lazy Mint in OpenSea for ERC-1155,https://stackoverflow.com/questions/70639715/lazy-mint-in-opensea-for-erc-1155
+Opensea listing through Opensea-js is not working,https://stackoverflow.com/questions/70633645/opensea-listing-through-opensea-js-is-not-working
+Erc721 Smart Contract deployment pending on Remix,https://stackoverflow.com/questions/70623390/erc721-smart-contract-deployment-pending-on-remix
+exchange own ERC20 token to another token in smart contract for Game,https://stackoverflow.com/questions/70623145/exchange-own-erc20-token-to-another-token-in-smart-contract-for-game
+how to call a ERC20 contract fucntion inside ERC721 contract,https://stackoverflow.com/questions/70618106/how-to-call-a-erc20-contract-fucntion-inside-erc721-contract
+Connecting NFTs to physical products by an NFC tag on the Solana blockchain with Dart / Flutter,https://stackoverflow.com/questions/70615306/connecting-nfts-to-physical-products-by-an-nfc-tag-on-the-solana-blockchain-with
+Security in in-game NFT mint,https://stackoverflow.com/questions/70612616/security-in-in-game-nft-mint
+How to find all NFTs minted from a v2 candy machine,https://stackoverflow.com/questions/70597753/how-to-find-all-nfts-minted-from-a-v2-candy-machine
+Having better controls of NFT royalties on Elrond blockchain? [closed],https://stackoverflow.com/questions/70591216/having-better-controls-of-nft-royalties-on-elrond-blockchain
+"OpenSea SDK - Unable to create sell listing for token from a factory-deployed contract, but no error messages?",https://stackoverflow.com/questions/70581807/opensea-sdk-unable-to-create-sell-listing-for-token-from-a-factory-deployed-co
+MetaMask - RPC Error: Internal JSON-RPC error,https://stackoverflow.com/questions/70580881/metamask-rpc-error-internal-json-rpc-error
+How to extract some data from a json file [closed],https://stackoverflow.com/questions/70556920/how-to-extract-some-data-from-a-json-file
+How to display Metaplex NFT in React using @metaplex/js and programs.metadata.Metadata,https://stackoverflow.com/questions/70547003/how-to-display-metaplex-nft-in-react-using-metaplex-js-and-programs-metadata-me
+"Instead change the require of index.js, to a dynamic import() which is available in all CommonJS modules",https://stackoverflow.com/questions/70541068/instead-change-the-require-of-index-js-to-a-dynamic-import-which-is-available
+Why does event in NFT (ERC721) token gets address(0) as first argument?,https://stackoverflow.com/questions/70488829/why-does-event-in-nft-erc721-token-gets-address0-as-first-argument
+error migrating contract with inheritance using truffle,https://stackoverflow.com/questions/70483592/error-migrating-contract-with-inheritance-using-truffle
+Invalid address or ENS name,https://stackoverflow.com/questions/70481285/invalid-address-or-ens-name
+NFT Marketplaces and Storage [closed],https://stackoverflow.com/questions/70464441/nft-marketplaces-and-storage
+Polygon transaction working directly with Polygonscan and on Mumbai through frontend but not on Mainnet,https://stackoverflow.com/questions/70430703/polygon-transaction-working-directly-with-polygonscan-and-on-mumbai-through-fron
+How to specify a date when the function will be available for calling?,https://stackoverflow.com/questions/70413532/how-to-specify-a-date-when-the-function-will-be-available-for-calling
+Integrate with Ethereum smart contract using other person Signer on server-side (NodeJS),https://stackoverflow.com/questions/70383758/integrate-with-ethereum-smart-contract-using-other-person-signer-on-server-side
+How to remove multiple lines (block of code) in multiple files in JS?,https://stackoverflow.com/questions/70352360/how-to-remove-multiple-lines-block-of-code-in-multiple-files-in-js
+"Meaning of ""Minting an NFT"" and OpenSea.io question",https://stackoverflow.com/questions/70343384/meaning-of-minting-an-nft-and-opensea-io-question
+Using Strings for uint256 not working with ERC721EnumerableUpgradeable,https://stackoverflow.com/questions/70341977/using-strings-for-uint256-not-working-with-erc721enumerableupgradeable
+"Issues running ""yarn build"" while creating Solana NFTs",https://stackoverflow.com/questions/70328530/issues-running-yarn-build-while-creating-solana-nfts
+How do I resolve this Hardhat CompilerError? (Stack too deep when compiling inline assembly),https://stackoverflow.com/questions/70310087/how-do-i-resolve-this-hardhat-compilererror-stack-too-deep-when-compiling-inli
+Bad ATA account,https://stackoverflow.com/questions/70307078/bad-ata-account
+Uploading metadata to IPFS using Pinata API for NFTs,https://stackoverflow.com/questions/70249699/uploading-metadata-to-ipfs-using-pinata-api-for-nfts
+How can I implement chainlink vrf with giving reward to a RANDOM owner of my nft when someone mints it?,https://stackoverflow.com/questions/70246295/how-can-i-implement-chainlink-vrf-with-giving-reward-to-a-random-owner-of-my-nft
+Error: Transaction reverted: function call failed to execute,https://stackoverflow.com/questions/70203931/error-transaction-reverted-function-call-failed-to-execute
+How to random mint a static number of NFT?,https://stackoverflow.com/questions/70189765/how-to-random-mint-a-static-number-of-nft
+How to display NFTs using Nextjs and Solidity,https://stackoverflow.com/questions/70180939/how-to-display-nfts-using-nextjs-and-solidity
+How to check if transaction is NFT using Web3j?,https://stackoverflow.com/questions/70170849/how-to-check-if-transaction-is-nft-using-web3j
+How do gasless fee transactions work on the polygon(matic) network?,https://stackoverflow.com/questions/70157507/how-do-gasless-fee-transactions-work-on-the-polygonmatic-network
+Where is the owner of an nft is stored?,https://stackoverflow.com/questions/70148215/where-is-the-owner-of-an-nft-is-stored
+Solidity throws UnhandledRejections detected after migration is finished,https://stackoverflow.com/questions/70142394/solidity-throws-unhandledrejections-detected-after-migration-is-finished
+How much nfts can be transferd on 1 smart contract?,https://stackoverflow.com/questions/70139722/how-much-nfts-can-be-transferd-on-1-smart-contract
+Cannot read properties of undefined (reading 'candyMachineAddress'),https://stackoverflow.com/questions/70129620/cannot-read-properties-of-undefined-reading-candymachineaddress
+Opensea not generating preview for 3d model glb,https://stackoverflow.com/questions/70124838/opensea-not-generating-preview-for-3d-model-glb
+NFTs minted but dont appear in OpenSea,https://stackoverflow.com/questions/70107337/nfts-minted-but-dont-appear-in-opensea
+Cant resolve ipfs-car/blockstore/memory when importing nft.storage,https://stackoverflow.com/questions/70063600/cant-resolve-ipfs-car-blockstore-memory-when-importing-nft-storage
+How to transfer ETH between IMX users without transferring a token,https://stackoverflow.com/questions/70063092/how-to-transfer-eth-between-imx-users-without-transferring-a-token
+Solidity minting NFT images not in the sequence from first to last one,https://stackoverflow.com/questions/70058239/solidity-minting-nft-images-not-in-the-sequence-from-first-to-last-one
+What are the valid image formats for Solana NFTs?,https://stackoverflow.com/questions/70051899/what-are-the-valid-image-formats-for-solana-nfts
+Solidity - ERC1155 NFT minting - Gas estimation failed: execution reverted,https://stackoverflow.com/questions/70049614/solidity-erc1155-nft-minting-gas-estimation-failed-execution-reverted
+Can I import NFT's metadata into a smart contract?,https://stackoverflow.com/questions/70043796/can-i-import-nfts-metadata-into-a-smart-contract
+How to transfer ERC1155 token using web3js?,https://stackoverflow.com/questions/70036366/how-to-transfer-erc1155-token-using-web3js
+"Solana, how to send a NFT (spl token) to another wallet using javascript/wallets",https://stackoverflow.com/questions/70024541/solana-how-to-send-a-nft-spl-token-to-another-wallet-using-javascript-wallets
+AttributeError: partially initialized module 'cytoolz' has no attribute 'update_signature_registry' (most likely due to a circular import),https://stackoverflow.com/questions/70015779/attributeerror-partially-initialized-module-cytoolz-has-no-attribute-update
+"Error: ENOENT, No such file or directory 'undefined'",https://stackoverflow.com/questions/70014669/error-enoent-no-such-file-or-directory-undefined
+"MekaVerse NFT smart contract is using ECDSA, but I don't understand how it works",https://stackoverflow.com/questions/70005355/mekaverse-nft-smart-contract-is-using-ecdsa-but-i-dont-understand-how-it-works
+Do I need to use approve method in ERC721?,https://stackoverflow.com/questions/70001835/do-i-need-to-use-approve-method-in-erc721
+How to return true if x data exists in JSON or CSV from API on Wordpress website,https://stackoverflow.com/questions/69959312/how-to-return-true-if-x-data-exists-in-json-or-csv-from-api-on-wordpress-website
+Update Metadata of Metaplex NFT,https://stackoverflow.com/questions/69956957/update-metadata-of-metaplex-nft
+Is it possible that sell NFT-Token by ERC20 token which is created by me?,https://stackoverflow.com/questions/69952945/is-it-possible-that-sell-nft-token-by-erc20-token-which-is-created-by-me
+Deployment to Ethereum Ropsten test net fails,https://stackoverflow.com/questions/69951441/deployment-to-ethereum-ropsten-test-net-fails
+How to transfer an ERC721 token across networks,https://stackoverflow.com/questions/69911990/how-to-transfer-an-erc721-token-across-networks
+Dapp react frontend code stop execution after transaction signed by metamask,https://stackoverflow.com/questions/69905546/dapp-react-frontend-code-stop-execution-after-transaction-signed-by-metamask
+NFT smart contract where NFTs keep being added over time. Does every addition necessarily cost gas?,https://stackoverflow.com/questions/69876111/nft-smart-contract-where-nfts-keep-being-added-over-time-does-every-addition-ne
+TypeError: Cannot read properties of undefined (reading 'path'),https://stackoverflow.com/questions/69860302/typeerror-cannot-read-properties-of-undefined-reading-path
+why and when is setApprovalForAll called?,https://stackoverflow.com/questions/69854414/why-and-when-is-setapprovalforall-called
+NFT Collection Ranking through Opensea API,https://stackoverflow.com/questions/69854369/nft-collection-ranking-through-opensea-api
+Unhandled Rejection (TypeError): fs.createReadStream is not a function. Error at the time of image uploading to ipfs( pinata),https://stackoverflow.com/questions/69841275/unhandled-rejection-typeerror-fs-createreadstream-is-not-a-function-error-at
+Resize image downloads for IPFS assets in CloudFlare,https://stackoverflow.com/questions/69812126/resize-image-downloads-for-ipfs-assets-in-cloudflare
+Is using nonReentrant modifier with a payable function causes errors?,https://stackoverflow.com/questions/69783556/is-using-nonreentrant-modifier-with-a-payable-function-causes-errors
+Split money on minting between more than one wallet solana metaplex & candymachine,https://stackoverflow.com/questions/69774365/split-money-on-minting-between-more-than-one-wallet-solana-metaplex-candymachi
+MFT rule which filters packet by ip length,https://stackoverflow.com/questions/69727848/mft-rule-which-filters-packet-by-ip-length
+Call nft_transfer using contract name on NEAR blockchain?,https://stackoverflow.com/questions/69723214/call-nft-transfer-using-contract-name-on-near-blockchain
+Add Meta Data To Solana Token with @solana/web3.js,https://stackoverflow.com/questions/69701491/add-meta-data-to-solana-token-with-solana-web3-js
+Can an NFT have metadata that updates based on smart contract variable values?,https://stackoverflow.com/questions/69625131/can-an-nft-have-metadata-that-updates-based-on-smart-contract-variable-values
+How to set different whitelist price tiers in a ERC-721 contract?,https://stackoverflow.com/questions/69623419/how-to-set-different-whitelist-price-tiers-in-a-erc-721-contract
+NFT: trying to run create_collectibles scripts throws execution reverted error : This is from Patrick Collins Youtube tutorial,https://stackoverflow.com/questions/69607470/nft-trying-to-run-create-collectibles-scripts-throws-execution-reverted-error
+"Transaction complete, but NFT not transferred",https://stackoverflow.com/questions/69580545/transaction-complete-but-nft-not-transferred
+'CERT_HAS_EXPIRED' error when accessing OpenSea API,https://stackoverflow.com/questions/69574668/cert-has-expired-error-when-accessing-opensea-api
+Fetching somehow the owner address of a polygon network NFT in opensea?,https://stackoverflow.com/questions/69573940/fetching-somehow-the-owner-address-of-a-polygon-network-nft-in-opensea
+"How to define name,symbol,uri,decimals for My NFT while using splToken.Token.createMint solana-web3 SDK?",https://stackoverflow.com/questions/69572252/how-to-define-name-symbol-uri-decimals-for-my-nft-while-using-spltoken-token-cre
+Continuously listening to smart contract events,https://stackoverflow.com/questions/69541323/continuously-listening-to-smart-contract-events
+Hardhat compile error with API_URL and Private Key import,https://stackoverflow.com/questions/69525606/hardhat-compile-error-with-api-url-and-private-key-import
+Is there any way to fix hardhat Unable signature,https://stackoverflow.com/questions/69524658/is-there-any-way-to-fix-hardhat-unable-signature
+Hardhat compile error with API_URL and Private Key import,https://stackoverflow.com/questions/69525606/hardhat-compile-error-with-api-url-and-private-key-import
+Is there any way to fix hardhat Unable signature,https://stackoverflow.com/questions/69524658/is-there-any-way-to-fix-hardhat-unable-signature
+Use p5js script for an NFT?,https://stackoverflow.com/questions/69488294/use-p5js-script-for-an-nft
+How can I swap tokens by using Ethereum private network?,https://stackoverflow.com/questions/69482010/how-can-i-swap-tokens-by-using-ethereum-private-network
+how can we use phantom wallet to mint NFT in solana without using minter account,https://stackoverflow.com/questions/69475970/how-can-we-use-phantom-wallet-to-mint-nft-in-solana-without-using-minter-account
+read request to smart contract without ABI,https://stackoverflow.com/questions/69462645/read-request-to-smart-contract-without-abi
+Java Script Random Number Generator Issue,https://stackoverflow.com/questions/69458961/java-script-random-number-generator-issue
+What role does a nonce serve for an NFT issued on Elrond Network?,https://stackoverflow.com/questions/69454497/what-role-does-a-nonce-serve-for-an-nft-issued-on-elrond-network
+"Is it possible to mint an NFT in Solana ""unrevealed"" and then reveal it later on?",https://stackoverflow.com/questions/69432445/is-it-possible-to-mint-an-nft-in-solana-unrevealed-and-then-reveal-it-later-on
+[NodeJS]Get not repeated numbers from a range,https://stackoverflow.com/questions/69417491/nodejsget-not-repeated-numbers-from-a-range
+How to set the Eth price with a transaction with web3js,https://stackoverflow.com/questions/69416142/how-to-set-the-eth-price-with-a-transaction-with-web3js
+ERC-721 Smart contract is minting 2 NFTs at a time,https://stackoverflow.com/questions/69408191/erc-721-smart-contract-is-minting-2-nfts-at-a-time
+Verify user is owner of an NFT via MetaMask connection? Make sure connected users public eth address is the same as of the NFT?,https://stackoverflow.com/questions/69395126/verify-user-is-owner-of-an-nft-via-metamask-connection-make-sure-connected-user
+Find Floor Of Opensea NFT,https://stackoverflow.com/questions/69385475/find-floor-of-opensea-nft
+"Why am I receiving ""creation of NFT errored: Internal JSON-RPC error. { ""code"": -32000, ""message"": ""execution reverted"" }"" in my remix.eth. code?",https://stackoverflow.com/questions/69366331/why-am-i-receiving-creation-of-nft-errored-internal-json-rpc-error-code
+How to execute truffle commands through an API or a code?,https://stackoverflow.com/questions/69355762/how-to-execute-truffle-commands-through-an-api-or-a-code
+"How is a NFT Token ID assigned to an object (e.g., picture, tweet, video, etc.)",https://stackoverflow.com/questions/69339123/how-is-a-nft-token-id-assigned-to-an-object-e-g-picture-tweet-video-etc
+"Storing NFT metadata on IPFS with BaseURI, can I update the JSON dynamically for tokens when they are minted?",https://stackoverflow.com/questions/69333653/storing-nft-metadata-on-ipfs-with-baseuri-can-i-update-the-json-dynamically-for
+Solana Metaplex Candy Machine `tokenMint` metadata is null,https://stackoverflow.com/questions/69331396/solana-metaplex-candy-machine-tokenmint-metadata-is-null
+ERC-721: How to get all token ids?,https://stackoverflow.com/questions/69302924/erc-721-how-to-get-all-token-ids
+ERC721: transfer caller is not owner nor approved,https://stackoverflow.com/questions/69302320/erc721-transfer-caller-is-not-owner-nor-approved
+Programmatic Minting Process,https://stackoverflow.com/questions/69299918/programmatic-minting-process
+DecoderFailure in cardano-cli,https://stackoverflow.com/questions/69274218/decoderfailure-in-cardano-cli
+Buying Orders With Opensea-Js Silently Quitting,https://stackoverflow.com/questions/69262198/buying-orders-with-opensea-js-silently-quitting
+Is it possible to integrate OpenSea SDK into Kotlin Android App?,https://stackoverflow.com/questions/69258552/is-it-possible-to-integrate-opensea-sdk-into-kotlin-android-app
+Polygon transaction working just fine on Mumbai but not on Mainnet,https://stackoverflow.com/questions/69239240/polygon-transaction-working-just-fine-on-mumbai-but-not-on-mainnet
+"Trying to buy NFT on Binance marketplace using Python requests, can't pass recaptcha",https://stackoverflow.com/questions/69214865/trying-to-buy-nft-on-binance-marketplace-using-python-requests-cant-pass-recap
+"ERC721 NFT creating a function to buy/sell NFTs that have been preminted by the contract owner, security question",https://stackoverflow.com/questions/69193720/erc721-nft-creating-a-function-to-buy-sell-nfts-that-have-been-preminted-by-the
+"openSea NFT SDK, how to buy and sell an NFT using the api",https://stackoverflow.com/questions/69191017/opensea-nft-sdk-how-to-buy-and-sell-an-nft-using-the-api
+Using IPFS to mint an NFT the safe way,https://stackoverflow.com/questions/69171562/using-ipfs-to-mint-an-nft-the-safe-way
+Code sample for parsing metadata for Solana NFT and updating the metadata,https://stackoverflow.com/questions/69152527/code-sample-for-parsing-metadata-for-solana-nft-and-updating-the-metadata
+How do I interact with ERC721 smart contracts using Flutter?,https://stackoverflow.com/questions/69152439/how-do-i-interact-with-erc721-smart-contracts-using-flutter
+getting error brownie cannot import AdvancedCollectibles,https://stackoverflow.com/questions/69150555/getting-error-brownie-cannot-import-advancedcollectibles
+Function not running properly in Nodejs,https://stackoverflow.com/questions/69146273/function-not-running-properly-in-nodejs
+hardhat : Issues while deploying a NFT to rinkeby network,https://stackoverflow.com/questions/69145714/hardhat-issues-while-deploying-a-nft-to-rinkeby-network
+Opensea NFT Metadata-API Python,https://stackoverflow.com/questions/69135343/opensea-nft-metadata-api-python
+Brownie Installed but not recognized,https://stackoverflow.com/questions/69127238/brownie-installed-but-not-recognized
+Can I use an existing (deployed) contract on ethereum mainnet instead of deploying myself? (NFT),https://stackoverflow.com/questions/69115417/can-i-use-an-existing-deployed-contract-on-ethereum-mainnet-instead-of-deployi
+Creating a website that allows metamask connection,https://stackoverflow.com/questions/69065272/creating-a-website-that-allows-metamask-connection
+On-Chain NFT: How to store a pixel image on the ethereum blockchain?,https://stackoverflow.com/questions/69064306/on-chain-nft-how-to-store-a-pixel-image-on-the-ethereum-blockchain
+How to export a p5js animation to upload it as a NFT?,https://stackoverflow.com/questions/69062402/how-to-export-a-p5js-animation-to-upload-it-as-a-nft
+File is not showing up in NFT storage on IPFS,https://stackoverflow.com/questions/69051938/file-is-not-showing-up-in-nft-storage-on-ipfs
+About IPFS client add() function,https://stackoverflow.com/questions/69047783/about-ipfs-client-add-function
+How to get over the limit of OpenSea Api?,https://stackoverflow.com/questions/69005840/how-to-get-over-the-limit-of-opensea-api
+How can I test opensea api?,https://stackoverflow.com/questions/68968895/how-can-i-test-opensea-api
+Factory error The called function should be payable,https://stackoverflow.com/questions/68951548/factory-error-the-called-function-should-be-payable
+"I am trying to make an NFT on the cardano blockchain, but I am having trouble generating keys",https://stackoverflow.com/questions/68947676/i-am-trying-to-make-an-nft-on-the-cardano-blockchain-but-i-am-having-trouble-ge
+Is there any way to force to update metadata on Opensea?,https://stackoverflow.com/questions/68935939/is-there-any-way-to-force-to-update-metadata-on-opensea
+"ERC721 - how do I generate nfts from different characteristics (e.g punks, apes...)?",https://stackoverflow.com/questions/68899430/erc721-how-do-i-generate-nfts-from-different-characteristics-e-g-punks-apes
+Rinkeby contracts deployment Error: Timeout,https://stackoverflow.com/questions/68877009/rinkeby-contracts-deployment-error-timeout
+Opensea JS SDK createSellOrder method doesn't seem to work or silent failure,https://stackoverflow.com/questions/68817488/opensea-js-sdk-createsellorder-method-doesnt-seem-to-work-or-silent-failure
+Multiple NFTs from the same source,https://stackoverflow.com/questions/68816228/multiple-nfts-from-the-same-source
+How to check which nft belong to the eth wallet address?,https://stackoverflow.com/questions/68776247/how-to-check-which-nft-belong-to-the-eth-wallet-address
+What happens when multiple call asking for the current counter in solidity gets the same value?,https://stackoverflow.com/questions/68700243/what-happens-when-multiple-call-asking-for-the-current-counter-in-solidity-gets
+How to get all the NFTs of particular smart contract,https://stackoverflow.com/questions/68651167/how-to-get-all-the-nfts-of-particular-smart-contract
+Not able to access ERC721 OpenZeppelin NFTs from separate contract that inherits NFT contract,https://stackoverflow.com/questions/68639104/not-able-to-access-erc721-openzeppelin-nfts-from-separate-contract-that-inherits
+Erorr after truffle compile in Erc721 openzeppelin contract,https://stackoverflow.com/questions/68636650/erorr-after-truffle-compile-in-erc721-openzeppelin-contract
+OpenZeppelin ERC721Full Import,https://stackoverflow.com/questions/68606716/openzeppelin-erc721full-import
+ERC 1155 Token Standard,https://stackoverflow.com/questions/68500811/erc-1155-token-standard
+Unable to deploy NFT in terminal,https://stackoverflow.com/questions/68468072/unable-to-deploy-nft-in-terminal
+Parsing Error when importing OpenZeppelin's ERC721Full.sol Library,https://stackoverflow.com/questions/68382095/parsing-error-when-importing-openzeppelins-erc721full-sol-library
+How to only allow smart contract erc-721 airdrops to be from one address,https://stackoverflow.com/questions/68320225/how-to-only-allow-smart-contract-erc-721-airdrops-to-be-from-one-address
+Nft randomness using baseURI,https://stackoverflow.com/questions/68234546/nft-randomness-using-baseuri
+Accepting ETH as a payment on Binance Smart Chain,https://stackoverflow.com/questions/68207229/accepting-eth-as-a-payment-on-binance-smart-chain
+How do I programmatically generating art variations based on variety of art assets similar to BAYC or other NFT collectibles? [closed],https://stackoverflow.com/questions/68169520/how-do-i-programmatically-generating-art-variations-based-on-variety-of-art-asse
+"Figuring out how to mint NFT with delayed release, metadata not validating on opensea",https://stackoverflow.com/questions/68118203/figuring-out-how-to-mint-nft-with-delayed-release-metadata-not-validating-on-op
+How can I tell if a smart contract on RSK is an NFT?,https://stackoverflow.com/questions/67939427/how-can-i-tell-if-a-smart-contract-on-rsk-is-an-nft
+unnoticeable changes leads to different tokens,https://stackoverflow.com/questions/67751557/unnoticeable-changes-leads-to-different-tokens
+Why does the minting function of ERC721 have an access control?,https://stackoverflow.com/questions/67611716/why-does-the-minting-function-of-erc721-have-an-access-control
+ERC721 Tokens with Metadata and Enumerable with Openzeppelin v4.1.0,https://stackoverflow.com/questions/67543769/erc721-tokens-with-metadata-and-enumerable-with-openzeppelin-v4-1-0
+API gives 406 code with Accept application/json request : Bluehost,https://stackoverflow.com/questions/67394866/api-gives-406-code-with-accept-application-json-request-bluehost
+JMeter HTML Dashboard shows NaN for the total row when Generate Parent Sample is checked in all the transaction controllers,https://stackoverflow.com/questions/67327214/jmeter-html-dashboard-shows-nan-for-the-total-row-when-generate-parent-sample-is
+How to transfer a NFT from one account to another using ERC721?,https://stackoverflow.com/questions/67317392/how-to-transfer-a-nft-from-one-account-to-another-using-erc721
+What happens when you 'create' an item on the OpenSea app?,https://stackoverflow.com/questions/67096529/what-happens-when-you-create-an-item-on-the-opensea-app
+Which information hold an NFT?,https://stackoverflow.com/questions/67018238/which-information-hold-an-nft
+Identifier already declared for Context.sol in Openzeppelin,https://stackoverflow.com/questions/66959912/identifier-already-declared-for-context-sol-in-openzeppelin
+Set price in Solidity contract using ERC-20 token,https://stackoverflow.com/questions/66914639/set-price-in-solidity-contract-using-erc-20-token
+node - How to generate NFT token for a file,https://stackoverflow.com/questions/66843106/node-how-to-generate-nft-token-for-a-file
+Can we track illegal use of our tokenized item using NFT [closed],https://stackoverflow.com/questions/66685344/can-we-track-illegal-use-of-our-tokenized-item-using-nft
+ar.js NFT Marker Generator Confidence rating,https://stackoverflow.com/questions/66525498/ar-js-nft-marker-generator-confidence-rating
+How right to make second input chain in other table nftables?,https://stackoverflow.com/questions/64801304/how-right-to-make-second-input-chain-in-other-table-nftables

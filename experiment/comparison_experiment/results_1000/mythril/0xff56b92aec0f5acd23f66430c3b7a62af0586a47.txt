@@ -1,0 +1,3 @@
+mythril.interfaces.cli [ERROR]: Solc experienced a fatal error.
+
+CompilerError: Stack too deep when compiling inline assembly: Variable length_1 is 1 slot(s) too deep inside the stack.

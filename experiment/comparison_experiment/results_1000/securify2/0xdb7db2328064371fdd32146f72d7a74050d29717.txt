@@ -1,0 +1,22 @@
+pragma directive defines a prior version to 0.8.2. Changing pragma version to 0.8.2....
+Traceback (most recent call last):
+  File "/GPUFS/sysu_zbzheng_1/sujzh3/mythril-develop/venv/bin/securify", line 33, in <module>
+    sys.exit(load_entry_point('securify', 'console_scripts', 'securify')())
+  File "/sec/securify/__main__.py", line 277, in main
+    matches.extend(pattern.find_matches())
+  File "/sec/securify/analyses/patterns/ast/too_many_digits_pattern.py", line 21, in find_matches
+    for literal in ast_root.find_descendants_of_type(ast.Literal):
+  File "/sec/securify/grammar/__init__.py", line 327, in find_descendants_of_type
+    for descendant in self.descendants():
+  File "/sec/securify/grammar/__init__.py", line 313, in descendants
+    yield from ProductionOps.descendants(child)
+  File "/sec/securify/grammar/__init__.py", line 313, in descendants
+    yield from ProductionOps.descendants(child)
+  File "/sec/securify/grammar/__init__.py", line 313, in descendants
+    yield from ProductionOps.descendants(child)
+  [Previous line repeated 1 more time]
+  File "/sec/securify/grammar/__init__.py", line 309, in descendants
+    for child in ProductionOps.children(self):
+  File "/sec/securify/grammar/__init__.py", line 300, in children
+    child = getattr(self, name)
+AttributeError: 'VariableDeclaration' object has no attribute 'value'

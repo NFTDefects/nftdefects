@@ -1,0 +1,186 @@
+﻿time,target,loss,method,link/description
+2022-08-24,PokémonFi,"$ 708,000",Scam,"Pokémon piracy project PokémonFi has RugPull, the project and token first launched in April, the project recently deleted its Twitter account, but its website still exists."
+2022-07-24,Audius,"$ 1,100,000",Contract vulnerabilities,"Web3 music streaming service platform Audius community treasury was hacked, losing 18.5 million AUDIO Tokens. The hackers exchanged the funds for about 705 ETH on Uniswap. Audius officially stated that the problem has been found and is currently being repaired. All Audius smart contracts on Ethereum must be stopped, including tokens. The team believes that there is no further capital risk. Before the repair is completed, token balances, transfers, etc. will be temporarily unavailable. use."
+2022-07-19,Tableland,"
+                        
+                            -
+                        
+                    ",Discord malicious bookmarks,"The permissions of the relevant administrators of the Discord of the Tableland project party were stolen. It is understood that after joining an external Discord server, Tableland members clicked the verification steps of a bot named ""Dyno"" and clicked a bookmark button with malicious javascript, and were then prompted to interact with the bookmark, triggering the malicious script to run. The attacker got hold of the admin account and posted a link on the announcement channel containing a fake website, anyone who clicked on the link and followed the wallet instructions would grant the attacker access to any NFTs held in their account."
+2022-07-17,PREMINT,280 ETH,Malicious JS Attack,"The NFT access list tool PREMINT issued an alert through its official Twitter, because some users reminded that the tool's website was hacked, and the collections of NFT collectors have been stolen. Subsequently, the blockchain security company SlowMist confirmed that the PREMINT website was attacked by hackers. Hackers carried out phishing attacks by implanting malicious JS (JavaScript) files in the website, deceiving users to sign the transaction of ""set approvals for all"", thereby stealing users. of NFT assets. The attack lost about 280 ETH in total, amounting to $381,818, making it one of the biggest NFT hacks of the year."
+2022-07-12,Citizen Finance,"$ 94,300",Private key leak,"Multi-chain NFT protocol Citizen Finance claims to have been attacked by an outside party that gained access to the private keys of BNB and the Polygon chain. The attackers used their access to transfer 244 BNB (~$55,000), 57,637 MATIC (~$32,300), and 7,000 USDC, for a total of about $94,300."
+2022-07-10,Omni X,"1,300 ETH",Reentry attack,"Decentralized NFT financialization protocol Omni X has been attacked and stolen funds have been transferred to Tornado.cash. The main reason for this attack is that the burn function will call the callback function externally to cause the reentrancy problem, and the liquidation function uses the old vars value for judgment, resulting in the user's status identification even after reentrancy and then borrowing. Being set as unborrowed results in no repayments."
+2022-07-01,Quixotic,"220,000 OP",The buyer's purchase order is not checked,"Quiuixotic, the largest NFT platform in the Optimism ecosystem, has a serious vulnerability, and a large number of user assets have been stolen. Users who have traded on this market should cancel their authorization as soon as possible. According to SlowMist analysis, only the sell order is checked in the fillSellOrder function of the market contract, and the buyer's buy order is not checked. Therefore, the attacker first creates an arbitrary NFT contract, calls the fillSellOrder function to generate a sell order, and passes the buyer parameter as the victim's address and the paymentERC20 parameter as the token address to be stolen, then the user who is authorized to the market contract can be transferred. Tokens are transferred for profit."
+2022-06-30,Quint,"$ 130,000",Bonus update bug,"Metaverse project Quint was hacked and lost $130,000. The root cause of the attack is that when the reStake function executes the reStake reward reStake, the reward amount of the LP token is not updated, so that the attacker can claim the issued reward multiple times."
+2022-06-26,XCarnival,"1,620 ETH",Contract vulnerabilities,"The NFT liquidity solver XCarnival was attacked, the hacker made a profit of 3,087 ETH (about 3.8 million US dollars), and the hacker has returned 1,467 ETH after the negotiation. The core of this vulnerability is that when borrowing, there is no judgment on whether the NFT in the order has been withdrawn."
+2022-06-19,LACOSTE,"
+                        
+                            -
+                        
+                    ",Discord server hacked,"Clothing brand LACOSTE's Discord was hacked, and scammers posted phishing links on the announcement channel. Recently, the Discords of several projects have been attacked, including Clyde, Good Skellas, Duppies, Oak Paradise, Tasties, Yuko Clan, Mono Apes, ApeX Club, Anata, GREED, CITADEL, DegenIslands, Sphynx Underground Society, FUD Bois, and Uncanny Club etc."
+2022-06-14,KnownOrigin,"
+                        
+                            -
+                        
+                    ",Discord server hacked,"KnownOrigin officially tweeted that its discord had been attacked, and reminded users not to click on any links. Other servers hacked in recent days include those of Curiosity, Meta Hunters, Parallel, Goat Society, RFTP and Gooniez."
+2022-06-04,BAYC&Otherside,145 ETH,Discord admin account hacked,"Discord servers for Yuga Lab projects Bored Ape Yacht Club (BAYC) and Otherside appear to have been affected by phishing attacks. The attackers allegedly stole more than 145 ethereum ($256,000) worth of tokens. It appears that the community administrator's account was compromised, which gave attackers access to the administrator account on the server. They then went on to post a link to a phishing site that encouraged users to link their wallets to access ""exclusive giveaways."" Subsequently, the NFT project BAYC stated on its official Twitter that its Discord server was briefly attacked today, and the team quickly resolved the problem, but some NFTs were still affected."
+2022-06-04,Homeless Friends,"
+                        
+                            -
+                        
+                    ",Discord server hacked,"The Discord of Homeless Friends NFT was attacked, homelessfriends[.]net is a phishing website."
+2022-06-02,Animoon,"$ 6,300,000",Scam,"The work of Animoon with 9999 NFTs is taken from Pokémon. They claim to have signed a non-disclosure agreement (NDA) with Pokémon partner TopDeck. But with no evidence of an actual P2E game being developed, the Animoon team disappeared, deleting their Twitter account and website."
+2022-05-28,Pokemoney,"$ 3,500,000",Scam,"A Rug Pull occurred in the NFT metaverse game project Pokemoney on BNBChian, its Token PMY has dropped by 99.98%%, and about 11,800 BNB (about 3.5 million US dollars) have been withdrawn and transferred."
+2022-05-20,Llamascape,30-40 ETH,Discord server hacked,"The project behind the Llamaverse, the Llamascape NFT series, was hacked. Hackers targeted their Discord server and scammers took around 30-40 ETH."
+2022-05-18,Axie Infinity,"
+                        
+                            -
+                        
+                    ",Discord server hacked,Axie Infinity says the Mee6 bot on its main server was hacked. Hackers use Mee6 bot to add permissions to fake Jiho account to post fake announcements about mint. MEE6 is a Discord bot that allows admins to automatically assign and remove roles and send messages. The fake announcement has now been removed.
+2022-05-18,Lazy Lions,"
+                        
+                            -
+                        
+                    ",Discord server hacked,"Discord for NFT series Lazy Lions was hacked. Notably, this attack appears to infiltrate many other large NFT projects throughout the day, seemingly due to MEE6 staff being able to use MEE6 remotely to give themselves roles in any server."
+2022-05-18,Alien Frens,"
+                        
+                            -
+                        
+                    ",Discord server hacked,NFT project Alien Frens tweeted that Discord had been attacked. Users are asked not to click on any MINT links.
+2022-05-17,天穹,"
+                        
+                            -
+                        
+                    ",Fake balance,"There was an abnormality on the Tianqiong Digital Collection platform. The price of its collections on the secondary market skyrocketed thousands of times, and collections with a price of nearly 10 million yuan were sold in seconds. The Tianqiongshuzang announcement stated that the platform was maliciously attacked by hackers and used false balances to purchase and steal player collections."
+2022-05-10,ownlyio,115 BNB,unstake function vulnerability,"The ownlyio project's NFTStaking contract was attacked, with a total of 115 BNB stolen and a loss of about $36,418. The reason for this attack is that the unstake function of the pledge contract of the ownio project does not check the user's claim status, so the attacker can use the unstake function to receive the own tokens in the contract infinitely, thereby extracting all the own tokens in the pledge contract, and finally the attacker The acquired owned tokens are exchanged for 115 BNB through the pair transaction."
+2022-05-07,Fury of the Fur,"$ 300,000",Scam,"The Fury of the Fur NFT project was a collection of 3D models that sort of resembled bears. However, the NFT rollout has not been smooth - out of a total supply of 9,671 NFTs, less than 2,800 NFTs have been minted. The project attempted to relaunch but failed to generate more interest, so the creators decided to pull it out — while preserving funding, of course. The project founders have left a long message to the community that they will close the project."
+2022-05-06,Day of Defeat,"$ 1,350,000",Scam,"Day of Defeat has rug pull, value has suddenly dropped by over 96%, and over $1.35 million in assets has been moved from BSC-based projects to external wallets. After the funds ran out, the project claimed they had been hacked by outside actors and had “reported to Binance and local authorities.”"
+2022-05-06,OpenSea,"
+                        
+                            -
+                        
+                    ",Discord server hacked,"Sentinel founder Serpent tweeted that OpenSea's official Discord was attacked. Hackers used bot accounts to post fake links in the channel, and said that ""OpenSea has reached a cooperation with YouTube. Click the link to participate in the mint pass NFT limited to 100 pieces."" Users should be aware of the risks and do not click on links provided by hackers."
+2022-05-01,Metaplex,"
+                        
+                            -
+                        
+                    ",Program crawler,"Solana-based NFT team at Metaplex, a web application and deployment platform, discontinued the program section today, Solana shows the program deployment of its program section, when further stabilized, the Solana team will be used to deploy a bot to use it for Deploy a bot. When attempting to complete a test transaction, 0.01 SOL will be charged for labor. The collected penalty funds will be provided to the configuration account of the Candy Machine instance."
+2022-04-25,BAYC,"
+                        
+                            -
+                        
+                    ",Official Instagram Hacked,"The official Instagram of the NFT project Bored Ape Yacht Club (BAYC) was hacked, and the attackers have stolen 91 NFTs including 4 BAYC, 7 MAYC, 3 BAKC, 1 CloneX, etc."
+2022-04-23,Akutars,"11,539.5 ETH",Code bug,"The Akutars (@AkuDreams) project auction contract was permanently unable to withdraw 11,539.5 ETH due to multiple code flaws. According to SlowMist analysis, even if the problem of users' inability to refund is solved, due to the inconsistency between the number of bidders and the number of auctions and the defects of the project party's withdrawal function, Akutars funds will eventually be permanently locked."
+2022-04-17,Ugly People,"
+                        
+                            -
+                        
+                    ",Discord server hacked,"The Discord of NFT project Ugly People has been hacked, and attackers are spreading fake mint links."
+2022-04-16,FaceDAO,"
+                        
+                            -
+                        
+                    ",Phishing attack,"According to official sources, a large amount of FACE tokens were dumped on-chain, and the investigation turned out that one of the FACE tokens held by the team was transferred and sold by an unauthorized account."
+2022-04-16,Metaconz,11.9 ETH,Discord server hacked,"The developer of Klaytn-based NFT project Metaconz tweeted that a malicious bot was installed on the administrator account of Metaconz’s Discord overseas team on Saturday, causing 79 users to lose 11.9 ETH (about $36,000), the team said. It promised to compensate all losses, and 53 users have so far been compensated. In addition, the developer reminded that if the user executes the setApprovalForAll function in Etherscan, please transfer the wallet unconditionally. Therefore, in this attack, the hacker used this function to deprive the victim of the wallet permission."
+2022-04-01,Multiple NFT projects,"
+                        
+                            -
+                        
+                    ",Discord server hacked,"According to the official news of each project, the Discord of NFT projects whose servers are currently under attack include BAYC, Doodles, Nyoki, Shamanz, Zooverse, Dreadfuls, Freaky Labs, and Kaijukingz. In addition, the source code of the verification robot Captcha has been leaked, and the private message tool Ticket tool has been attacked."
+2022-03-28,Cryptovoxel,"
+                        
+                            -
+                        
+                    ",Phishing attack,"According to reports, someone pretended to be a Cryptovoxels official to conduct a phishing attack, induced users to authorize, stole multiple NFTs (including Cryptovoxels Parcel Token, Art Blocks: BLOCKS Token, Mutant Ape Yacht Club: MAYC Token, etc.), and then sold them on opensea. It is reported that anonymous attackers used a vulnerability in the Discord bot to manage to direct community users to phishing sites on the official Cryptovoxels Discord channel. The attacker's address is: 0x794ca38bc1e15e528a7991ce25707a25ad71b675."
+2022-03-25,Maison Ghost,"
+                        
+                            -
+                        
+                    ",Discord server hacked,"Maison Ghost Discord was hacked, and about 265 NFTs were transferred to hacker wallets, including Sandbox and 3landers NFTs."
+2022-03-23,MekaVerse,"
+                        
+                            -
+                        
+                    ",Discord server hacked,"NFT project MekaVerse tweeted that the official Discord was hacked. In addition, according to other users in the community, the wallets of hundreds of thousands of bots are suspected to have been stolen, and it seems that no humans have been affected."
+2022-03-23,VEVE,"
+                        
+                            -
+                        
+                    ",Unknown,"The NFT project VEVE officially tweeted that the system was exploited, resulting in a large number of gems being illegally obtained."
+2022-03-22,REALSWAK,1330 BNB,Scam,"The NFT project REALSWAK has a Rug Pull, and its official social account (@REALSWAK) has been cancelled. Scammers have transferred 1,300 BNB to the TornadoCash mixer."
+2022-03-17,APE,"$ 500,000",Airdrop Mechanism Vulnerability,"According to a report by Twitter user Will Sheehan, the arbitrage bot took out more than 6w APE Coins (worth $8 each) through flash loans. After analysis, it was found that this was related to a loophole in the airdrop mechanism of APE Coin. Specifically, whether APE Coin can be airdropped depends on whether a user holds the instantaneous state of BYAC NFT, and this instantaneous state attacker can manipulate by borrowing a flash loan and then redeeming to obtain BYAC NFT. The attacker first borrows BYAC Token through flash loan, and then redeems to obtain BYAC NFT. Then use these NFTs to claim the airdropped APE, and finally use the BYAC NFT mint to obtain BYAC Token to return the flash loan."
+2022-03-14,NFTflow,92 ETH,Scam,"Several NFT players posted on social media that a project called ""NFTflow"" had a Rug Pull, ran away without completing the pre-sale, and transferred the 92 ETHs from the sale to the Tornado mixer. According to the official website, NFTflow calls itself ""a platform for creating liquid markets for illiquid NFTs on StarkNet""."
+2022-03-09,Pirate X,212 BNB,Private key leak,"The pledge contract (0x6912B19401913F1bd5020b3f59EE986c5792DA54) of the NFT adventure game Pirate X was attacked. When users deposit their PXP tokens into this contract, their tokens will be transferred to an EOA account (0x3b74a9cb5f1399b4a5a02559e67da37d450067b7). When the user withdraws the tokens, the contract will call ""Transferfrom"" to transfer these funds back. The attackers put these tokens on the market and made a profit of about 212 BNB."
+2022-03-03,TreasureDAO,"
+                        
+                            -
+                        
+                    ",Parameter validity check is not performed,"The Arbitrum-based TreasureDAO NFT trading market was exposed and discovered a vulnerability. According to SlowMist analysis, the core of this vulnerability lies in the lack of judgment that the incoming _quantity parameter is not 0 before the ERC-721 standard NFT transfer, resulting in ERC -721 Standard NFT can be transferred directly and the cost of purchasing NFT is calculated as 0 when calculating the price. Hours after it was stolen, developers confirmed that hackers had begun returning stolen “Smol Brains” and other NFTs."
+2022-02-20,OpenSea,"$ 3,400,000",Phishing attack,"According to OpenSea's official tweet, hackers sent phishing emails to all users' mailboxes at the same time as the OpenSea contract was upgraded. Many users mistakenly thought it was an official email and authorized the wallet, which resulted in the wallet being stolen. OpenSea co-founder and CEO Devin Finzer confirmed the phishing attack in a tweet."
+2022-02-17,TopGoal,"TMT4,809,984.00",Stolen hot wallet,"Hot wallets operated by TopGoal were attacked and compromised. In this hack, only the hot wallet operated by TopGoal, which manages the distribution of TopPrize rewards, was affected. All user assets including NFTs and TMTs are safe. The hackers transferred a total of 4,809,984 TMT from the TopGoal-operated hot wallet to the address 0x7F0D082D08874A57110c73a8853967e7C19D1a6e. The hackers then exchanged all those TMTs from PancakeSwap for over 2,600 BNB and used Tornado to transfer the BNB out of the address."
+2022-02-10,Dego Finance,"$ 10,000,000",Key compromise,"Dego Finance, an NFT and DeFi aggregator, announced that it was hacked, and now the DEGO liquidity on UniSwap and PancakeSwap has been exhausted."
+2022-02-02,The Heart Project,"
+                        
+                            -
+                        
+                    ",Discord server hacked,"The official Discord server of the NFT project The Heart Project was hacked. Scammers deleted most of The Heart Project's Discord channels and posted scam links. According to The Heart Project, some users clicked on fraudulent links and said they lost assets. The Heart Project says it will reimburse users for lost ether."
+2022-01-26,Mercenary,"$ 760,000",Scam,"The social media accounts of NFT project Mercenary have been deleted. Deployers spent over $760,000."
+2022-01-25,OpenSea,347 ETH,Listing mechanism loopholes,An OpenSea user exploited a vulnerability in the non-fungible token (NFT) market to steal hundreds of ether (ETH) from the owners of well-known collectibles such as the Bored Ape Yacht Club (BAYC) and Cyber​​ Kongs of several items. The vulnerability appears to be related to the listing mechanism exploited by the platform and allows users to earn around 347 ETH by purchasing some NFTs at the previous listing price on different markets.
+2022-01-24,Blockverse,"1,294 ETH",Scam,"Blockverse is a Minecraft-based NFT game. Through OpenSea, investors can buy Blockverse characters and a cryptocurrency called $Diamond. Unfortunately, investors withdrew all real money invested in Blockverse, shutting down and deleting the project’s official website, Discord, and Twitter. After three days of silence, the Blockverse founders resurfaced on Twitter, apologizing and explaining their actions. More than three weeks later, the Blockverse team's promise to ""get back on track"" has not materialized. The Blockverse Twitter account has not been updated further, its website remains offline, and the Medium account hosting the Blockverse white paper has disappeared."
+2022-01-17,Crypto Burger,"$ 770,000",Contract vulnerabilities,"There is a vulnerability in the Crypto Burger project, an NFT project on the BSC chain. ""The attacker discovered a vulnerability related to the $BURG token contract, which managed to burn most of the tokens in the liquidity pool, while immediately liquidating the tokens it had previously acquired, from liquidity,"" the project said in a statement. $770,000 was stolen from the pool.”"
+2022-01-13,Frosties,"$ 1,000,000",Scam,"The creator of the NFT project Frosties absconded with the money, causing investors to lose more than $1 million. According to available information, there are 8,888 NFTs in the series with a floor price of 0.04 ETH, roughly over $120. Within an hour, all NFTs were sold, but instead of getting their assets, investors found out that the project developers closed all communication with community members. Etherscan data shows that developers have moved most of the funds from the OpenSea account to another wallet."
+2022-01-11,LooksRare,"
+                        
+                            -
+                        
+                    ",DDos attack,"NFT marketplace LooksRare suffered a DDoS attack hours after its launch, resulting in a brief offline. Some users reported that they could not connect their wallets and list their NFTs. The LooksRare team quickly restored the site."
+2022-01-10,Lympo,"$ 18,700,000",Hot Wallet Security Vulnerability,"Sports NFT platform Lympo suffered a hot wallet security breach, losing 165.2 million LMT tokens worth $18.7 million in the hack. Ten different project wallets were compromised in the attack. Quotes show that the LMT price plummeted 92% to $0.0093 after hackers moved and sold the loot in the project’s hot wallet."
+2022-01-06,Bored Bunny,"2,000 ETH",Scam,"NFT project Bored Bunny is suspected of being a Rug Pull project. Some netizens said that 2,000 ETH raised have been transferred out, and some of them have been transferred to Binan. In addition, this address had similar behavior 1-2 months ago, associated with 2 NFT items that almost went to zero. Currently Bored Bunny's Discord has turned off all people all channels to speak."
+2021-12-23,Monkey Kindom,"$ 1,300,000",Discord server hacked,"The NFT project Monkey Kindom stated that hackers stole $1.3 million in SOL from the community through a security breach in discord. The hacker first attacked Grape, the solution to authenticate users on Solana, and took advantage of the vulnerability to take over an administrative account that posted a phishing link in the announcement channel of Monkey Kindom discord."
+2021-12-21,Fractal,"$ 150,000",Discord server hacked,"A Discord server run by Fractal in the recently launched game NFT market was hacked. The hacker defrauded 373 members of 800 Solana cryptocurrencies worth US$150,000. The startup said in its announcement that it will compensate the victims in full."
+2021-12-21,Fractal,"$ 600,000",Discord server hacked,"The Discord server run by Fractal, a gaming NFT marketplace, was hacked, a fake Discord bot disguised as an official posted a fake minting link in Fractal's ""#announcements"" channel, and nearly 3,500 people fell victim to it, losing nearly 600,000 Dollar. In its announcement, the company said it would fully compensate victims of the hack."
+2021-12-13,Vulcan Forged,"$ 102,820,974",Private key leak,"Chain game project Vulcan Forged officially tweeted that 148 wallets holding PYR were hacked, and more than 4.5 million PYR had been stolen. It then stated: Most of the PYR has been returned from the treasury to the affected wallets."
+2021-11-19,Phantom Galaxies,265 ETH,Discord server hacked,"According to blockchain game developer Animoca Brands, on November 19, hackers successfully accessed the Discord account of the science fiction NFT game Phantom Galaxies and took over its server. The hacker subsequently issued a fraudulent statement claiming that the game was launching an NFT minting activity. The hacker directs the user to a website, charges the user 0.1 ETH, and then sends the funds to the hacker's Ethereum address. A total of 265 sent
+ ETH, about 1.1 million US dollars. Animoca Brands pointed out that there is no evidence that smart contracts have been breached, and no funds have been stolen from the game or its developers or publishers."
+2021-11-07,Farmers World,"$ 15,700,000","The game ""plug-in"" script changed the user's pledge address","According to reports, a currency stolen event occurred in Farmers World, a farm-type game on the WAX ​​chain, and the amount may exceed 100 million yuan. Some players have found that the game shows ""Insufficient RAM"" prompts, which cannot be solved even after adding WAXP. According to the official Discord discussion information: Neither the project smart contract nor the WAX ​​wallet has vulnerabilities, but the address where the user pledged WAXP is not the official address of the game. It may be that the game ""plug-in"" script changed the user pledge address, causing the user to be unable to obtain RAM resources."
+2021-10-13,OpenSea,"
+                        
+                            -
+                        
+                    ",XSS,"According to news, the security research company discovered that there is a serious security vulnerability in OpenSea in the NFT market, which may cause hackers to steal the user's entire encrypted wallet. Then OpenSea responded that a repair was implemented within one hour of discovering the problem, and other measures will be taken to strengthen community safety education."
+2021-10-06,Evolved Apes,798 ETH,Scam,"The official Twitter account and website of the NFT project Evolved Apes, the project developer ""Evil Ape"" disappeared last week, and took away 798 ETH worth US$2.7 million."
+2021-10-01,POAP,"
+                        
+                            -
+                        
+                    ",Minting system was attacked,"POAP, the proof of attendance badge protocol, stated that its minting system was hacked on September 29, and several POAPs of XCOPY and Polygonal Mind were fraudulently issued and sold. At the request of the artist, POAP has burned down the relevant NFT."
+2021-10-01,Iconics,"$ 140,000",Scam,"Iconics, an NFT project on Solana, was accused of being a “Rug pull.” The 17-year-old artist behind Iconics made about $140,000 before disappearing. The project developers also deleted Iconics’ Twitter account and disabled Discord channel chat."
+2021-09-10,OpenSea,"$ 100,000",System vulnerabilities,"A vulnerability in NFT marketplace OpenSea resulted in at least 42 NFTs being sent to a burn address, worth at least $100,000. The issue was first raised by Nick Johnson, lead developer of the Ethereum Name Service (ENS), who noted that when he transferred an ENS domain name (in the form of an NFT), it was transferred to a burn address. This means it was accidentally sent to an uncontrolled address and can no longer be moved. Regarding the destroyed ENS domain name, Johnson said it was the first registered ENS domain name, called rilxxlir.eth, which was held by an ENS account when Johnson registered it with personal funds. In order to transfer the ENS domain name to his own account, he went to OpenSea to perform the transfer, only to find that it had been sent to a destruction address by mistake. Since Johnson is still the controller of the ENS domain name, he can still make changes, just cannot move the domain name. Johnson then received further reports from others who were similarly affected and compiled a list of 32 affected transactions involving 42 NFTs. Most NFTs use the ERC-721 standard, but a few use ERC-1155. He looked at the floor price of each NFT, which totaled about $100,000. Johnson claims that OpenSea has now fixed the vulnerability."
+2021-09-04,Banksy,"$ 5,000",Scam,"A user claimed on Twitter that he had mistakenly entered an NFT auction scam and was taken away by an art website worth 336,000 US dollars of Ethereum. However, the development of the story is somewhat unexpected, because the other party returned 100 ETH in full. In this scam, the victim reported that he inquired about the NFT auction on Monday from a certain population on Discord, and then he thought he was lucky enough to win the bid for the first NFT on the website and paid 100 ETH (about 336,000 US dollars) for this. ). However, according to a BBC report on Tuesday, a hacker exploited a security hole in the artist Banksy's website and set up a web page (banksy.co.uk/NFT) to sell so-called non-fungible tokens (NFT). In the end, although the hacker returned the money, the user still lost $5,000 in transaction fees."
+2021-07-13,Axie Infinity,"
+                        
+                            -
+                        
+                    ",DDos attack,The NFT project Axie Infinity tweeted that its market platform was attacked by DDoS and that someone was sending spam to its server in an attempt to make it unusable. Officials say the funds are currently safe.
+2022-04-23,Akutar,$34 M,ether locked,https://blocksecteam.medium.com/how-akutar-nft-loses-34m-usd-60d6cb053dff
+2022-04-25,BAYC,$3 M,phishing,https://twitter.com/Romudeth/status/1519013109972754440
+2022-04-15,Rariable,500000,phishing,https://twitter.com/ionCube24/status/1518862985820786688
+2022-04-21,NBA,,signature verification,https://blocksecteam.medium.com/how-to-verify-a-signature-in-a-wrong-way-the-associationnft-case-5a913e9b8a1d
+2022-04-21,,25000,fat finger error,https://twitter.com/SENDYOURNFT/status/1516953754607624192
+2022-04-01,,,discord bot hack,https://twitter.com/BlockSecAlert/status/1509792482351271941
+2022-03-27,Revest,1e18 Rena tokens,ERC interface reentrancy,https://twitter.com/BlockSecTeam/status/1509544742723649537
+2022-03-03,Treasure DAO,returned,free NFT,https://twitter.com/BlockSecTeam/status/1499321063372898304
+2022-04-23,NBA,$34 M,signature verification,https://twitter.com/BlockSecTeam/status/1517769222365270017
+2022-03-22,DeFiance Capital Founder,$1.7 M,phishing scam,https://twitter.com/DefibankFunds/status/1517970682629398529
+2022-03-18,BYC,$270K,flash loan,https://twitter.com/BlockSecTeam/status/1504488061459398658
+2022-02-03,HyperBears,,ERC interface reentrancy,https://blocksecteam.medium.com/when-safemint-becomes-unsafe-lessons-from-the-hypebears-security-incident-2965209bda2a
+2022-02-18,x2y2,,delegate & upgradeable,https://tldr.tech/crypto/newsletter/2022-02-17
+2022-01-28,Sandbox,remmediated,public burn,https://slowmist.medium.com/the-vulnerability-behind-the-sandbox-land-migration-2abf68933170
+2022-01-17,CryptoBurger,$770K,public burn,https://twitter.com/CertiKCommunity/status/1482930661547782148
+2022-04-27,BAYC,,unlimited mint,https://mirror.xyz/ninjak.eth/_buBOQflWtHDpLbg18Fp8zLe8AmLiPka2y-UhppK_u0
+2022-01-17,CryptoBurger,,ERC interface reentrancy,https://medium.com/@cryptoburgernft/a-tough-day-for-crypto-burgers-b371da577c8b
+2022-03-07,The idols,,ERC interface reentrancy,https://docs.google.com/document/d/1FfeF-epgBUwZBhdwMQ_rtvVjLtQ8f09pukSmZZ-GsI8/edit
+2022-07-10,OMNI,"1,300ETH",ERC interface reentrancy,https://www.tehparadox.net/cryptocurrency-news/2761829-nft-protocol-omni-suffers-reentrancy-attack-loses-1-300-eth-in-testing-funds.html
+2022-02-03,OpenSea Wyvern,,proxy,https://twitter.com/0xQuit/status/1488908463669350400
+,Hashmasks,,ERC interface reentrancy,https://samczsun.com/the-dangers-of-surprising-code/
+,ENS ,,ERC interface reentrancy,https://samczsun.com/the-dangers-of-surprising-code/
+,SupDuck,,ERC interface reentrancy,https://learnblockchain.cn/article/2939

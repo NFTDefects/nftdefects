@@ -1,0 +1,33 @@
+pragma directive defines a prior version to 0.8.4. Changing pragma version to 0.8.4....
+Traceback (most recent call last):
+  File "/GPUFS/sysu_zbzheng_1/sujzh3/mythril-develop/venv/bin/securify", line 33, in <module>
+    sys.exit(load_entry_point('securify', 'console_scripts', 'securify')())
+  File "/sec/securify/__main__.py", line 277, in main
+    matches.extend(pattern.find_matches())
+  File "/sec/securify/analyses/patterns/ast/default_constructor_pattern.py", line 17, in find_matches
+    ast_root = self.get_ast_root()
+  File "/sec/securify/analyses/patterns/ast/abstract_ast_pattern.py", line 27, in get_ast_root
+    ast_root = DictTransformer(Grammar.from_modules(ast), implicit_terminals=True).transform(ast_root)
+  File "/sec/securify/grammar/transformer.py", line 53, in transform
+    tree = self.transform_element(element)
+  File "/sec/securify/grammar/transformer.py", line 65, in transform_element
+    return self.__transform_dict(element)
+  File "/sec/securify/grammar/transformer.py", line 123, in __transform_dict
+    setattr(node, attribute_name, self.transform_element(value))
+  File "/sec/securify/grammar/transformer.py", line 89, in transform_element
+    tmp = self.transform_element(e)
+  File "/sec/securify/grammar/transformer.py", line 65, in transform_element
+    return self.__transform_dict(element)
+  File "/sec/securify/grammar/transformer.py", line 123, in __transform_dict
+    setattr(node, attribute_name, self.transform_element(value))
+  File "/sec/securify/grammar/transformer.py", line 89, in transform_element
+    tmp = self.transform_element(e)
+  File "/sec/securify/grammar/transformer.py", line 65, in transform_element
+    return self.__transform_dict(element)
+  File "/sec/securify/grammar/transformer.py", line 123, in __transform_dict
+    setattr(node, attribute_name, self.transform_element(value))
+  File "/sec/securify/grammar/transformer.py", line 65, in transform_element
+    return self.__transform_dict(element)
+  File "/sec/securify/grammar/transformer.py", line 104, in __transform_dict
+    raise GrammarError(f"Symbol '{symbol_name}' not found in grammar.")
+securify.grammar.GrammarError: Symbol 'IdentifierPath' not found in grammar.

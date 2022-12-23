@@ -1,0 +1,3 @@
+[INFO] | 2022-08-04 04:15:14 AM | analyzer.c093a77e457229bd6db4febeec611b20 | Analysis started at: 2022-08-04 04:15:14 AM
+[INFO] | 2022-08-04 04:15:16 AM | analyzer.c093a77e457229bd6db4febeec611b20 | Version constraints: ['^0.8.0', '^0.8.0', '^0.8.0', '^0.8.0', '^0.8.0', '^0.8.0', '^0.8.0', '^0.8.0', '^0.8.0', '^0.8.0', '^0.8.0', '^0.8.0', '^0.8.0', '^0.8.0', '^0.8.0']
+[INFO] | 2022-08-04 04:15:16 AM | analyzer.c093a77e457229bd6db4febeec611b20 | solc version: v0.8.0

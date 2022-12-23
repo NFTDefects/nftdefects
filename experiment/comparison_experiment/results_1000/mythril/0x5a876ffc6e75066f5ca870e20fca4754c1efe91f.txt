@@ -1,0 +1,7 @@
+mythril.interfaces.cli [ERROR]: Solc experienced a fatal error.
+
+ParserError: Expected pragma, import directive or contract/interface/library/struct/enum/constant/function definition.
+    --> /tmp/d5b74bd7ac2f929e6e087429cdcab9f2.sol:1771:1:
+     |
+1771 | {
+     | ^
