@@ -1,14 +1,14 @@
 import re
 
 
-class Vulnerability:
+class Defect:
     def __init__(self, source_map, pcs):
         self.source_map = source_map
         self.pcs = self._rm_general_false_positives(pcs)
         if source_map:
             self.warnings = self._warnings()
 
-    def is_vulnerable(self):
+    def is_defective(self):
         return bool(self.pcs)
 
     def get_warnings(self):
@@ -72,80 +72,31 @@ class Vulnerability:
         return s.lstrip('\n')
 
 
-class AssertionFailure(Vulnerability):
-    def __init__(self, source_map, assertions):
-        self.source_map = source_map
-        self.assertions = self._reduce_pcs_having_the_same_pos(assertions)
-        self.name = ' '.join(re.findall('[A-Z][a-z]+', self.__class__.__name__))
-        if self.name == 'AssertionFailure' and not source_map:
-            raise Exception("source_map attribute can't be None")
-        self.warnings = self._warnings()
-
-    def is_vulnerable(self):
-        return bool(self.assertions)
-
-    def _reduce_pcs_having_the_same_pos(self, assertions):
-        d = {}
-        for asrt in assertions:
-            pos = str(self.source_map.instr_positions[asrt.pc])
-            if pos not in d:
-                d[pos] = asrt
-        return d.values()
-
-    def _warnings(self):
-        warnings = []
-        for asrt in self.assertions:
-            source_code = self.source_map.get_buggy_line(asrt.pc)
-            s = Vulnerability._warning_content(self, asrt.pc, source_code)
-
-            model = ''
-            for variable in asrt.model.decls():
-                var_name = str(variable)
-                if len(var_name.split('-')) > 2:
-                    var_name = var_name.split('-')[2]
-                if self.source_map.get_parameter_or_state_var(var_name):
-                    model += '\n    ' + var_name + ' = ' + str(asrt.model[variable])
-            if model:
-                model = "\n%s occurs if:%s" % (self.name, model)
-                s += model
-            if s:
-                warnings.append(s)
-        return warnings
-
-
-class IntegerUnderflow(AssertionFailure):
-    pass
-
-
-class IntegerOverflow(AssertionFailure):
-    pass
-
-
-class ViolationDefect(Vulnerability):
+class ViolationDefect(Defect):
     def __init__(self, source_map, pcs):
         self.name = 'ERC721 Standard Violation Defect'
-        Vulnerability.__init__(self, source_map, pcs)
+        Defect.__init__(self, source_map, pcs)
 
 
-class ReentrancyDefect(Vulnerability):
+class ReentrancyDefect(Defect):
     def __init__(self, source_map, pcs):
         self.name = 'ERC721 Reentrancy Defect'
-        Vulnerability.__init__(self, source_map, pcs)
+        Defect.__init__(self, source_map, pcs)
 
 
-class RiskyProxyDefect(Vulnerability):
+class RiskyProxyDefect(Defect):
     def __init__(self, source_map, pcs):
-        self.name = 'Risky Proxy Defect'
-        Vulnerability.__init__(self, source_map, pcs)
+        self.name = 'Risky Mutable Proxy Defect'
+        Defect.__init__(self, source_map, pcs)
 
 
-class UnlimitedMintingDefect(Vulnerability):
+class UnlimitedMintingDefect(Defect):
     def __init__(self, source_map, pcs):
         self.name = 'Unlimited Minting Defect'
-        Vulnerability.__init__(self, source_map, pcs)
+        Defect.__init__(self, source_map, pcs)
 
 
-class PublicBurnDefect(Vulnerability):
+class PublicBurnDefect(Defect):
     def __init__(self, source_map, pcs):
         self.name = 'Public Burn Defect'
-        Vulnerability.__init__(self, source_map, pcs)
+        Defect.__init__(self, source_map, pcs)

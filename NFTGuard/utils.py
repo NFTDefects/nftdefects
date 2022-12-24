@@ -1,6 +1,3 @@
-# return true if the two paths have different flows of money
-# later on we may want to return more meaningful output: e.g. if the concurrency changes
-# the amount of money or the recipient.
 import csv
 import difflib
 import json
@@ -253,19 +250,6 @@ def get_contract_stats(list_of_contracts):
                 value, txs = get_contract_info(contract_addr)
                 fp.writerow([contract_addr, contract.split()[1], contract.split()[2],
                              value, txs, contract.split()[3:]])
-
-
-def get_time_dependant_contracts(list_of_contracts):
-    with open("time.csv", "w") as stats_file:
-        fp = csv.writer(stats_file, delimiter=',')
-        fp.writerow(["Contract address", "Balance", "No. of TXs", "Note"])
-        with open(list_of_contracts, "r") as f:
-            for contract in f.readlines():
-                if len(contract.strip()) == 0:
-                    continue
-                contract_addr = contract.split(".")[0].split("_")[1]
-                txs, value = get_contract_info(contract_addr)
-                fp.writerow([contract_addr, value, txs])
 
 
 def get_distinct_contracts(list_of_contracts="concurr.csv"):

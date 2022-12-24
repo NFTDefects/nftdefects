@@ -1,7 +1,7 @@
 import logging
 
 import global_params
-from opcodes import *
+from evm.opcodes import *
 from utils import *
 
 HASH_TO_HEX = 353073666
@@ -10,6 +10,7 @@ BOOL_ACTIVE = "ACTIVE"
 BOOL_START = "START"
 
 log = logging.getLogger(__name__)
+
 
 # THIS IS TO DEFINE A SKELETON FOR ANALYSIS
 # FOR NEW TYPE OF ANALYSIS: add necessary details to the skeleton functions
@@ -167,7 +168,7 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
         stored_address = stack[0]
         stored_value = stack[1]
 
-        # *Risky Proxy DEFECT
+        # *Risky Mutable Proxy DEFECT
         if g_src_map:
             if stored_address in global_params.PROXY_INDEX and current_func_name:
                 if BOOL_ACTIVE not in current_func_name.upper() and BOOL_START not in current_func_name.upper() and "SETPROXY" in current_func_name.upper():
@@ -176,15 +177,6 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
                     solver.add([global_state["Ia"][stored_address] != stored_value])
                     if solver.check() == sat:
                         global_problematic_pcs["proxy_defect"].append(global_state['pc'])
-
-        # *AllowedContract DEFECT
-        # Simple method to judge
-        if stored_address in global_params.ALLOW_INDEX and current_func_name:
-            solver = Solver()
-            solver.set("timeout", global_params.TIMEOUT)
-            solver.add([global_state["Ia"][stored_address] != stored_value])
-            if solver.check() == sat:
-                global_problematic_pcs["brave_troops_defect"].append(global_state['pc'])
 
         if global_state["mint"]["hash"] == stored_address:
             vars = get_vars(stored_value)

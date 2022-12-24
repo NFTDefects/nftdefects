@@ -7,9 +7,6 @@ PRINT_MODE = 0
 # enable log file to print all exception
 DEBUG_MODE = 0
 
-# check false positive in concurrency
-CHECK_CONCURRENCY_FP = 0
-
 # Timeout for z3 in ms
 TIMEOUT = 3000
 
@@ -26,33 +23,19 @@ GLOBAL_TIMEOUT_TEST = 2
 # print path conditions
 PRINT_PATHS = 0
 
-# WEB = 1 means that we are using Oyente for web service
-WEB = 0
-
 # Redirect results to a json file.
 STORE_RESULT = 1
 
 # depth limit for DFS
-DEPTH_LIMIT = 100
+DEPTH_LIMIT = 500
 
-GAS_LIMIT = 8000000
+GAS_LIMIT = 400000000
 
-LOOP_LIMIT = 50
-
-# Use a public blockchain to speed up the symbolic execution
-USE_GLOBAL_BLOCKCHAIN = 0
-
-USE_GLOBAL_STORAGE = 0
-
-# Take state data from state.json to speed up the symbolic execution
-INPUT_STATE = 0
-
-# Check assertions
-CHECK_ASSERTIONS = 0
+LOOP_LIMIT = 200
 
 GENERATE_TEST_CASES = 0
 
-# Run Oyente in parallel
+# Run NFTGuard in parallel
 PARALLEL = 0
 
 # Iterable of targeted smart contract names
@@ -64,8 +47,6 @@ OWNER_INDEX = None
 APPROVAL_INDEX = None
 SUPPLY_INDEX = None
 PROXY_INDEX = None
-UNDERSCORE_INDEX = None
-ALLOW_INDEX = None
 
 # output json elements
 START = None

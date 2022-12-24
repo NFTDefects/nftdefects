@@ -1,56 +1,30 @@
-import json
 import logging
 import os
 import re
-import shlex
 import subprocess
 
 import six
 from crytic_compile import CryticCompile, InvalidCompilation
 
 import global_params
-from source_map import SourceMap
+from input.source_map import SourceMap
 
 
 class InputHelper:
     BYTECODE = 0
     SOLIDITY = 1
-    STANDARD_JSON = 2
-    STANDARD_JSON_OUTPUT = 3
 
     def __init__(self, input_type, **kwargs):
         self.input_type = input_type
         self.target = global_params.SOURCE
 
-        if input_type == InputHelper.BYTECODE:
-            attr_defaults = {
-                'source': None,
-                'evm': False,
-            }
-        elif input_type == InputHelper.SOLIDITY:
+        if input_type == InputHelper.SOLIDITY:
             attr_defaults = {
                 'source': None,
                 'evm': False,
                 'root_path': "",
                 'compiled_contracts': [],
                 'compilation_err': False,
-                'remap': "",
-                'allow_paths': ""
-            }
-        elif input_type == InputHelper.STANDARD_JSON:
-            attr_defaults = {
-                'source': None,
-                'evm': False,
-                'root_path': "",
-                'allow_paths': None,
-                'compiled_contracts': []
-            }
-        elif input_type == InputHelper.STANDARD_JSON_OUTPUT:
-            attr_defaults = {
-                'source': None,
-                'evm': False,
-                'root_path': "",
-                'compiled_contracts': [],
             }
 
         for (attr, default) in six.iteritems(attr_defaults):
@@ -81,10 +55,8 @@ class InputHelper:
                     continue
                 c_source = re.sub(self.root_path, "", c_source)
                 if self.input_type == InputHelper.SOLIDITY:
-                    source_map = SourceMap(contract, self.source, 'solidity', self.root_path, self.remap,
-                                           self.allow_paths)
-                else:
-                    source_map = SourceMap(contract, self.source, 'standard json', self.root_path)
+                    source_map = SourceMap(contract, self.source, 'solidity')
+
                 disasm_file = self._get_temporary_files(contract)['disasm']
                 inputs.append({
                     'contract': contract,
@@ -109,10 +81,6 @@ class InputHelper:
         if not self.compiled_contracts:
             if self.input_type == InputHelper.SOLIDITY:
                 self.compiled_contracts = self._compile_solidity()
-            elif self.input_type == InputHelper.STANDARD_JSON:
-                self.compiled_contracts = self._compile_standard_json()
-            elif self.input_type == InputHelper.STANDARD_JSON_OUTPUT:
-                self.compiled_contracts = self._compile_standard_json_output(self.source)
 
         return self.compiled_contracts
 
@@ -135,8 +103,6 @@ class InputHelper:
     def _compile_solidity(self):
         try:
             options = []
-            if self.allow_paths:
-                options.append(F"--allow-paths {self.allow_paths}")
             print("Compiling solidity...")
 
             com = CryticCompile(self.target)
@@ -147,40 +113,11 @@ class InputHelper:
         except InvalidCompilation as err:
             if not self.compilation_err:
                 logging.critical("Solidity compilation failed. Please use -ce flag to see the detail.")
-                if global_params.WEB:
-                    six.print_({"error": "Solidity compilation failed."})
             else:
                 logging.critical("solc output:\n" + self.source)
                 logging.critical(err)
                 logging.critical("Solidity compilation failed.")
-                if global_params.WEB:
-                    six.print_({"error": err})
             exit(1)
-
-    def _compile_standard_json(self):
-        FNULL = open(os.devnull, 'w')
-        cmd = "cat %s" % self.source
-        p1 = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE, stderr=FNULL)
-        cmd = "solc --allow-paths %s --standard-json" % self.allow_paths
-        p2 = subprocess.Popen(shlex.split(cmd), stdin=p1.stdout, stdout=subprocess.PIPE, stderr=FNULL)
-        p1.stdout.close()
-        out = p2.communicate()[0]
-        with open('standard_json_output', 'w') as of:
-            of.write(out)
-
-        return self._compile_standard_json_output('standard_json_output')
-
-    def _compile_standard_json_output(self, json_output_file):
-        with open(json_output_file, 'r') as f:
-            out = f.read()
-        j = json.loads(out)
-        contracts = []
-        for source in j['sources']:
-            for contract in j['contracts'][source]:
-                cname = source + ":" + contract
-                evm = j['contracts'][source][contract]['evm']['deployedBytecode']['object']
-                contracts.append((cname, evm))
-        return contracts
 
     def _removeSwarmHash(self, evm):
         evm_without_hash = re.sub(r"a165627a7a72305820\S{64}0029$", "", evm)
@@ -191,9 +128,7 @@ class InputHelper:
         for idx, lib in enumerate(libs):
             lib_address = "0x" + hex(idx + 1)[2:].zfill(40)
             options.append("--libraries %s:%s" % (lib, lib_address))
-        if self.allow_paths:
-            options.append(F"--allow-paths {self.allow_paths}")
-        com = CryticCompile(target=self.source, solc_args=' '.join(options), solc_remaps=self.remap)
+        com = CryticCompile(target=self.source, solc_args=' '.join(options))
 
         return self._extract_bin_obj(com)
 
@@ -234,8 +169,6 @@ class InputHelper:
             of.write(disasm_out)
 
     def _rm_tmp_files_of_multiple_contracts(self, contracts):
-        if self.input_type in ['standard_json', 'standard_json_output']:
-            self._rm_file('standard_json_output')
         for contract, _ in contracts:
             self._rm_tmp_files(contract)
 

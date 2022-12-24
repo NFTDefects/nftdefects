@@ -1,33 +1,20 @@
 import json
 
-from ast_walker import AstWalker
+from input.ast_walker import AstWalker
 from utils import run_command
 
 
 class AstHelper:
-    def __init__(self, filename, input_type, remap, allow_paths=""):
+    def __init__(self, filename, input_type):
         self.input_type = input_type
-        self.allow_paths = allow_paths
         if input_type == "solidity":
-            self.remap = remap
             self.source_list = self.get_source_list(filename)
-        elif input_type == "standard json":
-            self.source_list = self.get_source_list_standard_json(filename)
         else:
             raise Exception("There is no such type of input")
         self.contracts = self.extract_contract_definitions(self.source_list)
 
-    def get_source_list_standard_json(self, filename):
-        with open('standard_json_output', 'r') as f:
-            out = f.read()
-        out = json.loads(out)
-        return out["sources"]
-
     def get_source_list(self, filename):
-        if self.allow_paths:
-            cmd = "solc --combined-json ast %s %s --allow-paths %s" % (self.remap, filename, self.allow_paths)
-        else:
-            cmd = "solc --combined-json ast %s %s" % (self.remap, filename)
+        cmd = "solc --combined-json ast %s" % filename
         out = run_command(cmd)
         out = json.loads(out)
         return out["sources"]

@@ -11,11 +11,13 @@ from tokenize import NUMBER, NAME, NEWLINE
 
 from numpy import mod
 
-from basicblock import BasicBlock
-from semantic_analysis import *
+from analysis.semantic_analysis import *
+from defects.defect import PublicBurnDefect, ReentrancyDefect, RiskyProxyDefect, UnlimitedMintingDefect, ViolationDefect
+from evm.basicblock import BasicBlock
+from evm.execution_states import (UNKNOWN_INSTRUCTION, EXCEPTION, PICKLE_PATH)
+from evm.vargenerator import *
+from input.utils import *
 from utils import *
-from vargenerator import *
-from vulnerability import PublicBurnDefect, ReentrancyDefect, RiskyProxyDefect, UnlimitedMintingDefect, ViolationDefect
 
 log = logging.getLogger(__name__)
 
@@ -85,7 +87,7 @@ def initGlobalVars():
             'evm_code_coverage': '',
             'instructions': '',
             'time': '',
-            'vulnerabilities': {
+            'defects': {
                 'proxy': [],
                 'burn': [],
                 'reentrancy': [],
@@ -105,7 +107,7 @@ def initGlobalVars():
             'evm_code_coverage': '',
             'instructions': '',
             'time': '',
-            'vulnerabilities': {
+            'defects': {
                 'proxy': [],
                 'burn': [],
                 'reentrancy': [],
@@ -178,8 +180,6 @@ def initGlobalVars():
     gen = Generator()
 
     global data_source
-    if global_params.USE_GLOBAL_BLOCKCHAIN:
-        data_source = EthereumData()
 
     global rfile
     if global_params.REPORT_MODE:
@@ -441,46 +441,11 @@ def get_init_global_state(path_conditions_and_vars):
     global_state = {"balance": {}, "pc": 0}
     init_is = init_ia = deposited_value = sender_address = receiver_address = gas_price = origin = currentCoinbase = currentNumber = currentDifficulty = currentGasLimit = currentChainId = currentSelfBalance = currentBaseFee = callData = None
 
-    if global_params.INPUT_STATE:
-        with open('state.json') as f:
-            state = json.loads(f.read())
-            if state["Is"]["balance"]:
-                init_is = int(state["Is"]["balance"], 16)
-            if state["Ia"]["balance"]:
-                init_ia = int(state["Ia"]["balance"], 16)
-            if state["exec"]["value"]:
-                deposited_value = 0
-            if state["Is"]["address"]:
-                sender_address = int(state["Is"]["address"], 16)
-            if state["Ia"]["address"]:
-                receiver_address = int(state["Ia"]["address"], 16)
-            if state["exec"]["gasPrice"]:
-                gas_price = int(state["exec"]["gasPrice"], 16)
-            if state["exec"]["origin"]:
-                origin = int(state["exec"]["origin"], 16)
-            if state["env"]["currentCoinbase"]:
-                currentCoinbase = int(state["env"]["currentCoinbase"], 16)
-            if state["env"]["currentNumber"]:
-                currentNumber = int(state["env"]["currentNumber"], 16)
-            if state["env"]["currentDifficulty"]:
-                currentDifficulty = int(state["env"]["currentDifficulty"], 16)
-            if state["env"]["currentGasLimit"]:
-                currentGasLimit = int(state["env"]["currentGasLimit"], 16)
-            if state["env"]["currentChainId"]:
-                currentChainId = int(state["env"]["currentChainId"], 16)
-            if state["env"]["currentSelfBalance"]:
-                currentSelfBalance = int(
-                    state["env"]["currentSelfBalance"], 16)
-            if state["env"]["currentBaseFee"]:
-                currentBaseFee = int(state["env"]["currentBaseFee"], 16)
-
-    # for some weird reason these 3 vars are stored in path_conditions insteaad of global_state
-    else:
-        sender_address = BitVec("Is", 256)
-        receiver_address = BitVec("Ia", 256)
-        deposited_value = BitVec("Iv", 256)
-        init_is = BitVec("init_Is", 256)
-        init_ia = BitVec("init_Ia", 256)
+    sender_address = BitVec("Is", 256)
+    receiver_address = BitVec("Ia", 256)
+    deposited_value = BitVec("Iv", 256)
+    init_is = BitVec("init_Is", 256)
+    init_ia = BitVec("init_Ia", 256)
 
     path_conditions_and_vars["Is"] = sender_address
     path_conditions_and_vars["Ia"] = receiver_address
@@ -1502,15 +1467,13 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
         if len(stack) > 0:
             global_state["pc"] = global_state["pc"] + 1
             address = stack.pop(0)
-            if isReal(address) and global_params.USE_GLOBAL_BLOCKCHAIN:
-                new_var = data_source.getBalance(address)
+
+            new_var_name = gen.gen_balance_var()
+            if new_var_name in path_conditions_and_vars:
+                new_var = path_conditions_and_vars[new_var_name]
             else:
-                new_var_name = gen.gen_balance_var()
-                if new_var_name in path_conditions_and_vars:
-                    new_var = path_conditions_and_vars[new_var_name]
-                else:
-                    new_var = BitVec(new_var_name, 256)
-                    path_conditions_and_vars[new_var_name] = new_var
+                new_var = BitVec(new_var_name, 256)
+                path_conditions_and_vars[new_var_name] = new_var
             if isReal(address):
                 hashed_address = "concrete_address_" + str(address)
             else:
@@ -1656,18 +1619,15 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
         if len(stack) > 0:
             global_state["pc"] = global_state["pc"] + 1
             address = stack.pop(0)
-            if isReal(address) and global_params.USE_GLOBAL_BLOCKCHAIN:
-                code = data_source.getCode(address)
-                stack.insert(0, len(code) / 2)
+
+            # not handled yet
+            new_var_name = gen.gen_code_size_var(address)
+            if new_var_name in path_conditions_and_vars:
+                new_var = path_conditions_and_vars[new_var_name]
             else:
-                # not handled yet
-                new_var_name = gen.gen_code_size_var(address)
-                if new_var_name in path_conditions_and_vars:
-                    new_var = path_conditions_and_vars[new_var_name]
-                else:
-                    new_var = BitVec(new_var_name, 256)
-                    path_conditions_and_vars[new_var_name] = new_var
-                stack.insert(0, new_var)
+                new_var = BitVec(new_var_name, 256)
+                path_conditions_and_vars[new_var_name] = new_var
+            stack.insert(0, new_var)
         else:
             raise ValueError('STACK underflow')
     elif opcode == "EXTCODECOPY":
@@ -1878,10 +1838,6 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
 
             if isReal(position) and position in global_state["Ia"]:
                 value = global_state["Ia"][position]
-                stack.insert(0, value)
-            elif global_params.USE_GLOBAL_STORAGE and isReal(position) and position not in global_state["Ia"]:
-                value = data_source.getStorageAt(position)
-                global_state["Ia"][position] = value
                 stack.insert(0, value)
             else:
                 if str(position) in global_state["Ia"]:
@@ -2144,14 +2100,6 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             global_state["pc"] = global_state["pc"] + 1
             outgas = stack.pop(0)
             recipient = stack.pop(0)  # this is not used as recipient
-            if global_params.USE_GLOBAL_STORAGE:
-                if isReal(recipient):
-                    recipient = hex(recipient)
-                    if recipient[-1] == "L":
-                        recipient = recipient[:-1]
-                    recipients.add(recipient)
-                else:
-                    recipients.add(None)
 
             transfer_amount = stack.pop(0)
             start_data_input = stack.pop(0)
@@ -2191,14 +2139,6 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             global_state["pc"] += 1
             stack.pop(0)
             recipient = stack.pop(0)
-            if global_params.USE_GLOBAL_STORAGE:
-                if isReal(recipient):
-                    recipient = hex(recipient)
-                    if recipient[-1] == "L":
-                        recipient = recipient[:-1]
-                    recipients.add(recipient)
-                else:
-                    recipients.add(None)
 
             stack.pop(0)
             stack.pop(0)
@@ -2466,11 +2406,11 @@ def detect_violation():
     violation = ViolationDefect(g_src_map, pcs)
 
     if g_src_map:
-        results['vulnerabilities']['violation'] = violation.get_warnings()
+        results['defects']['violation'] = violation.get_warnings()
     else:
-        results['vulnerabilities']['violation'] = violation.is_vulnerable()
-    results['bool_defect']['violation'] = violation.is_vulnerable()
-    log.info("\t  Standard Violation Defect: \t\t %s", violation.is_vulnerable())
+        results['defects']['violation'] = violation.is_defective()
+    results['bool_defect']['violation'] = violation.is_defective()
+    log.info("\t  Standard Violation Defect: \t\t %s", violation.is_defective())
 
 
 def detect_reentrancy():
@@ -2482,12 +2422,12 @@ def detect_reentrancy():
     reentrancy = ReentrancyDefect(g_src_map, pcs)
 
     if g_src_map:
-        results['vulnerabilities']['reentrancy'] = reentrancy.get_warnings()
+        results['defects']['reentrancy'] = reentrancy.get_warnings()
     else:
-        results['vulnerabilities']['reentrancy'] = reentrancy.is_vulnerable()
+        results['defects']['reentrancy'] = reentrancy.is_defective()
 
-    results['bool_defect']['reentrancy'] = reentrancy.is_vulnerable()
-    log.info("\t  ERC721-Reentrancy Defect: \t\t %s", reentrancy.is_vulnerable())
+    results['bool_defect']['reentrancy'] = reentrancy.is_defective()
+    log.info("\t  ERC721-Reentrancy Defect: \t\t %s", reentrancy.is_defective())
 
 
 def detect_proxy():
@@ -2499,11 +2439,11 @@ def detect_proxy():
     proxy = RiskyProxyDefect(g_src_map, pcs)
 
     if g_src_map:
-        results['vulnerabilities']['proxy'] = proxy.get_warnings()
+        results['defects']['proxy'] = proxy.get_warnings()
     else:
-        results['vulnerabilities']['proxy'] = proxy.is_vulnerable()
-    results["bool_defect"]["proxy"] = proxy.is_vulnerable()
-    log.info("\t  Risky Proxy Defect: \t\t\t %s", proxy.is_vulnerable())
+        results['defects']['proxy'] = proxy.is_defective()
+    results["bool_defect"]["proxy"] = proxy.is_defective()
+    log.info("\t  Risky Mutable Proxy Defect: \t\t %s", proxy.is_defective())
 
 
 def detect_unlimited_minting():
@@ -2515,11 +2455,11 @@ def detect_unlimited_minting():
     unlimited_minting = UnlimitedMintingDefect(g_src_map, pcs)
 
     if g_src_map:
-        results['vulnerabilities']['unlimited_minting'] = unlimited_minting.get_warnings()
+        results['defects']['unlimited_minting'] = unlimited_minting.get_warnings()
     else:
-        results['vulnerabilities']['unlimited_minting'] = unlimited_minting.is_vulnerable()
-    results["bool_defect"]["unlimited_minting"] = unlimited_minting.is_vulnerable()
-    log.info("\t  Unlimited Minting Defect: \t\t %s", unlimited_minting.is_vulnerable())
+        results['defects']['unlimited_minting'] = unlimited_minting.is_defective()
+    results["bool_defect"]["unlimited_minting"] = unlimited_minting.is_defective()
+    log.info("\t  Unlimited Minting Defect: \t\t %s", unlimited_minting.is_defective())
 
 
 def detect_public_burn():
@@ -2531,14 +2471,14 @@ def detect_public_burn():
     public_burn = PublicBurnDefect(g_src_map, pcs)
 
     if g_src_map:
-        results['vulnerabilities']['burn'] = public_burn.get_warnings()
+        results['defects']['burn'] = public_burn.get_warnings()
     else:
-        results['vulnerabilities']['burn'] = public_burn.is_vulnerable()
-    results["bool_defect"]["burn"] = public_burn.is_vulnerable()
-    log.info("\t  Public Burn Defect: \t\t\t %s", public_burn.is_vulnerable())
+        results['defects']['burn'] = public_burn.is_defective()
+    results["bool_defect"]["burn"] = public_burn.is_defective()
+    log.info("\t  Public Burn Defect: \t\t\t %s", public_burn.is_defective())
 
 
-def detect_vulnerabilities():
+def detect_defects():
     global results
     global g_src_map
     global visited_pcs
@@ -2572,16 +2512,9 @@ def detect_vulnerabilities():
             log_info()
 
     else:
-        log.info("\t  EVM code coverage: \t 0/0")
-        log.info("\t  Callstack bug: \t False")
-        log.info("\t  Money concurrency bug: False")
-        log.info("\t  Time dependency bug: \t False")
-        log.info("\t  Reentrancy bug: \t False")
-        if global_params.CHECK_ASSERTIONS:
-            log.info("\t  Assertion failure: \t False")
+        log.info("\t  No Instructions \t")
         results["evm_code_coverage"] = "0/0"
-
-    return results, vulnerability_found()
+    return results, defect_found()
 
 
 def log_info():
@@ -2592,15 +2525,15 @@ def log_info():
     global unlimited_minting
     global public_burn
 
-    vulnerabilities = [reentrancy, violation, proxy, unlimited_minting, public_burn]
+    defects = [reentrancy, violation, proxy, unlimited_minting, public_burn]
 
-    for vul in vulnerabilities:
-        s = str(vul)
+    for defect in defects:
+        s = str(defect)
         if s:
             log.info(s)
 
 
-def vulnerability_found():
+def defect_found():
     global g_src_map
     global reentrancy
     global violation
@@ -2608,10 +2541,10 @@ def vulnerability_found():
     global unlimited_minting
     global public_burn
 
-    vulnerabilities = [reentrancy, violation, proxy, unlimited_minting, public_burn]
+    defects = [reentrancy, violation, proxy, unlimited_minting, public_burn]
 
-    for vul in vulnerabilities:
-        if vul.is_vulnerable():
+    for defect in defects:
+        if defect.is_defective():
             return 1
     return 0
 
@@ -2677,30 +2610,6 @@ def run_build_cfg_and_analyze(timeout_cb=do_nothing):
         timeout_cb()
 
 
-def get_recipients(disasm_file, contract_address):
-    global recipients
-    global data_source
-    global g_src_map
-    global g_disasm_file
-    global g_source_file
-
-    g_src_map = None
-    g_disasm_file = disasm_file
-    g_source_file = None
-    data_source = EthereumData(contract_address)
-    recipients = set()
-
-    evm_code_coverage = float(len(visited_pcs)) / len(instructions.keys())
-
-    run_build_cfg_and_analyze()
-
-    return {
-        'addrs': list(recipients),
-        'evm_code_coverage': evm_code_coverage,
-        'timeout': g_timeout
-    }
-
-
 def test():
     global_params.GLOBAL_TIMEOUT = global_params.GLOBAL_TIMEOUT_TEST
 
@@ -2719,157 +2628,12 @@ def analyze():
     run_build_cfg_and_analyze(timeout_cb=timeout_cb)
 
 
-def calculate_slot(id_to_state_vars):
-    # TODO calculate slot id of state vars
-    slot_id = 0
-    bit_remain = 256
-    simpler_slot_map = {}
-    name_to_type = {}
-    for id in id_to_state_vars:
-        for key in id_to_state_vars[id]:
-            constant = id_to_state_vars[id][key]['constant']
-            mutable = id_to_state_vars[id][key]['mutability']
-            type = id_to_state_vars[id][key]['type']
-            name_to_type[key] = type
-            neg = 0
-
-            if constant or mutable == "immutable":
-                id_to_state_vars[id][key]["slot_id"] = None
-                continue
-            if type == "address":
-                neg = 160
-            elif type == "bool":
-                neg = 1
-            elif type == "string":
-                neg = 256
-            elif len(re.findall('mapping(.*)', type)) > 0:
-                neg = 256
-            elif type.startswith("uint"):
-                if re.findall('\d+', type):
-                    neg = int(re.findall('\d+', type)[0])
-                else:
-                    neg = 256
-            elif type.startswith("bytes"):
-                if re.findall('\d+', type):
-                    neg = int(re.findall('\d+', type)[0]) * 8
-                else:
-                    neg = 256
-            elif len(re.findall('(.*)\[(.*?)\]', type)) > 0:
-                neg = 256
-            elif type.startswith("struct"):
-                neg = 256
-
-            if bit_remain - neg < 0:
-                # new_slot = True
-                slot_id += 1
-                bit_remain = 256
-            bit_remain = bit_remain - neg
-            id_to_state_vars[id][key]["slot_id"] = slot_id
-            if slot_id in simpler_slot_map:
-                simpler_slot_map[slot_id].append({key: type})
-            else:
-                simpler_slot_map[slot_id] = [key]
-    return id_to_state_vars, simpler_slot_map, name_to_type
-
-
-def match_owner(id_to_state_vars, slot_map):
-    # usually _owners, _tokenApprovals, _operatorApprovals, _ownerships, etc.
-    keywords = 'OWNER'
-    index = []
-    for id in id_to_state_vars:
-        for key in id_to_state_vars[id]:
-            if any([w in key.upper() and w for w in keywords.split(',')]):
-                if slot_map[id][key]["slot_id"] is not None:
-                    index.append(slot_map[id][key]["slot_id"])
-    return index
-
-
-def match_approval(id_to_state_vars, slot_map):
-    # usually _owners, _tokenApprovals, _operatorApprovals, _ownerships, etc.
-    keywords = 'APPROVAL,OPERATOR'
-    index = []
-    for id in id_to_state_vars:
-        for key in id_to_state_vars[id]:
-            if any([w in key.upper() and w for w in keywords.split(',')]):
-                if slot_map[id][key]["slot_id"] is not None:
-                    index.append(slot_map[id][key]["slot_id"])
-    return index
-
-
-def match_allow(id_to_state_vars, slot_map):
-    # usually allowedToContract etc.
-    # seperate to prefix and suffix
-    keywords_prefix = 'ALLOW'
-    keywords_suffix = 'CONTRACT'
-    index = []
-    for id in id_to_state_vars:
-        for key in id_to_state_vars[id]:
-            # match prefix
-            if any([w in key.upper() and w for w in keywords_prefix.split(',')]):
-                # match suffix
-                if any([w in key.upper() and w for w in keywords_suffix.split(',')]):
-                    if slot_map[id][key]["slot_id"] is not None:
-                        index.append(slot_map[id][key]["slot_id"])
-    return index
-
-
-def match_supply(id_to_state_vars, slot_map):
-    # usually MAX_SUPPLY, _TOTALSUPPLY, MAX_TOKENS, etc.
-    # *Add others: nextToken, totalMinted
-    # seperate to prefix and suffix
-    keywords_prefix = 'ALL,MAX,TOTAL,CURRENT,NEXT,TOTAL,TOKEN'
-    keywords_suffix = 'TOKEN,SUPPLY,INDEX,MINTED'
-    whole = 'COUNTER,SUPPLY,MINTCOUNT'
-    index = []
-    for id in id_to_state_vars:
-        for key in id_to_state_vars[id]:
-            # match prefix
-            if any([w in key.upper() and w for w in keywords_prefix.split(',')]):
-                # match suffix
-                if any([w in key.upper() and w for w in keywords_suffix.split(',')]):
-                    if slot_map[id][key]["slot_id"] is not None:
-                        index.append(slot_map[id][key]["slot_id"])
-
-    for id in id_to_state_vars:
-        for key in id_to_state_vars[id]:
-            if any(w in key.upper() and w for w in whole.split(',')):
-                if slot_map[id][key]["slot_id"] is not None:
-                    index.append(slot_map[id][key]["slot_id"])
-    return index
-
-
-def no_underscore(id_to_state_vars, slot_map):
-    index = []
-    for id in id_to_state_vars:
-        for key in id_to_state_vars[id]:
-            if key.startswith("_"):
-                if slot_map[id][key]["slot_id"] is not None:
-                    index.append(slot_map[id][key]["slot_id"])
-    return index
-
-
-def match_proxy(id_to_state_vars, slot_map):
-    # should find address type vars
-    keywords_prefix = 'PROXY'
-    keywords_suffix = 'REGISTRY'
-    index = []
-    for id in id_to_state_vars:
-        for key in id_to_state_vars[id]:
-            # match prefix
-            if any([w in key.upper() and w for w in keywords_prefix.split(',')]):
-                # match suffix
-                if any([w in key.upper() and w for w in keywords_suffix.split(',')]):
-                    if slot_map[id][key]["slot_id"] is not None and slot_map[id][key]["type"] == "address":
-                        index.append(slot_map[id][key]["slot_id"])
-    return index
-
-
 def run(disasm_file=None, source_file=None, source_map=None):
     global g_disasm_file
     global g_source_file
     global g_src_map
     global results
-    global g_ref_dict
+    global begin
 
     g_disasm_file = disasm_file
     g_source_file = source_file
@@ -2888,8 +2652,6 @@ def run(disasm_file=None, source_file=None, source_map=None):
     global_params.APPROVAL_INDEX = match_approval(g_ref_id_to_state_vars, slot_map)
     global_params.SUPPLY_INDEX = match_supply(g_ref_id_to_state_vars, slot_map)
     global_params.PROXY_INDEX = match_proxy(g_ref_id_to_state_vars, slot_map)
-    global_params.UNDERSCORE_INDEX = no_underscore(g_ref_id_to_state_vars, slot_map)
-    global_params.ALLOW_INDEX = match_allow(g_ref_id_to_state_vars, slot_map)
 
     if is_testing_evm():
         test()
@@ -2897,6 +2659,6 @@ def run(disasm_file=None, source_file=None, source_map=None):
         begin = time.time()
         log.info("\t============ Results of %s===========" % source_map.cname)
         analyze()
-        ret = detect_vulnerabilities()
+        ret = detect_defects()
         closing_message()
         return ret
