@@ -14,6 +14,9 @@ The results of our conducted experiments.
 - Comparison with the other 6 tools (with outputs of them)
 - Results of large-scale experiment on 16,527 NFT smart contracts.
 - Evaluation results of related experiments.
+  - labeled results on randomly sampled dataset with a confidence interval of 10 and a confidence level of 95% for **precision** and **false positives** evaluation.
+  - analysis of **false negatives** by the same sampling approach on contracts where no defect was reported.
+  - effectiveness evaluation of **proposed solutions** for each defect.
 
 ### NFTGuard
 
