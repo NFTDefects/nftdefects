@@ -7,7 +7,7 @@ contract token is ERC721Enumerable, Ownable {
     constructor() ERC721("tokens", "demo") {}
 
     function burn(uint256 tokenId) public {
-        // Public Burn
+        // add judgment with msg.sender
         require(msg.sender == ERC721.ownerOf(tokenId), 'not the owner of the token');
         _burn(tokenId);
     }
