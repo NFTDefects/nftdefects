@@ -4,8 +4,7 @@
 *.pyc
 *.report
 *.json
-# *.txt
-# *.md
+*.sh
 
 .DS_Store
 

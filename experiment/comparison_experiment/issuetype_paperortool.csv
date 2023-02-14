@@ -1,0 +1,437 @@
+﻿IssueName,Paper,Conference/Journal/Onlie
+Race Condition,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Check/Validation,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Resource Leak,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Transaction Related,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Deadlock,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Go Panic,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Block Related,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Denial-of-Service,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Peer/Node Related,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Sanity Check,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Overflow,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Wallet Key/Password,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Uninitialized Read,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+RPC Related,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Out-of-Bound,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Off-by-One,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Segfault,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Memory Pool,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Nil Pointer Deref,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Database Corruption,"An empirical study of blockchain system vulnerabilities: modules, types, and patterns",FSE
+Access Control,Making smart contract development more secure and easier,FSE
+Arithmetic,Making smart contract development more secure and easier,FSE
+Backdoor Threats,Making smart contract development more secure and easier,FSE
+Front Running,Making smart contract development more secure and easier,FSE
+Locked Ether,Making smart contract development more secure and easier,FSE
+Reentrancy,Making smart contract development more secure and easier,FSE
+Timestamp Dependency,Making smart contract development more secure and easier,FSE
+Unchecked Low Calls,Making smart contract development more secure and easier,FSE
+Unhanaled Exception,Making smart contract development more secure and easier,FSE
+Access_control,MANDO-GURU: vulnerability detection for smart contract source code by heterogeneous graph embeddings,FSE
+Arithmetic,MANDO-GURU: vulnerability detection for smart contract source code by heterogeneous graph embeddings,FSE
+Denial of service,MANDO-GURU: vulnerability detection for smart contract source code by heterogeneous graph embeddings,FSE
+Front_ running,MANDO-GURU: vulnerability detection for smart contract source code by heterogeneous graph embeddings,FSE
+Reentrancy,MANDO-GURU: vulnerability detection for smart contract source code by heterogeneous graph embeddings,FSE
+Time_manipulation,MANDO-GURU: vulnerability detection for smart contract source code by heterogeneous graph embeddings,FSE
+Unchecked_low_level_calls,MANDO-GURU: vulnerability detection for smart contract source code by heterogeneous graph embeddings,FSE
+Smart Contract Fairness,Towards Automated Verification of Smart Contract Fairness,FSE
+Re-Entrancy Attacks,Sereum: Protecting Existing Smart Contracts Against Re-Entrancy Attacks,NDSS
+re-entrancy,SODA: A Generic Online Detection Framework for Smart Contracts,NDSS
+unexpected function invocation,SODA: A Generic Online Detection Framework for Smart Contracts,NDSS
+invalid input,SODA: A Generic Online Detection Framework for Smart Contracts,NDSS
+uses the result of ORIGIN to check permissions,SODA: A Generic Online Detection Framework for Smart Contracts,NDSS
+transfer() or transferFrom() can be executed without emitting the Transfer event,SODA: A Generic Online Detection Framework for Smart Contracts,NDSS
+BALANCE is strictly equal to a specific value,SODA: A Generic Online Detection Framework for Smart Contracts,NDSS
+comparison depending on the block number or the timestamp,SODA: A Generic Online Detection Framework for Smart Contracts,NDSS
+REENTRANCY,ZEUS: Analyzing Safety of Smart Contracts,NDSS
+UNCHECKED SEND,ZEUS: Analyzing Safety of Smart Contracts,NDSS
+FAILED SEND,ZEUS: Analyzing Safety of Smart Contracts,NDSS
+TRANSACTION STATE DEPENDENCE,ZEUS: Analyzing Safety of Smart Contracts,NDSS
+ABSENCE OF LOGIC,ZEUS: Analyzing Safety of Smart Contracts,NDSS
+INCORRECT LOGIC,ZEUS: Analyzing Safety of Smart Contracts,NDSS
+Exception disorders/Mishandled exceptions/Gasless send,Smart Contract Repair,TOSEM
+Reentrancy,Smart Contract Repair,TOSEM
+Integer overflow/Integer underflow/Unchecked math,Smart Contract Repair,TOSEM
+Transaction order dependence/Unpredictable state,Smart Contract Repair,TOSEM
+Backdoor Threats,Pied-Piper: Revealing the Backdoor Threats in Ethereum ERC Token Contracts,TOSEM
+Reentrancy with Ether,SmartFast: an accurate and robust formal analysis tool for Ethereum smart contracts,ESE
+Right-to-Left-Override,SmartFast: an accurate and robust formal analysis tool for Ethereum smart contracts,ESE
+Lock Account Assets,SmartFast: an accurate and robust formal analysis tool for Ethereum smart contracts,ESE
+Transaction Origin Address,SmartFast: an accurate and robust formal analysis tool for Ethereum smart contracts,ESE
+Wrong Shift Parameters,SmartFast: an accurate and robust formal analysis tool for Ethereum smart contracts,ESE
+Shadowed Built-in Elements,SmartFast: an accurate and robust formal analysis tool for Ethereum smart contracts,ESE
+Non-compliant Signature,SmartFast: an accurate and robust formal analysis tool for Ethereum smart contracts,ESE
+Timestamp Dependency,SmartFast: an accurate and robust formal analysis tool for Ethereum smart contracts,ESE
+Useless Code,SmartFast: an accurate and robust formal analysis tool for Ethereum smart contracts,ESE
+ERC20 Problems,Conformance evaluation of the top-100 Ethereum token smart contracts with Ethereum Request for Comment-20 functional specifications,IETS
+Reentrancy,Vulpedia: Detecting vulnerable ethereum smart contracts via abstracted vulnerability signatures,JSS
+Unexpected Revert,Vulpedia: Detecting vulnerable ethereum smart contracts via abstracted vulnerability signatures,JSS
+Abuse of Tx.origin,Vulpedia: Detecting vulnerable ethereum smart contracts via abstracted vulnerability signatures,JSS
+SelfDestruct,Vulpedia: Detecting vulnerable ethereum smart contracts via abstracted vulnerability signatures,JSS
+Event-Ordering Bugs,Exploiting the Laws of Order in Smart Contracts,ISSTA
+Timestamp Dependency,"How Effective Are Smart Contract Analysis Tools? Evaluating
+Smart Contract Static Analysis Tools using Bug Injection",ISSTA
+Unhandled Exceptions,"How Effective Are Smart Contract Analysis Tools? Evaluating
+Smart Contract Static Analysis Tools using Bug Injection",ISSTA
+Integer Overflow/Underflow,"How Effective Are Smart Contract Analysis Tools? Evaluating
+Smart Contract Static Analysis Tools using Bug Injection",ISSTA
+Use of tx.origin.,"How Effective Are Smart Contract Analysis Tools? Evaluating
+Smart Contract Static Analysis Tools using Bug Injection",ISSTA
+Re-entrancy,"How Effective Are Smart Contract Analysis Tools? Evaluating
+Smart Contract Static Analysis Tools using Bug Injection",ISSTA
+Unchecked Send,"How Effective Are Smart Contract Analysis Tools? Evaluating
+Smart Contract Static Analysis Tools using Bug Injection",ISSTA
+Transaction Ordering Dependence,"How Effective Are Smart Contract Analysis Tools? Evaluating
+Smart Contract Static Analysis Tools using Bug Injection",ISSTA
+Unbounded Loops,"eTainter: Detecting Gas-Related Vulnerabilities in Smart
+Contracts",ISSTA
+DoS with Failed Call,"eTainter: Detecting Gas-Related Vulnerabilities in Smart
+Contracts",ISSTA
+Permission Bugs,Finding Permission Bugs in Smart Contracts with Role Mining,ISSTA
+reentrancy,SmartDagger : A Bytecode-based Static Analysis Approach for Detecting Cross-contract Vulnerability,ISSTA
+Transaction-Ordering Dependence,Making Smart Contracts Smarter,CCS
+Timestamp Dependence,Making Smart Contracts Smarter,CCS
+Mishandled Exceptions,Making Smart Contracts Smarter,CCS
+Reentrancy,Making Smart Contracts Smarter,CCS
+Locking,"Learning to Fuzz from Symbolic Execution
+with Application to Smart Contracts",CCS
+Leaking,"Learning to Fuzz from Symbolic Execution
+with Application to Smart Contracts",CCS
+Suicidal,"Learning to Fuzz from Symbolic Execution
+with Application to Smart Contracts",CCS
+Block Dependency,"Learning to Fuzz from Symbolic Execution
+with Application to Smart Contracts",CCS
+Unhandled Exception,"Learning to Fuzz from Symbolic Execution
+with Application to Smart Contracts",CCS
+Controlled Delegatecall,"Learning to Fuzz from Symbolic Execution
+with Application to Smart Contracts",CCS
+Inconsistent Behaviors,"TokenScope: Automatically Detecting Inconsistent Behaviors of
+Cryptocurrency Tokens in Ethereum",CCS
+Reentrancy,Securify: Practical Security Analysis of Smart Contracts,CCS
+unrestricted ether flow,Securify: Practical Security Analysis of Smart Contracts,CCS
+locked ether,Securify: Practical Security Analysis of Smart Contracts,CCS
+missing input validation,Securify: Practical Security Analysis of Smart Contracts,CCS
+ToD,Securify: Practical Security Analysis of Smart Contracts,CCS
+unhandled exceptions,Securify: Practical Security Analysis of Smart Contracts,CCS
+TODAmount,Securify2,Successor of Securify (CCS)
+TODReceiver,Securify2,Successor of Securify (CCS)
+TODTransfer,Securify2,Successor of Securify (CCS)
+UnrestrictedWrite,Securify2,Successor of Securify (CCS)
+RightToLeftOverride,Securify2,Successor of Securify (CCS)
+ShadowedStateVariable,Securify2,Successor of Securify (CCS)
+UnrestrictedSelfdestruct,Securify2,Successor of Securify (CCS)
+UninitializedStateVariable,Securify2,Successor of Securify (CCS)
+UninitializedStorage,Securify2,Successor of Securify (CCS)
+UnrestrictedDelegateCall,Securify2,Successor of Securify (CCS)
+DAO,Securify2,Successor of Securify (CCS)
+ERC20Interface,Securify2,Successor of Securify (CCS)
+ERC721Interface,Securify2,Successor of Securify (CCS)
+IncorrectEquality,Securify2,Successor of Securify (CCS)
+LockedEther,Securify2,Successor of Securify (CCS)
+ReentrancyNoETH,Securify2,Successor of Securify (CCS)
+TxOrigin,Securify2,Successor of Securify (CCS)
+UnhandledException,Securify2,Successor of Securify (CCS)
+UnrestrictedEtherFlow,Securify2,Successor of Securify (CCS)
+UninitializedLocal,Securify2,Successor of Securify (CCS)
+UnusedReturn,Securify2,Successor of Securify (CCS)
+ShadowedBuiltin,Securify2,Successor of Securify (CCS)
+ShadowedLocalVariable,Securify2,Successor of Securify (CCS)
+CallToDefaultConstructor?,Securify2,Successor of Securify (CCS)
+CallInLoop,Securify2,Successor of Securify (CCS)
+ReentrancyBenign,Securify2,Successor of Securify (CCS)
+Timestamp,Securify2,Successor of Securify (CCS)
+AssemblyUsage,Securify2,Successor of Securify (CCS)
+ERC20Indexed,Securify2,Successor of Securify (CCS)
+LowLevelCalls,Securify2,Successor of Securify (CCS)
+NamingConvention,Securify2,Successor of Securify (CCS)
+SolcVersion,Securify2,Successor of Securify (CCS)
+UnusedStateVariable,Securify2,Successor of Securify (CCS)
+TooManyDigits,Securify2,Successor of Securify (CCS)
+ConstableStates,Securify2,Successor of Securify (CCS)
+ExternalFunctions,Securify2,Successor of Securify (CCS)
+StateVariablesDefaultVisibility,Securify2,Successor of Securify (CCS)
+Locked Ether,"Rethinking Smart Contract Fuzzing: Fuzzing With Invocation
+Ordering and Important Branch Revisiting",TIFS
+timestamp dependency,"Rethinking Smart Contract Fuzzing: Fuzzing With Invocation
+Ordering and Important Branch Revisiting",TIFS
+block number dependency,"Rethinking Smart Contract Fuzzing: Fuzzing With Invocation
+Ordering and Important Branch Revisiting",TIFS
+dangerous delegatecall,"Rethinking Smart Contract Fuzzing: Fuzzing With Invocation
+Ordering and Important Branch Revisiting",TIFS
+ether frozen,"Rethinking Smart Contract Fuzzing: Fuzzing With Invocation
+Ordering and Important Branch Revisiting",TIFS
+unchecked external call,"Rethinking Smart Contract Fuzzing: Fuzzing With Invocation
+Ordering and Important Branch Revisiting",TIFS
+reentrancy,"Rethinking Smart Contract Fuzzing: Fuzzing With Invocation
+Ordering and Important Branch Revisiting",TIFS
+integer overflow,"Rethinking Smart Contract Fuzzing: Fuzzing With Invocation
+Ordering and Important Branch Revisiting",TIFS
+dangerous Ether strict equality.,"Hunting Vulnerable Smart Contracts via Graph
+Embedding Based Bytecode Matching",TIFS
+Integer Overflow,"Hunting Vulnerable Smart Contracts via Graph
+Embedding Based Bytecode Matching",TIFS
+Reentrancy,"Hunting Vulnerable Smart Contracts via Graph
+Embedding Based Bytecode Matching",TIFS
+Bad Randomness,"Hunting Vulnerable Smart Contracts via Graph
+Embedding Based Bytecode Matching",TIFS
+Unprotected Ownership,"Hunting Vulnerable Smart Contracts via Graph
+Embedding Based Bytecode Matching",TIFS
+Mishandled Exceptions,An Ever-evolving Game: Evaluation of Real-world Attacks and Defenses in Ethereum Ecosystem,Security
+call injection,An Ever-evolving Game: Evaluation of Real-world Attacks and Defenses in Ethereum Ecosystem,Security
+reentrancy,An Ever-evolving Game: Evaluation of Real-world Attacks and Defenses in Ethereum Ecosystem,Security
+integer overflow,An Ever-evolving Game: Evaluation of Real-world Attacks and Defenses in Ethereum Ecosystem,Security
+airdrop hunting,An Ever-evolving Game: Evaluation of Real-world Attacks and Defenses in Ethereum Ecosystem,Security
+call-after-destruct,An Ever-evolving Game: Evaluation of Real-world Attacks and Defenses in Ethereum Ecosystem,Security
+honeypot,Annotary: A Concolic Execution System for Developing Secure Smart Contracts,ESORICS
+Over-/Underflow,Annotary: A Concolic Execution System for Developing Secure Smart Contracts,ESORICS
+Struct cast to storage,Annotary: A Concolic Execution System for Developing Secure Smart Contracts,ESORICS
+Misspelled constructor name,Annotary: A Concolic Execution System for Developing Secure Smart Contracts,ESORICS
+Missing visibility modifier,Annotary: A Concolic Execution System for Developing Secure Smart Contracts,ESORICS
+Memory layout missmatch with delgation,Annotary: A Concolic Execution System for Developing Secure Smart Contracts,ESORICS
+Unmatched call forwarded to delegate,Annotary: A Concolic Execution System for Developing Secure Smart Contracts,ESORICS
+Unset state (instanciated),Annotary: A Concolic Execution System for Developing Secure Smart Contracts,ESORICS
+Unchecked send return,Annotary: A Concolic Execution System for Developing Secure Smart Contracts,ESORICS
+Arithmetic mistace,Annotary: A Concolic Execution System for Developing Secure Smart Contracts,ESORICS
+Trick transaction origin,Annotary: A Concolic Execution System for Developing Secure Smart Contracts,ESORICS
+Unreachable state/code,Elysium: Context-Aware Bytecode-Level Patching to Automatically Heal Vulnerable Smart Contracts,RAID
+Reentrancy,Elysium: Context-Aware Bytecode-Level Patching to Automatically Heal Vulnerable Smart Contracts,RAID
+Access Control,Elysium: Context-Aware Bytecode-Level Patching to Automatically Heal Vulnerable Smart Contracts,RAID
+Arithmetic,Elysium: Context-Aware Bytecode-Level Patching to Automatically Heal Vulnerable Smart Contracts,RAID
+Unchecked Low Level Calls,Elysium: Context-Aware Bytecode-Level Patching to Automatically Heal Vulnerable Smart Contracts,RAID
+Denial of Services,"Empirical review of automated analysis tools on 47, 578 Ethereum smart contracts",ICSE
+Access Control,"Empirical review of automated analysis tools on 47, 579 Ethereum smart contracts",ICSE
+Arithmetic,"Empirical review of automated analysis tools on 47, 580 Ethereum smart contracts",ICSE
+Bad Randomness,"Empirical review of automated analysis tools on 47, 581 Ethereum smart contracts",ICSE
+Denial of service,"Empirical review of automated analysis tools on 47, 582 Ethereum smart contracts",ICSE
+Front running,"Empirical review of automated analysis tools on 47, 583 Ethereum smart contracts",ICSE
+Reentrancy,"Empirical review of automated analysis tools on 47, 584 Ethereum smart contracts",ICSE
+Short addresses,"Empirical review of automated analysis tools on 47, 585 Ethereum smart contracts",ICSE
+Time manipulation,"Empirical review of automated analysis tools on 47, 586 Ethereum smart contracts",ICSE
+Unchecked low level calls,EOSAFE: Security Analysis of EOSIO Smart Contracts,Security
+Fake EOS,EOSAFE: Security Analysis of EOSIO Smart Contracts,Security
+Fake Receipt,EOSAFE: Security Analysis of EOSIO Smart Contracts,Security
+Rollback,EOSAFE: Security Analysis of EOSIO Smart Contracts,Security
+Missing Permission Check,ETHBMC: A Bounded Model Checker for Smart Contracts,Security
+Steal Ether,ETHBMC: A Bounded Model Checker for Smart Contracts,Security
+Hijack,ETHBMC: A Bounded Model Checker for Smart Contracts,Security
+Suicidal,Evil Under the Sun: Understanding and Discovering Attacks on Ethereum Decentralized Applications,Security
+Bad randomness,Evil Under the Sun: Understanding and Discovering Attacks on Ethereum Decentralized Applications,Security
+Denial of service,Evil Under the Sun: Understanding and Discovering Attacks on Ethereum Decentralized Applications,Security
+Integer overflow and underflow,Evil Under the Sun: Understanding and Discovering Attacks on Ethereum Decentralized Applications,Security
+Reentrancy,Evil Under the Sun: Understanding and Discovering Attacks on Ethereum Decentralized Applications,Security
+Improper authentication,"ExGen: Cross-platform, Automated Exploit Generation for Smart Contract Vulnerabilities",TDSC
+Overflow,"ExGen: Cross-platform, Automated Exploit Generation for Smart Contract Vulnerabilities",TDSC
+Underflow,"ExGen: Cross-platform, Automated Exploit Generation for Smart Contract Vulnerabilities",TDSC
+reentrancy,"ExGen: Cross-platform, Automated Exploit Generation for Smart Contract Vulnerabilities",TDSC
+Suicidal,"ExGen: Cross-platform, Automated Exploit Generation for Smart Contract Vulnerabilities",TDSC
+call injection,Fee-Free Pooled Mining for Countering Pool-Hopping Attack in Blockchain,TDSC
+pool-hopping attack,"Finding The Greedy, Prodigal, and Suicidal Contracts at Scale",ACSAC
+Prodigal,"Finding The Greedy, Prodigal, and Suicidal Contracts at Scale",ACSAC
+Suicidal,"Finding The Greedy, Prodigal, and Suicidal Contracts at Scale",ACSAC
+Greedy,Frontrunner Jones and the Raiders of the Dark Forest: An Empirical Study of Frontrunning on the Ethereum Blockchain,Security
+Front-Running,"Gigahorse: thorough, declarative decompilation of smart contracts",ICSE
+Unbounded Iteration,"Gigahorse: thorough, declarative decompilation of smart contracts",ICSE
+Overflow Loop Iteration,"Gigahorse: thorough, declarative decompilation of smart contracts",ICSE
+Wallet Griefing,Impact of Man-In-The-Middle Attacks on Ethereum,SRDS
+man-in-the-middle attack,Impact of Man-In-The-Middle Attacks on Ethereum,SRDS
+double spending attack,Incentives for Harvesting Attack in Proof of Work Mining Pools,ESORICS
+pool harvesting attack,On the Routing-Aware Peering against Network-Eclipse Attacks in Bitcoin,Security
+Erebus attack,Opportunistic Algorithmic Double-Spending: - How I Learned to Stop Worrying and Love the Fork,ESORICS
+double spending attack,Oracle-Supported Dynamic Exploit Generation for Smart Contracts,TDSC
+reentrancy,Oracle-Supported Dynamic Exploit Generation for Smart Contracts,TDSC
+exception disorder,Oracle-Supported Dynamic Exploit Generation for Smart Contracts,TDSC
+gasless send,Oracle-Supported Dynamic Exploit Generation for Smart Contracts,TDSC
+integer overflow/underflow,Osiris: Hunting for Integer Bugs in Ethereum Smart Contracts,ACSAC
+integer overflow/underflow,Osiris: Hunting for Integer Bugs in Ethereum Smart Contracts,ACSAC
+Truncation Bugs,Osiris: Hunting for Integer Bugs in Ethereum Smart Contracts,ACSAC
+Signedness Bugs,Penny Wise and Pound Foolish: Quantifying the Risk of Unlimited Approval of ERC20 Tokens on Ethereum,RAID
+unlimited approval of ERC20 tokens,Practical Provably Secure Flooding for Blockchains,ASIACRYPT
+eclipse attacks,Protect Your Smart Contract Against Unfair Payment,SRDS
+Unfair Payment,sFuzz: an efficient adaptive fuzzer for solidity smart contracts,ICSE
+Gasless Send,sFuzz: an efficient adaptive fuzzer for solidity smart contracts,ICSE
+Exception Disorder,sFuzz: an efficient adaptive fuzzer for solidity smart contracts,ICSE
+Reentrancy,sFuzz: an efficient adaptive fuzzer for solidity smart contracts,ICSE
+Timestamp Dependency,sFuzz: an efficient adaptive fuzzer for solidity smart contracts,ICSE
+Block Number Dependency,sFuzz: an efficient adaptive fuzzer for solidity smart contracts,ICSE
+Dangerous DelegateCall,sFuzz: an efficient adaptive fuzzer for solidity smart contracts,ICSE
+Integer Overflow,sFuzz: an efficient adaptive fuzzer for solidity smart contracts,ICSE
+Integer Underflow,sFuzz: an efficient adaptive fuzzer for solidity smart contracts,ICSE
+Freezing Ether,Smart Contract Vulnerabilities: Vulnerable Does Not Imply Exploited,Security
+Re-Entrancy,Smart Contract Vulnerabilities: Vulnerable Does Not Imply Exploited,Security
+Unhandled Exceptions,Smart Contract Vulnerabilities: Vulnerable Does Not Imply Exploited,Security
+Locked Ether,Smart Contract Vulnerabilities: Vulnerable Does Not Imply Exploited,Security
+Transaction Order Dependency,Smart Contract Vulnerabilities: Vulnerable Does Not Imply Exploited,Security
+Integer Overflow,Smart Contract Vulnerabilities: Vulnerable Does Not Imply Exploited,Security
+Unrestricted Action,SmarTest: Effectively Hunting Vulnerable Transaction Sequences in Smart Contracts through Language Model-Guided Symbolic Execution,Security
+Integer Overflow/Underflow,SmarTest: Effectively Hunting Vulnerable Transaction Sequences in Smart Contracts through Language Model-Guided Symbolic Execution,Security
+Division by Zero,SmarTest: Effectively Hunting Vulnerable Transaction Sequences in Smart Contracts through Language Model-Guided Symbolic Execution,Security
+Assertion Violation,SmarTest: Effectively Hunting Vulnerable Transaction Sequences in Smart Contracts through Language Model-Guided Symbolic Execution,Security
+ERC20 Standard Violation,The Art of The Scam: Demystifying Honeypots in Ethereum Smart Contracts,Security
+Honeypots,The Balance Attack or Why Forkable Blockchains are Ill-Suited for Consortium,DSN
+double spend,Towards a First Step to Understand the Cryptocurrency Stealing Attack on Ethereum,RAID
+Honeypots,Trusted Computing Meets Blockchain: Rollback Attacks and a Solution for Hyperledger Fabric,SRDS
+Rollback Attack,TXSPECTOR: Uncovering Attacks in Ethereum from Transactions,Security
+Tx Order Dependence,TXSPECTOR: Uncovering Attacks in Ethereum from Transactions,Security
+State Dependence,TXSPECTOR: Uncovering Attacks in Ethereum from Transactions,Security
+Mishandled Exception,TXSPECTOR: Uncovering Attacks in Ethereum from Transactions,Security
+Re-entrancy,TXSPECTOR: Uncovering Attacks in Ethereum from Transactions,Security
+Restricted Transfer,TXSPECTOR: Uncovering Attacks in Ethereum from Transactions,Security
+Failed Send,TXSPECTOR: Uncovering Attacks in Ethereum from Transactions,Security
+Unsecured Balance,TXSPECTOR: Uncovering Attacks in Ethereum from Transactions,Security
+Misuse-of-origin,TXSPECTOR: Uncovering Attacks in Ethereum from Transactions,Security
+Integer Overflow,TXSPECTOR: Uncovering Attacks in Ethereum from Transactions,Security
+Suicidal,TXSPECTOR: Uncovering Attacks in Ethereum from Transactions,Security
+Denial-of-Service,Identifying Solidity Smart Contract API Documentation Errors,ASE
+API Documentation Errors,Towards Effective Static Analysis Approaches for Security Vulnerabilities in Smart Contracts,ASE
+Gas-Related Vulnerability,Towards Effective Static Analysis Approaches for Security Vulnerabilities in Smart Contracts,ASE
+Access Control,Effectively Generating Vulnerable Transaction Sequences in Smart Contracts with Reinforcement Learning-guided Fuzzing,ASE
+Ether Leaking,Effectively Generating Vulnerable Transaction Sequences in Smart Contracts with Reinforcement Learning-guided Fuzzing,ASE
+Suicidal Contract,Effectively Generating Vulnerable Transaction Sequences in Smart Contracts with Reinforcement Learning-guided Fuzzing,ASE
+Block State Dependency,Effectively Generating Vulnerable Transaction Sequences in Smart Contracts with Reinforcement Learning-guided Fuzzing,ASE
+Unhandled Exception,Effectively Generating Vulnerable Transaction Sequences in Smart Contracts with Reinforcement Learning-guided Fuzzing,ASE
+Dangerous Delegatecall,Effectively Generating Vulnerable Transaction Sequences in Smart Contracts with Reinforcement Learning-guided Fuzzing,ASE
+Ether Frezzing,SMARTIAN: Enhancing Smart Contract Fuzzing with Static and Dynamic Data-Flow Analyses,ASE
+Assertion Failure,SMARTIAN: Enhancing Smart Contract Fuzzing with Static and Dynamic Data-Flow Analyses,ASE
+Arbitrary Write,SMARTIAN: Enhancing Smart Contract Fuzzing with Static and Dynamic Data-Flow Analyses,ASE
+Block State Dependency,SMARTIAN: Enhancing Smart Contract Fuzzing with Static and Dynamic Data-Flow Analyses,ASE
+Control-flow Hijack,SMARTIAN: Enhancing Smart Contract Fuzzing with Static and Dynamic Data-Flow Analyses,ASE
+Ether Leak,SMARTIAN: Enhancing Smart Contract Fuzzing with Static and Dynamic Data-Flow Analyses,ASE
+Freezing Ether,SMARTIAN: Enhancing Smart Contract Fuzzing with Static and Dynamic Data-Flow Analyses,ASE
+Integer Bug,SMARTIAN: Enhancing Smart Contract Fuzzing with Static and Dynamic Data-Flow Analyses,ASE
+Mishandled Exception,SMARTIAN: Enhancing Smart Contract Fuzzing with Static and Dynamic Data-Flow Analyses,ASE
+Multiple Send,SMARTIAN: Enhancing Smart Contract Fuzzing with Static and Dynamic Data-Flow Analyses,ASE
+Reentrancy,SMARTIAN: Enhancing Smart Contract Fuzzing with Static and Dynamic Data-Flow Analyses,ASE
+Requirement Violation,SMARTIAN: Enhancing Smart Contract Fuzzing with Static and Dynamic Data-Flow Analyses,ASE
+Suicidal Contract,SMARTIAN: Enhancing Smart Contract Fuzzing with Static and Dynamic Data-Flow Analyses,ASE
+Tranasaction Origin Use,SmartBugs: A Framework to Analyze Solidity Smart Contracts,ASE
+Access Control,SmartBugs: A Framework to Analyze Solidity Smart Contracts,ASE
+Arithmetic,SmartBugs: A Framework to Analyze Solidity Smart Contracts,ASE
+Bad Randomness,SmartBugs: A Framework to Analyze Solidity Smart Contracts,ASE
+Denial of service,SmartBugs: A Framework to Analyze Solidity Smart Contracts,ASE
+Front running,SmartBugs: A Framework to Analyze Solidity Smart Contracts,ASE
+Reentrancy,SmartBugs: A Framework to Analyze Solidity Smart Contracts,ASE
+Short addresses,SmartBugs: A Framework to Analyze Solidity Smart Contracts,ASE
+Time manipulation,SmartBugs: A Framework to Analyze Solidity Smart Contracts,ASE
+Unchecked low level calls,Finding Ethereum Smart Contracts Security Issues by Comparing History Versions,ASE
+Unmatched ERC20 Contract,Finding Ethereum Smart Contracts Security Issues by Comparing History Versions,ASE
+Limits of Permission,Finding Ethereum Smart Contracts Security Issues by Comparing History Versions,ASE
+Unchecked External Call,Finding Ethereum Smart Contracts Security Issues by Comparing History Versions,ASE
+Nested Call,Summary-Based Symbolic Evaluation for Smart Contracts,ASE
+BatchOverflow,Summary-Based Symbolic Evaluation for Smart Contracts,ASE
+Unchecked-send (Gasless-send),Summary-Based Symbolic Evaluation for Smart Contracts,ASE
+Reentrancy,Cross-contract static analysis for detecting practical reentrancy vulnerabilities in smart contracts,ASE
+Reentrancy,ContractFuzzer: fuzzing smart contracts for vulnerability detection,ASE
+Gasless Send,ContractFuzzer: fuzzing smart contracts for vulnerability detection,ASE
+Reentrancy,ContractFuzzer: fuzzing smart contracts for vulnerability detection,ASE
+Timestamp Dependency,ContractFuzzer: fuzzing smart contracts for vulnerability detection,ASE
+Block Number Dependency,ContractFuzzer: fuzzing smart contracts for vulnerability detection,ASE
+Dangerous DelegateCall,ContractFuzzer: fuzzing smart contracts for vulnerability detection,ASE
+Freezing Ether,SAILFISH: Vetting Smart Contract State-Inconsistency Bugs in Seconds,S&P
+State-Inconsistency,SGUARD: Towards Fixing Vulnerable Smart Contracts Automatically,S&P
+overflow,SGUARD: Towards Fixing Vulnerable Smart Contracts Automatically,S&P
+Reentrancy,SmartPulse: Automated Checking of Temporal Properties in Smart Contracts,S&P
+Reentrancy,SmartPulse: Automated Checking of Temporal Properties in Smart Contracts,S&P
+Unprotected Function,SmartPulse: Automated Checking of Temporal Properties in Smart Contracts,S&P
+Integer Overflow,SmartPulse: Automated Checking of Temporal Properties in Smart Contracts,S&P
+Integer Underflow,SmartPulse: Automated Checking of Temporal Properties in Smart Contracts,S&P
+Gas DOS,SmartPulse: Automated Checking of Temporal Properties in Smart Contracts,S&P
+Revert DOS,SmartPulse: Automated Checking of Temporal Properties in Smart Contracts,S&P
+Push DOS,SmartPulse: Automated Checking of Temporal Properties in Smart Contracts,S&P
+Unchecked Send,SmartPulse: Automated Checking of Temporal Properties in Smart Contracts,S&P
+Locked Funds,Semantic Understanding of Smart Contracts: Executable Operational Semantics of Solidity,S&P
+Reentrancy,Semantic Understanding of Smart Contracts: Executable Operational Semantics of Solidity,S&P
+Unsafe Delegatecall,Semantic Understanding of Smart Contracts: Executable Operational Semantics of Solidity,S&P
+Unhandled Exception,VERISMART: A Highly Precise Safety Verifier for Ethereum Smart Contracts,S&P
+Arithmetic Over/underflow,VERISMART: A Highly Precise Safety Verifier for Ethereum Smart Contracts,S&P
+Bad Randomness,VERISMART: A Highly Precise Safety Verifier for Ethereum Smart Contracts,S&P
+Access Control,VERISMART: A Highly Precise Safety Verifier for Ethereum Smart Contracts,S&P
+Unsafe Input Dependency,VerX: Safety Verification of Smart Contracts,S&P
+external callback,Aroc: An Automatic Repair Framework for On-Chain Smart Contracts,TSE
+reentrancy,Aroc: An Automatic Repair Framework for On-Chain Smart Contracts,TSE
+arithmetic bugs,Aroc: An Automatic Repair Framework for On-Chain Smart Contracts,TSE
+unchecked low-level checks,DEFECTCHECKER: Automated Smart Contract Defect Detection by Analyzing EVM Bytecode,TSE
+Transaction State Dependency,DEFECTCHECKER: Automated Smart Contract Defect Detection by Analyzing EVM Bytecode,TSE
+Strict Balance Equality,DEFECTCHECKER: Automated Smart Contract Defect Detection by Analyzing EVM Bytecode,TSE
+DoS under External Influence,DEFECTCHECKER: Automated Smart Contract Defect Detection by Analyzing EVM Bytecode,TSE
+Reentrancy,DEFECTCHECKER: Automated Smart Contract Defect Detection by Analyzing EVM Bytecode,TSE
+Nested Call,DEFECTCHECKER: Automated Smart Contract Defect Detection by Analyzing EVM Bytecode,TSE
+Greedy Contract,DEFECTCHECKER: Automated Smart Contract Defect Detection by Analyzing EVM Bytecode,TSE
+Unchecked External Call,DEFECTCHECKER: Automated Smart Contract Defect Detection by Analyzing EVM Bytecode,TSE
+Block Info Dependency,DEFECTCHECKER: Automated Smart Contract Defect Detection by Analyzing EVM Bytecode,TSE
+Unchecked External Calls,DEFECTCHECKER: Automated Smart Contract Defect Detection by Analyzing EVM Bytecode,TSE
+Unmatched Type Assignment,DEFECTCHECKER: Automated Smart Contract Defect Detection by Analyzing EVM Bytecode,TSE
+Misleading Data Location,DEFECTCHECKER: Automated Smart Contract Defect Detection by Analyzing EVM Bytecode,TSE
+Hard Code Address,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Unchecked External Calls,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Strict Balance Equality,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Transaction State Dependency,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Hard Code Address,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Nested Call,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Unspecified Compiler Version,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Unused Statement,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Missing Return Statement,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Missing Reminder,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+High Gas Consumption Function Type,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+DoS Under External Influence,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Unmatched Type Assignment,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Re-entrancy,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Block Info Dependency,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Deprecated APIs,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Misleading Data Location,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Unmatched ERC-20 standard,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Missing Interrupter,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+Greedy Contract,DEFINING SMART CONTRACT DEFECTS ON ETHEREUM,TSE
+High Gas Consumption Data Type,CHECKING SMART CONTRACTS WITH STRUCTURAL CODE EMBEDDING,TSE
+Overflow/Underflow,CHECKING SMART CONTRACTS WITH STRUCTURAL CODE EMBEDDING,TSE
+Blockhash/Timestamp,CHECKING SMART CONTRACTS WITH STRUCTURAL CODE EMBEDDING,TSE
+Implicit Visibility/HoneyPot,CHECKING SMART CONTRACTS WITH STRUCTURAL CODE EMBEDDING,TSE
+Overpowered User/Owner CVE,CHECKING SMART CONTRACTS WITH STRUCTURAL CODE EMBEDDING,TSE
+Reentrancy,CHECKING SMART CONTRACTS WITH STRUCTURAL CODE EMBEDDING,TSE
+Gas Consumption/Gas Limit,CHECKING SMART CONTRACTS WITH STRUCTURAL CODE EMBEDDING,TSE
+Incorrect Signature/Replay,CHECKING SMART CONTRACTS WITH STRUCTURAL CODE EMBEDDING,TSE
+TransferFlaw/ERC-20 Transfer,CHECKING SMART CONTRACTS WITH STRUCTURAL CODE EMBEDDING,TSE
+Overflow/Batch Overflow,CHECKING SMART CONTRACTS WITH STRUCTURAL CODE EMBEDDING,TSE
+Unsafe Reverse/Verify Reverse,A Large-Scale Empirical Study on Control Flow Identification of Smart Contracts,ESEM
+Transaction-Ordering Dependence,A Large-Scale Empirical Study on Control Flow Identification of Smart Contracts,ESEM
+Timestamp Dependence,A Large-Scale Empirical Study on Control Flow Identification of Smart Contracts,ESEM
+Mishandled Exceptions,A Large-Scale Empirical Study on Control Flow Identification of Smart Contracts,ESEM
+Reentrancy,SMARTGIFT: Learning to Generate Practical Inputs for Testing Smart Contracts,ICSME
+Time Dependency,SMARTGIFT: Learning to Generate Practical Inputs for Testing Smart Contracts,ICSME
+Number Dependency,SMARTGIFT: Learning to Generate Practical Inputs for Testing Smart Contracts,ICSME
+Gasless Send,SMARTGIFT: Learning to Generate Practical Inputs for Testing Smart Contracts,ICSME
+Exception Disorder,SMARTGIFT: Learning to Generate Practical Inputs for Testing Smart Contracts,ICSME
+Delegate Dangerous,SMARTGIFT: Learning to Generate Practical Inputs for Testing Smart Contracts,ICSME
+Reentrancy,A Framework and DataSet for Bugs in Ethereum Smart Contracts,ICSME
+Integer Sign,A Framework and DataSet for Bugs in Ethereum Smart Contracts,ICSME
+Wrong Operator,A Framework and DataSet for Bugs in Ethereum Smart Contracts,ICSME
+Uninitialized Storage Variables,A Framework and DataSet for Bugs in Ethereum Smart Contracts,ICSME
+Re-entrancy Vulnerability,A Framework and DataSet for Bugs in Ethereum Smart Contracts,ICSME
+Short Address Attack,A Framework and DataSet for Bugs in Ethereum Smart Contracts,ICSME
+Signature With Wrong Parameter,A Framework and DataSet for Bugs in Ethereum Smart Contracts,ICSME
+Transaction Order Dependence,Peculiar: Smart Contract Vulnerability Detection Based on Crucial Data Flow Graph and Pre-training Techniques,ISSRE
+Reentrancy,MPro: Combining Static and Symbolic Analysis for Scalable Testing of Smart Contract,ISSRE
+Reentrancy,MPro: Combining Static and Symbolic Analysis for Scalable Testing of Smart Contract,ISSRE
+Unrestricted Suicide,Analysis Of The Relationship Between Smart Contracts’ Categories and Vulnerabilities,SANER
+Arithmetic overflows and underflows.,Analysis Of The Relationship Between Smart Contracts’ Categories and Vulnerabilities,SANER
+Unexpected code execution due to the DELEGATECALL opcode.,Analysis Of The Relationship Between Smart Contracts’ Categories and Vulnerabilities,SANER
+Unexpected loss of Ether due to improper use of the suicide/selfdestruct function.,Analysis Of The Relationship Between Smart Contracts’ Categories and Vulnerabilities,SANER
+Block timestamps manipulation.,Analysis Of The Relationship Between Smart Contracts’ Categories and Vulnerabilities,SANER
+Improper iterations over array or mapping with a big amount of elements.,ETHPLOIT: From Fuzzing to Efficient Exploit Generation against Smart Contracts,SANER
+Unchecked Transfer Value,ETHPLOIT: From Fuzzing to Efficient Exploit Generation against Smart Contracts,SANER
+Vulnerable Access Control,SMARTSHIELD: Automatic Smart Contract Protection Made Easy,SANER
+State Changes after External Calls,SMARTSHIELD: Automatic Smart Contract Protection Made Easy,SANER
+Missing Checks for Out-of-Bound Arithmetic Ops,SMARTSHIELD: Automatic Smart Contract Protection Made Easy,SANER
+Delegate Call To Untrusted Contract,Mythril,GitHub
+Dependence on Predictable Variables,Mythril,GitHub
+Ether Thief,Mythril,GitHub
+Exceptions,Mythril,GitHub
+External Calls,Mythril,GitHub
+Integer,Mythril,GitHub
+Multiple Sends,Mythril,GitHub
+Suicide,Mythril,GitHub
+State Change External Calls,Mythril,GitHub
+Unchecked Retval,Mythril,GitHub
+User Supplied assertion,Mythril,GitHub
+Arbitrary Storage Write,Mythril,GitHub
+Arbitrary Jump,Mythril,GitHub
