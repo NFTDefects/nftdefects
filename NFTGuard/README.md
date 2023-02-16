@@ -18,6 +18,10 @@ A static analysis tool for detecting NFT-related contract defects based on a sym
 
 ## Code Structure
 
+The design refers to the architecture shown below:
+
+<img src="./test/arch.png" alt="arch" style="zoom: 50%;" />
+
 - `inputter`: **_Inputter_** module for compiling the source code of Solidity smart contracts and extracting useful information for further analysis before symbolic execution.
 - `cfg_builder`: **_CFG Builder_** module for analysis, including essential data structures, and symbolic execution of evm opcodes.
 - `feature_detector`: **_Feature Detector_** module of core analysis of finding NFT defects during execution based on 3 operational features (i.e., mapping storage, delete operation, and external invocation) and detection rules.
