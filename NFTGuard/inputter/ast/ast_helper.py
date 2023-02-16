@@ -1,16 +1,19 @@
 import json
 
-from input.ast_walker import AstWalker
-from utils import run_command
+from inputter.ast.ast_walker import AstWalker
+from cfg_builder.utils import run_command
 
 
 class AstHelper:
+    # scalability, method to its declaration id in AST
+    method_to_ref_decl_ids = {}
+
     def __init__(self, filename, input_type):
         self.input_type = input_type
         if input_type == "solidity":
             self.source_list = self.get_source_list(filename)
         else:
-            raise Exception("There is no such type of input")
+            raise Exception("There is no such type of inputter")
         self.contracts = self.extract_contract_definitions(self.source_list)
 
     def get_source_list(self, filename):
@@ -49,7 +52,8 @@ class AstHelper:
         node = self.contracts["contractsByName"][c_name]
         state_vars = []
         if node:
-            base_contracts = self.get_linearized_base_contracts(node["id"], self.contracts["contractsById"])
+            base_contracts = self.get_linearized_base_contracts(
+                node["id"], self.contracts["contractsById"])
             base_contracts = list(base_contracts)
             base_contracts = list(reversed(base_contracts))
             for contract in base_contracts:
@@ -120,7 +124,8 @@ class AstHelper:
                 type_of_first_child = node["children"][0]["attributes"]["type"]
                 if type_of_first_child.split(" ")[0] == "contract":
                     contract = type_of_first_child.split(" ")[1]
-                    contract_path = self._find_contract_path(self.contracts["contractsByName"].keys(), contract)
+                    contract_path = self._find_contract_path(
+                        self.contracts["contractsByName"].keys(), contract)
                     callee_src_pairs.append((contract_path, node["src"]))
         return callee_src_pairs
 
@@ -129,30 +134,35 @@ class AstHelper:
         walker = AstWalker()
         func_def_nodes = []
         if node:
-            walker.walk(node, {'nodeType': 'FunctionDefinition'}, func_def_nodes)
+            walker.walk(
+                node, {'nodeType': 'FunctionDefinition'}, func_def_nodes)
 
         func_name_to_params = {}
         for func_def_node in func_def_nodes:
             func_name = func_def_node['name']
 
             params_nodes = []
-            walker.walk(func_def_node, {'nodeType': 'ParameterList'}, params_nodes)
+            walker.walk(func_def_node, {
+                'nodeType': 'ParameterList'}, params_nodes)
 
             params_node = params_nodes[0]
             param_nodes = []
-            walker.walk(params_node, {'nodeType': 'VariableDeclaration'}, param_nodes)
+            walker.walk(
+                params_node, {'nodeType': 'VariableDeclaration'}, param_nodes)
 
             for param_node in param_nodes:
                 var_name = param_node['name']
                 type_name = param_node['typeName']['nodeType']
                 if type_name == 'ArrayTypeName':
                     literal_nodes = []
-                    walker.walk(param_node, {'nodeType': 'Literal'}, literal_nodes)
+                    walker.walk(
+                        param_node, {'nodeType': 'Literal'}, literal_nodes)
                     if literal_nodes:
                         array_size = int(literal_nodes[0]['value'])
                     else:
                         array_size = 1
-                    param = {'name': var_name, 'type': type_name, 'value': array_size}
+                    param = {'name': var_name,
+                             'type': type_name, 'value': array_size}
                 elif type_name == 'ElementaryTypeName':
                     param = {'name': var_name, 'type': type_name}
                 else:

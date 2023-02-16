@@ -1,9 +1,10 @@
 import logging
 
 import global_params
-from evm.opcodes import *
-from utils import *
+from cfg_builder.opcodes import *
+from cfg_builder.utils import *
 
+# magic value
 HASH_TO_HEX = 353073666
 OWNER = "owner"
 BOOL_ACTIVE = "ACTIVE"
@@ -40,7 +41,7 @@ def calculate_gas(opcode, stack, mem, global_state, analysis, solver):
     elif opcode == "EXP" and len(stack) > 1:
         if isReal(stack[1]) and stack[1] > 0:
             gas_increment += GCOST["Gexpbyte"] * \
-                             (1 + math.floor(math.log(stack[1], 256)))
+                (1 + math.floor(math.log(stack[1], 256)))
     elif opcode == "EXTCODECOPY" and len(stack) > 2:
         if isReal(stack[2]):
             gas_increment += GCOST["Gcopy"] * math.ceil(stack[2] / 32)
@@ -122,7 +123,7 @@ def calculate_gas(opcode, stack, mem, global_state, analysis, solver):
 
 
 def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problematic_pcs, current_func_name, g_src_map,
-                      path_conditions_and_vars, solver, blocks, instructions):
+                      path_conditions_and_vars, solver, instructions, g_slot_map):
     gas_increment, gas_memory = calculate_gas(
         opcode, stack, mem, global_state, analysis, solver)
     analysis["gas"] += gas_increment
@@ -139,27 +140,27 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
                 # *Other cases, the second param of mint is quantity
                 # if value == global_state["mint"]["token_id"]:
                 # global_state["mint"]["MSTORE_1"] = True
-                if value in global_params.OWNER_INDEX:
+                if value in g_slot_map.owner_index:
                     global_state["mint"]["MSTORE_2"] = True
 
             if global_state["approve"]["trigger"] == True:
                 if value == global_state["approve"]["token_id"]:
                     global_state["approve"]["MSTORE_1"] = True
-                elif value in global_params.OWNER_INDEX:
+                elif value in g_slot_map.owner_index:
                     global_state["approve"]["MSTORE_owner"] = True
-                elif value in global_params.APPROVAL_INDEX:
+                elif value in g_slot_map.owner_index:
                     global_state["approve"]["MSTORE_2"] = True
 
             if global_state["burn"]["trigger"] == True:
                 if value == global_state["burn"]["token_id"]:
                     global_state["burn"]["MSTORE_1"] = True
-                elif value in global_params.OWNER_INDEX:
+                elif value in g_slot_map.owner_index:
                     global_state["burn"]["MSTORE_2"] = True
 
             if global_state["setApprovalForAll"]["trigger"] == True:
                 if str(global_state["sender_address"]) in str(value):
                     global_state["setApprovalForAll"]["MSTORE_1"] = True
-                elif value in global_params.APPROVAL_INDEX:
+                elif value in g_slot_map.approval_index:
                     global_state["setApprovalForAll"]["MSTORE_2"] = True
                 elif str(global_state["setApprovalForAll"]["operator"]) in str(value):
                     global_state["setApprovalForAll"]["MSTORE_3"] = True
@@ -170,13 +171,15 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
 
         # *Risky Mutable Proxy DEFECT
         if g_src_map:
-            if stored_address in global_params.PROXY_INDEX and current_func_name:
+            if stored_address in g_slot_map.proxy_index and current_func_name:
                 if BOOL_ACTIVE not in current_func_name.upper() and BOOL_START not in current_func_name.upper() and "SETPROXY" in current_func_name.upper():
                     solver = Solver()
                     solver.set("timeout", global_params.TIMEOUT)
-                    solver.add([global_state["Ia"][stored_address] != stored_value])
+                    solver.add(
+                        [global_state["Ia"][stored_address] != stored_value])
                     if solver.check() == sat:
-                        global_problematic_pcs["proxy_defect"].append(global_state['pc'])
+                        global_problematic_pcs["proxy_defect"].append(
+                            global_state['pc'])
 
         if global_state["mint"]["hash"] == stored_address:
             vars = get_vars(stored_value)
@@ -200,14 +203,15 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
                             new_path_condition.append(var == BitVecVal(0, 256))
                         elif is_storage_var(var):
                             if str(global_state["mint"]["hash"]) in str(var):
-                                new_path_condition.append(var != BitVecVal(0, 256))
+                                new_path_condition.append(
+                                    var != BitVecVal(0, 256))
                 solver = Solver()
                 solver.set("timeout", global_params.TIMEOUT)
 
                 solver.add(path_condition)
                 solver.push()
                 solver.add(new_path_condition)
-                # *True => problematic mint      
+                # *True => problematic mint
                 if solver.check() == sat:
                     for pc in global_state["standard_violation"]["mint_pc"]:
                         global_problematic_pcs["violation_defect"].append(pc)
@@ -224,22 +228,23 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
                         if is_storage_var(var):
                             pos = get_storage_position(var)
                             var_name = get_storage_var_name(var)
-                            # *onlyOwner 
+                            # *onlyOwner
                             if var_name == "":
-                                if pos in global_params.SIMPLER_SLOT_MAP:
-                                    var_names = global_params.SIMPLER_SLOT_MAP[pos]
+                                if pos in g_slot_map.simpler_slot_map:
+                                    var_names = g_slot_map.simpler_slot_map[pos]
                                     for var_name in var_names:
                                         if OWNER in var_name:
                                             owner = True
                             else:
                                 if OWNER in var_name:
                                     owner = True
-                            if pos in global_params.SUPPLY_INDEX:
+                            if pos in g_slot_map.supply_index:
                                 check = True
 
                 if not check and owner and not global_state["unlimited_minting"]["check"]:
                     for pc in global_state["unlimited_minting"]["pc"]:
-                        global_problematic_pcs["unlimited_minting_defect"].append(pc)
+                        global_problematic_pcs["unlimited_minting_defect"].append(
+                            pc)
 
         # *_tokenApprovals[tokenId] = to;
         if global_state["approve"]["hash"] == stored_address:
@@ -281,7 +286,8 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
                                 # *Step1: Do not approve to current owner
                                 # *Cannot through solver checking
                                 solver.push()
-                                solver.add([var == global_state["approve"]["to"]])
+                                solver.add(
+                                    [var == global_state["approve"]["to"]])
                                 if not (solver.check() == sat):
                                     check_to = True
                                 solver.pop()
@@ -303,7 +309,8 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
                 if global_state["approve"]["to"] != None and global_state["mint"]["to"] != None and \
                         global_state["approve"]["to"] == global_state["mint"]["to"]:
                     for pc in global_state["invalid_approval"]["pc"]:
-                        global_problematic_pcs["invalid_approval_defect"].append(pc)
+                        global_problematic_pcs["invalid_approval_defect"].append(
+                            pc)
 
                 # *Cannot transfer the approval permission
                 # *Sample:
@@ -311,7 +318,8 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
                 #   setApprovalForAll(contract, true)
                 if str(global_state["mint"]["to"]) == str(path_conditions_and_vars["Ia"]):
                     for pc in global_state["invalid_approval"]["pc"]:
-                        global_problematic_pcs["invalid_approval_defect"].append(pc)
+                        global_problematic_pcs["invalid_approval_defect"].append(
+                            pc)
 
         # *Public Burn DEFECT
         if global_state["burn"]["valid"] and global_state["burn"]["hash"] == stored_address:
@@ -325,7 +333,8 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
                     if str(var) == str(global_state["sender_address"]):
                         check = True
             if check == False:
-                global_problematic_pcs["burn_defect"].append(global_state["burn"]["pc"])
+                global_problematic_pcs["burn_defect"].append(
+                    global_state["burn"]["pc"])
     elif opcode.startswith('PUSH', 0):
         position = int(opcode[4:], 10)
         source_code = g_src_map.get_source_code(global_state['pc'])
@@ -352,7 +361,8 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
                 # *Need to validate the intention => the exitence of calling onERC721Received
                 if (source_code.startswith("_safeMint") or source_code.startswith("safeTransferFrom")) and not \
                         global_state["ERC721_reentrancy"]["check"]:
-                    global_state["unlimited_minting"]["pc"].append(global_state['pc'])
+                    global_state["unlimited_minting"]["pc"].append(
+                        global_state['pc'])
                     # *stack elements
                     mint_to = stack[2]
                     mint_amount = stack[1]
@@ -373,26 +383,28 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
                             # check if a var is global
                             if is_storage_var(var):
                                 pos = get_storage_position(var)
-                                global_state["ERC721_reentrancy"]["var"].append(str(pos))
+                                global_state["ERC721_reentrancy"]["var"].append(
+                                    str(pos))
                                 var_name = get_storage_var_name(var)
                                 # *onlyOwner modifier will not trigger the reentrancy
                                 if var_name == "":
-                                    if pos in global_params.SIMPLER_SLOT_MAP:
-                                        var_names = global_params.SIMPLER_SLOT_MAP[pos]
+                                    if pos in g_slot_map.simpler_slot_map:
+                                        var_names = g_slot_map.simpler_slot_map[pos]
                                         for var_name in var_names:
                                             if OWNER in var_name:
                                                 not_owner = False
-                                            if global_params.NAME_TO_TYPE[var_name].startswith("mapping"):
+                                            if g_slot_map.name_to_type[var_name].startswith("mapping"):
                                                 has_mapping = True
                                 else:
                                     if OWNER in var_name:
                                         not_owner = False
 
-                                    if var_name.split('[')[0] in global_params.NAME_TO_TYPE:
-                                        if global_params.NAME_TO_TYPE[var_name.split('[')[0]].startswith("mapping"):
+                                    if var_name.split('[')[0] in g_slot_map.name_to_type:
+                                        if g_slot_map.name_to_type[var_name.split('[')[0]].startswith("mapping"):
                                             has_mapping = True
                                 if pos in global_state['Ia']:
-                                    new_path_condition.append(var == global_state['Ia'][pos])
+                                    new_path_condition.append(
+                                        var == global_state['Ia'][pos])
 
                     # *Add the constraint of the second param of _safeMint => tokenId/quantity
                     vars = get_vars(mint_amount)
@@ -400,7 +412,8 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
                         if is_storage_var(var):
                             pos = get_storage_position(var)
                             if pos in global_state['Ia']:
-                                new_path_condition.append(var == global_state['Ia'][pos])
+                                new_path_condition.append(
+                                    var == global_state['Ia'][pos])
 
                     solver = Solver()
                     solver.set("timeout", global_params.TIMEOUT)
@@ -413,8 +426,10 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
                     if not (solver.check() == unsat) and not_owner:
                         # *Skip double enter in loop
                         global_state["ERC721_reentrancy"]["check"] = True
-                        global_state["ERC721_reentrancy"]["pc"].append(global_state['pc'])
-                        global_problematic_pcs["reentrancy_defect"].append(global_state['pc'])
+                        global_state["ERC721_reentrancy"]["pc"].append(
+                            global_state['pc'])
+                        global_problematic_pcs["reentrancy_defect"].append(
+                            global_state['pc'])
                         # *Judge the end of the function => not intend to modify the state in the function body
                         # pop_pc = return_pc + 1
                         # pop_src = g_src_map.get_source_code(pop_pc)
@@ -436,7 +451,8 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
                     global_state["mint"]["to"] = stack[2]
                     global_state["mint"]["token_id"] = stack[1]
                     global_state["mint"]["quantity"] = stack[1]
-                    global_state["standard_violation"]["mint_pc"].append(global_state["pc"])
+                    global_state["standard_violation"]["mint_pc"].append(
+                        global_state["pc"])
                     path_condition = path_conditions_and_vars["path_condition"]
                     for expr in path_condition:
                         if not is_expr(expr):
@@ -454,15 +470,19 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
                     # TODO check the parameter of approve, default sequence(operator, token_id)
                     global_state["approve"]["to"] = stack[2]
                     global_state["approve"]["token_id"] = stack[1]
-                    global_state["standard_violation"]["approve_pc"].append(global_state["pc"])
-                    global_state["invalid_approval"]["pc"].append(global_state["pc"])
+                    global_state["standard_violation"]["approve_pc"].append(
+                        global_state["pc"])
+                    global_state["invalid_approval"]["pc"].append(
+                        global_state["pc"])
 
                 elif source_code.startswith("setApprovalForAll") and current_func_name:
                     global_state["setApprovalForAll"]["trigger"] = True
                     global_state["setApprovalForAll"]["operator"] = stack[2]
                     global_state["setApprovalForAll"]["approved"] = stack[1]
-                    global_state["standard_violation"]["setApprovalForAll_pc"].append(global_state["pc"])
-                    global_state["invalid_approval"]["pc"].append(global_state["pc"])
+                    global_state["standard_violation"]["setApprovalForAll_pc"].append(
+                        global_state["pc"])
+                    global_state["invalid_approval"]["pc"].append(
+                        global_state["pc"])
 
                 # *Check burn and validate it
                 elif source_code.startswith("_burn") and current_func_name:
@@ -473,7 +493,8 @@ def semantic_analysis(analysis, opcode, stack, mem, global_state, global_problem
 
     elif opcode == "CALL":
         if global_state["ERC721_reentrancy"]["check"] == True:
-            reentrancy_result = check_reentrancy_bug(path_conditions_and_vars, stack, mem)
+            reentrancy_result = check_reentrancy_bug(
+                path_conditions_and_vars, stack, mem)
 
             # *Also check the validity of mint
             if reentrancy_result == True and global_state["mint"]["valid"]:
@@ -486,7 +507,7 @@ def check_reentrancy_bug(path_conditions_and_vars, stack, mem):
 
     # onERC721Received() Selector: 150b7a02
     ret_val = False
-    # TODO Why stack[8] represents the hash of onERC721Received
+    # stack[8] represents the hash of onERC721Received
     # *Read memory from 160 to 224/mem_64 => 160, 164 + mem_mem_64 => 224
     # *The values should be the shift-lefted value of OnERC721Received selector
     start_data_input = stack[3]

@@ -8,25 +8,23 @@ import traceback
 import zlib
 from collections import namedtuple
 from tokenize import NUMBER, NAME, NEWLINE
+from rich.progress import track
 
 from numpy import mod
+from defect_identifier.identifier import Identifier
 
-from analysis.semantic_analysis import *
-from defects.defect import PublicBurnDefect, ReentrancyDefect, RiskyProxyDefect, UnlimitedMintingDefect, ViolationDefect
-from evm.basicblock import BasicBlock
-from evm.execution_states import (UNKNOWN_INSTRUCTION, EXCEPTION, PICKLE_PATH)
-from evm.vargenerator import *
-from input.utils import *
-from utils import *
+from feature_detector.semantic_analysis import *
+from cfg_builder.basicblock import BasicBlock
+from cfg_builder.execution_states import (
+    UNKNOWN_INSTRUCTION, EXCEPTION, PICKLE_PATH)
+from cfg_builder.vargenerator import *
+from cfg_builder.utils import *
+from defect_identifier.defect import PublicBurnDefect, ReentrancyDefect, RiskyProxyDefect, UnlimitedMintingDefect, ViolationDefect
 
 log = logging.getLogger(__name__)
 
 UNSIGNED_BOUND_NUMBER = 2 ** 256 - 1
 CONSTANT_ONES_159 = BitVecVal((1 << 160) - 1, 256)
-
-Assertion = namedtuple('Assertion', ['pc', 'model'])
-Underflow = namedtuple('Underflow', ['pc', 'model'])
-Overflow = namedtuple('Overflow', ['pc', 'model'])
 
 
 class Parameter:
@@ -87,7 +85,7 @@ def initGlobalVars():
             'evm_code_coverage': '',
             'instructions': '',
             'time': '',
-            'defects': {
+            'analysis': {
                 'proxy': [],
                 'burn': [],
                 'reentrancy': [],
@@ -107,7 +105,7 @@ def initGlobalVars():
             'evm_code_coverage': '',
             'instructions': '',
             'time': '',
-            'defects': {
+            'analysis': {
                 'proxy': [],
                 'burn': [],
                 'reentrancy': [],
@@ -178,8 +176,6 @@ def initGlobalVars():
     # to generate names for symbolic variables
     global gen
     gen = Generator()
-
-    global data_source
 
     global rfile
     if global_params.REPORT_MODE:
@@ -404,7 +400,7 @@ def construct_bb():
     global blocks
     sorted_addresses = sorted(instructions.keys())
     size = len(sorted_addresses)
-    logging.info("instruction size: %d" % size)
+    # logging.info("instruction size: %d" % size)
     for key in end_ins_dict:
         end_address = end_ins_dict[key]
         block = BasicBlock(key, end_address)
@@ -533,7 +529,7 @@ def get_init_global_state(path_conditions_and_vars):
     global_state["currentSelfBalance"] = currentSelfBalance
     global_state["currentBaseFee"] = currentBaseFee
 
-    # the state of gates to detect defects
+    # the state of gates to detect defect
     global_state["ERC721_reentrancy"] = {
         "pc": [],
         "key": None,
@@ -643,6 +639,7 @@ def full_sym_exec():
                        global_state=global_state, analysis=analysis)
     if g_src_map:
         start_block_to_func_sig = get_start_block_to_func_sig()
+
     return sym_exec_block(params, 0, 0, 0, -1, 'fallback')
 
 
@@ -666,7 +663,6 @@ def sym_exec_block(params, block, pre_block, depth, func_call, current_func_name
     path_conditions_and_vars = params.path_conditions_and_vars
     analysis = params.analysis
     calls = params.calls
-    overflow_pcs = params.overflow_pcs
 
     # Factory Function for tuples is used as dictionary key
     Edge = namedtuple("Edge", ["v1", "v2"])
@@ -839,8 +835,8 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
     global edges
     global blocks
     global g_src_map
+    global g_slot_map
     global calls_affect_state
-    global data_source
     global instructions
 
     stack = params.stack
@@ -855,6 +851,9 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
 
     visited_pcs.add(global_state["pc"])
 
+    # flush coverage
+    perc = float(len(visited_pcs)) / len(instructions.keys())
+
     instr_parts = str.split(instr, ' ')
     opcode = instr_parts[0]
 
@@ -867,7 +866,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
     # this should be done before symbolically executing the instruction,
     # since SE will modify the stack and mem
     semantic_analysis(analysis, opcode, stack, mem, global_state, global_problematic_pcs,
-                      current_func_name, g_src_map, path_conditions_and_vars, solver, blocks, instructions)
+                      current_func_name, g_src_map, path_conditions_and_vars, solver, instructions, g_slot_map)
 
     log.debug("==============================")
     log.debug("EXECUTING: " + instr)
@@ -1184,10 +1183,10 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                     signbit_index_from_right = 8 * first + 7
                     if second & (1 << signbit_index_from_right):
                         computed = second | (
-                                2 ** 256 - (1 << signbit_index_from_right))
+                            2 ** 256 - (1 << signbit_index_from_right))
                     else:
                         computed = second & (
-                                (1 << signbit_index_from_right) - 1)
+                            (1 << signbit_index_from_right) - 1)
             else:
                 first = to_symbolic(first)
                 second = to_symbolic(second)
@@ -1201,10 +1200,10 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                     solver.add(second & (1 << signbit_index_from_right) == 0)
                     if check_sat(solver) == unsat:
                         computed = second | (
-                                2 ** 256 - (1 << signbit_index_from_right))
+                            2 ** 256 - (1 << signbit_index_from_right))
                     else:
                         computed = second & (
-                                (1 << signbit_index_from_right) - 1)
+                            (1 << signbit_index_from_right) - 1)
                     solver.pop()
                 solver.pop()
             computed = simplify(computed) if is_expr(computed) else computed
@@ -1454,7 +1453,6 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 global_state["approve"]["hash"] = stack[0]
                 global_state["transfer"]["MSTORE_2"] = False
 
-
         else:
             raise ValueError('STACK underflow')
     #
@@ -1494,7 +1492,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
         stack.insert(0, global_state["value"])
         # buy function feature: msg.value to transfer the token
 
-    elif opcode == "CALLDATALOAD":  # from input data from environment
+    elif opcode == "CALLDATALOAD":  # from inputter data from environment
         if len(stack) > 0:
             global_state["pc"] = global_state["pc"] + 1
             position = stack.pop(0)
@@ -1529,7 +1527,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             new_var = BitVec(new_var_name, 256)
             path_conditions_and_vars[new_var_name] = new_var
         stack.insert(0, new_var)
-    elif opcode == "CALLDATACOPY":  # Copy input data to memory
+    elif opcode == "CALLDATACOPY":  # Copy inputter data to memory
         #  TODO: Don't know how to simulate this yet
         if len(stack) > 2:
             global_state["pc"] = global_state["pc"] + 1
@@ -1639,40 +1637,24 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             no_bytes = stack.pop(0)
             current_miu_i = global_state["miu_i"]
 
-            if isAllReal(address, mem_location, current_miu_i, code_from, no_bytes) and USE_GLOBAL_BLOCKCHAIN:
-                if six.PY2:
-                    temp = long(
-                        math.ceil((mem_location + no_bytes) / float(32)))
-                else:
-                    temp = int(
-                        math.ceil((mem_location + no_bytes) / float(32)))
-                if temp > current_miu_i:
-                    current_miu_i = temp
-
-                evm = data_source.getCode(address)
-                start = code_from * 2
-                end = start + no_bytes * 2
-                code = evm[start: end]
-                mem[mem_location] = int(code, 16)
+            new_var_name = gen.gen_code_var(address, code_from, no_bytes)
+            if new_var_name in path_conditions_and_vars:
+                new_var = path_conditions_and_vars[new_var_name]
             else:
-                new_var_name = gen.gen_code_var(address, code_from, no_bytes)
-                if new_var_name in path_conditions_and_vars:
-                    new_var = path_conditions_and_vars[new_var_name]
-                else:
-                    new_var = BitVec(new_var_name, 256)
-                    path_conditions_and_vars[new_var_name] = new_var
+                new_var = BitVec(new_var_name, 256)
+                path_conditions_and_vars[new_var_name] = new_var
 
-                temp = ((mem_location + no_bytes) / 32) + 1
-                current_miu_i = to_symbolic(current_miu_i)
-                expression = current_miu_i < temp
-                solver.push()
-                solver.add(expression)
-                if MSIZE:
-                    if check_sat(solver) != unsat:
-                        current_miu_i = If(expression, temp, current_miu_i)
-                solver.pop()
-                mem.clear()  # very conservative
-                mem[str(mem_location)] = new_var
+            temp = ((mem_location + no_bytes) / 32) + 1
+            current_miu_i = to_symbolic(current_miu_i)
+            expression = current_miu_i < temp
+            solver.push()
+            solver.add(expression)
+            if MSIZE:
+                if check_sat(solver) != unsat:
+                    current_miu_i = If(expression, temp, current_miu_i)
+            solver.pop()
+            mem.clear()  # very conservative
+            mem[str(mem_location)] = new_var
             global_state["miu_i"] = current_miu_i
         else:
             raise ValueError('STACK underflow')
@@ -2070,7 +2052,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 if check_sat(solver) == unsat:
                     solver.pop()
                     new_balance_is = (
-                            global_state["balance"]["Is"] + transfer_amount)
+                        global_state["balance"]["Is"] + transfer_amount)
                     global_state["balance"]["Is"] = new_balance_is
                 else:
                     solver.pop()
@@ -2372,7 +2354,6 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
         global_state["pc"] = global_state["pc"] + 1
         stack.insert(0, global_state["currentSelfBalance"])
 
-
     elif opcode == "CHAINID":
         # chain_id = {  1 // mainnet
         #    {  2 // Morden testnet (disused)
@@ -2395,180 +2376,6 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             log.critical("Unknown instruction: %s" % opcode)
             exit(UNKNOWN_INSTRUCTION)
         raise Exception('UNKNOWN INSTRUCTION: ' + opcode)
-
-
-def detect_violation():
-    global g_src_map
-    global results
-    global violation
-
-    pcs = global_problematic_pcs["violation_defect"]
-    violation = ViolationDefect(g_src_map, pcs)
-
-    if g_src_map:
-        results['defects']['violation'] = violation.get_warnings()
-    else:
-        results['defects']['violation'] = violation.is_defective()
-    results['bool_defect']['violation'] = violation.is_defective()
-    log.info("\t  Standard Violation Defect: \t\t %s", violation.is_defective())
-
-
-def detect_reentrancy():
-    global g_src_map
-    global results
-    global reentrancy
-
-    pcs = global_problematic_pcs["reentrancy_defect"]
-    reentrancy = ReentrancyDefect(g_src_map, pcs)
-
-    if g_src_map:
-        results['defects']['reentrancy'] = reentrancy.get_warnings()
-    else:
-        results['defects']['reentrancy'] = reentrancy.is_defective()
-
-    results['bool_defect']['reentrancy'] = reentrancy.is_defective()
-    log.info("\t  ERC721-Reentrancy Defect: \t\t %s", reentrancy.is_defective())
-
-
-def detect_proxy():
-    global g_src_map
-    global results
-    global proxy
-
-    pcs = global_problematic_pcs["proxy_defect"]
-    proxy = RiskyProxyDefect(g_src_map, pcs)
-
-    if g_src_map:
-        results['defects']['proxy'] = proxy.get_warnings()
-    else:
-        results['defects']['proxy'] = proxy.is_defective()
-    results["bool_defect"]["proxy"] = proxy.is_defective()
-    log.info("\t  Risky Mutable Proxy Defect: \t\t %s", proxy.is_defective())
-
-
-def detect_unlimited_minting():
-    global g_src_map
-    global results
-    global unlimited_minting
-
-    pcs = global_problematic_pcs["unlimited_minting_defect"]
-    unlimited_minting = UnlimitedMintingDefect(g_src_map, pcs)
-
-    if g_src_map:
-        results['defects']['unlimited_minting'] = unlimited_minting.get_warnings()
-    else:
-        results['defects']['unlimited_minting'] = unlimited_minting.is_defective()
-    results["bool_defect"]["unlimited_minting"] = unlimited_minting.is_defective()
-    log.info("\t  Unlimited Minting Defect: \t\t %s", unlimited_minting.is_defective())
-
-
-def detect_public_burn():
-    global g_src_map
-    global results
-    global public_burn
-
-    pcs = global_problematic_pcs["burn_defect"]
-    public_burn = PublicBurnDefect(g_src_map, pcs)
-
-    if g_src_map:
-        results['defects']['burn'] = public_burn.get_warnings()
-    else:
-        results['defects']['burn'] = public_burn.is_defective()
-    results["bool_defect"]["burn"] = public_burn.is_defective()
-    log.info("\t  Public Burn Defect: \t\t\t %s", public_burn.is_defective())
-
-
-def detect_defects():
-    global results
-    global g_src_map
-    global visited_pcs
-    global global_problematic_pcs
-    global begin
-
-    if instructions:
-        evm_code_coverage = float(len(visited_pcs)) / \
-                            len(instructions.keys()) * 100
-        log.info("\t  EVM Code Coverage: \t\t\t %s%%",
-                 round(evm_code_coverage, 1))
-        results["evm_code_coverage"] = str(round(evm_code_coverage, 1))
-        results["instructions"] = str(len(instructions.keys()))
-
-        if global_params.REPORT_MODE:
-            rfile.write(str(total_no_of_paths) + "\n")
-
-        stop = time.time()
-        if global_params.REPORT_MODE:
-            rfile.write(str(stop - begin))
-            rfile.close()
-
-        # *All Defects to be detectd...
-        detect_violation()
-        detect_reentrancy()
-        detect_proxy()
-        detect_unlimited_minting()
-        detect_public_burn()
-
-        if g_src_map:
-            log_info()
-
-    else:
-        log.info("\t  No Instructions \t")
-        results["evm_code_coverage"] = "0/0"
-    return results, defect_found()
-
-
-def log_info():
-    global g_src_map
-    global reentrancy
-    global violation
-    global proxy
-    global unlimited_minting
-    global public_burn
-
-    defects = [reentrancy, violation, proxy, unlimited_minting, public_burn]
-
-    for defect in defects:
-        s = str(defect)
-        if s:
-            log.info(s)
-
-
-def defect_found():
-    global g_src_map
-    global reentrancy
-    global violation
-    global proxy
-    global unlimited_minting
-    global public_burn
-
-    defects = [reentrancy, violation, proxy, unlimited_minting, public_burn]
-
-    for defect in defects:
-        if defect.is_defective():
-            return 1
-    return 0
-
-
-def closing_message():
-    global g_disasm_file
-    global results
-
-    end = time.time()
-    results["time"] = str(end - global_params.START)
-    results["address"] = global_params.CONTRACT_ADDRESS
-    results["contract_count"] = global_params.CONTRACT_COUNT
-    results["storage_var_count"] = global_params.STORAGE_VAR_COUNT
-    results["sload_count"] = global_params.SLOAD_COUNT
-    results["sstore_count"] = global_params.SSTORE_COUNT
-    results["keccak256_count"] = global_params.KECCAK256_COUNT
-    results["pub_fun_count"] = global_params.PUB_FUN_COUNT
-
-    log.info("\t====== Analysis Completed ======")
-    if global_params.STORE_RESULT:
-        result_file = g_disasm_file.split('.evm.disasm')[0] + '.json'
-        with open(result_file, 'w') as of:
-            of.write(json.dumps(results, indent=1))
-        log.info("Wrote results to %s.", result_file)
 
 
 class TimeoutError(Exception):
@@ -2628,30 +2435,18 @@ def analyze():
     run_build_cfg_and_analyze(timeout_cb=timeout_cb)
 
 
-def run(disasm_file=None, source_file=None, source_map=None):
+def run(disasm_file=None, source_file=None, source_map=None, slot_map=None):
     global g_disasm_file
     global g_source_file
     global g_src_map
     global results
     global begin
+    global g_slot_map
 
     g_disasm_file = disasm_file
     g_source_file = source_file
     g_src_map = source_map
-
-    g_ref_id_to_state_vars = g_src_map.ref_id_to_state_vars
-
-    # *Simpler slot map: slot id => name
-    slot_map, simpler_slot_map, name_to_type = calculate_slot(g_ref_id_to_state_vars)
-
-    global_params.NAME_TO_TYPE = name_to_type
-    global_params.SIMPLER_SLOT_MAP = simpler_slot_map
-
-    # *Simple keyword-matching strategy
-    global_params.OWNER_INDEX = match_owner(g_ref_id_to_state_vars, slot_map)
-    global_params.APPROVAL_INDEX = match_approval(g_ref_id_to_state_vars, slot_map)
-    global_params.SUPPLY_INDEX = match_supply(g_ref_id_to_state_vars, slot_map)
-    global_params.PROXY_INDEX = match_proxy(g_ref_id_to_state_vars, slot_map)
+    g_slot_map = slot_map
 
     if is_testing_evm():
         test()
@@ -2659,6 +2454,6 @@ def run(disasm_file=None, source_file=None, source_map=None):
         begin = time.time()
         log.info("\t============ Results of %s===========" % source_map.cname)
         analyze()
-        ret = detect_defects()
-        closing_message()
+        ret = Identifier.detect_defects(
+            instructions, results, g_src_map, visited_pcs, global_problematic_pcs, begin, g_disasm_file)
         return ret

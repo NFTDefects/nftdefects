@@ -30,14 +30,17 @@ class AstWalker:
                 for key in node:
                     if isinstance(node[key], list):
                         for child in node[key]:
-                            self._walk_with_list_of_attrs(child, list_of_attributes, nodes)
+                            self._walk_with_list_of_attrs(
+                                child, list_of_attributes, nodes)
                     elif isinstance(node[key], dict):
-                        self._walk_with_list_of_attrs(node[key], list_of_attributes, nodes)
+                        self._walk_with_list_of_attrs(
+                            node[key], list_of_attributes, nodes)
                     else:
                         continue
             elif isinstance(node, list):
                 for key in node:
-                    self._walk_with_list_of_attrs(node[key], list_of_attributes, nodes)
+                    self._walk_with_list_of_attrs(
+                        node[key], list_of_attributes, nodes)
 
     def _check_attributes(self, node, attributes):
         if not isinstance(node, dict):

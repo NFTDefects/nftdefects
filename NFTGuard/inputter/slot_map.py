@@ -1,0 +1,180 @@
+import re
+
+import global_params
+from inputter.ast.ast_helper import AstHelper
+
+
+class SlotMap:
+    """GENESIS: simple and heuristic method for marking critical vars to make a quick feature_detector in complex NFT contracts
+    """
+    ref_id_to_state_vars = {}
+    parent_filename = ""
+    slot_map = []
+    simpler_slot_map = []
+    name_to_type = []
+    ast_helper = None
+    # heuristic keyword matching
+    owner_index = None
+    approval_index = None
+    supply_index = None
+    proxy_index = None
+
+    def __init__(self, cname, parent_filename, input_type='solidity', root_path=""):
+        self.root_path = root_path
+        self.cname = cname
+        if not SlotMap.parent_filename:
+            SlotMap.parent_filename = parent_filename
+            if input_type == "solidity":
+                SlotMap.ast_helper = AstHelper(
+                    SlotMap.parent_filename, input_type)
+            else:
+                # TODO add more type of inputter
+                raise Exception("There is no such type of inputter")
+            # extension of AST feature_detector (e.g., ref id in AST => {var name => type, immutabily, const, etc.})
+            self.state_def = self.ast_helper.extract_states_definitions()
+            self.ref_id_to_state_vars = self._get_ref_id_to_state_vars()
+
+            # name_to_type: mark var name => type
+            # simpler_slot_map: mark var slot id
+            self.slot_map, self.simpler_slot_map, self.name_to_type = self.calculate_slot()
+
+            # simple and heuristic keyword-matching strategy (extensible and to be refined)
+            self.owner_index = self.match_owner()
+            self.approval_index = self.match_approval()
+            self.supply_index = self.match_supply()
+            self.proxy_index = self.match_proxy()
+
+    def _get_ref_id_to_state_vars(self):
+        """GENESIS: get var dict (name => type). TODO need update
+
+        Returns:
+            mapping: a map from the var name to its type
+        """
+        state_vars = self.state_def[self.cname]
+        var_dict = {}
+        for state_v in state_vars:
+            var_dict[state_v['id']] = {
+                state_v['name']: {"type": state_v['typeDescriptions']['typeString'], "constant": state_v['constant'],
+                                  "mutability": state_v['mutability']}}
+        return var_dict
+
+    def calculate_slot(self):
+        id_to_state_vars = self._get_ref_id_to_state_vars()
+        slot_id = 0
+        bit_remain = 256
+        simpler_slot_map = {}
+        name_to_type = {}
+        for id in id_to_state_vars:
+            for key in id_to_state_vars[id]:
+                constant = id_to_state_vars[id][key]['constant']
+                mutable = id_to_state_vars[id][key]['mutability']
+                type = id_to_state_vars[id][key]['type']
+                name_to_type[key] = type
+                neg = 0
+
+                if constant or mutable == "immutable":
+                    id_to_state_vars[id][key]["slot_id"] = None
+                    continue
+                if type == "address":
+                    neg = 160
+                elif type == "bool":
+                    neg = 1
+                elif type == "string":
+                    neg = 256
+                elif len(re.findall('mapping(.*)', type)) > 0:
+                    neg = 256
+                elif type.startswith("uint"):
+                    if re.findall('\d+', type):
+                        neg = int(re.findall('\d+', type)[0])
+                    else:
+                        neg = 256
+                elif type.startswith("bytes"):
+                    if re.findall('\d+', type):
+                        neg = int(re.findall('\d+', type)[0]) * 8
+                    else:
+                        neg = 256
+                elif len(re.findall('(.*)\[(.*?)\]', type)) > 0:
+                    neg = 256
+                elif type.startswith("struct"):
+                    neg = 256
+
+                if bit_remain - neg < 0:
+                    slot_id += 1
+                    bit_remain = 256
+                bit_remain = bit_remain - neg
+                id_to_state_vars[id][key]["slot_id"] = slot_id
+                if slot_id in simpler_slot_map:
+                    simpler_slot_map[slot_id].append({key: type})
+                else:
+                    simpler_slot_map[slot_id] = [key]
+        return id_to_state_vars, simpler_slot_map, name_to_type
+
+    def match_owner(self):
+        id_to_state_vars = self._get_ref_id_to_state_vars()
+        slot_map = self.slot_map
+        # usually _owners, _tokenApprovals, _operatorApprovals, _ownerships, etc.
+        keywords = 'OWNER'
+        index = []
+        for id in id_to_state_vars:
+            for key in id_to_state_vars[id]:
+                if any([w in key.upper() and w for w in keywords.split(',')]):
+                    if slot_map[id][key]["slot_id"] is not None:
+                        index.append(slot_map[id][key]["slot_id"])
+        return index
+
+    def match_approval(self):
+        id_to_state_vars = self._get_ref_id_to_state_vars()
+        slot_map = self.slot_map
+        # usually _owners, _tokenApprovals, _operatorApprovals, _ownerships, etc.
+        keywords = 'APPROVAL,OPERATOR'
+        index = []
+        for id in id_to_state_vars:
+            for key in id_to_state_vars[id]:
+                if any([w in key.upper() and w for w in keywords.split(',')]):
+                    if slot_map[id][key]["slot_id"] is not None:
+                        index.append(slot_map[id][key]["slot_id"])
+        return index
+
+    def match_supply(self):
+        id_to_state_vars = self._get_ref_id_to_state_vars()
+        slot_map = self.slot_map
+        # usually MAX_SUPPLY, _TOTALSUPPLY, MAX_TOKENS, etc.
+        # add others: nextToken, totalMinted
+
+        # seperate to prefix and suffix
+        keywords_prefix = 'ALL,MAX,TOTAL,CURRENT,NEXT,TOTAL,TOKEN'
+        keywords_suffix = 'TOKEN,SUPPLY,INDEX,MINTED'
+        whole = 'COUNTER,SUPPLY,MINTCOUNT'
+        index = []
+        for id in id_to_state_vars:
+            for key in id_to_state_vars[id]:
+                # match prefix
+                if any([w in key.upper() and w for w in keywords_prefix.split(',')]):
+                    # match suffix
+                    if any([w in key.upper() and w for w in keywords_suffix.split(',')]):
+                        if slot_map[id][key]["slot_id"] is not None:
+                            index.append(slot_map[id][key]["slot_id"])
+
+        for id in id_to_state_vars:
+            for key in id_to_state_vars[id]:
+                if any(w in key.upper() and w for w in whole.split(',')):
+                    if slot_map[id][key]["slot_id"] is not None:
+                        index.append(slot_map[id][key]["slot_id"])
+        return index
+
+    def match_proxy(self):
+        id_to_state_vars = self._get_ref_id_to_state_vars()
+        slot_map = self.slot_map
+        # should find address type vars
+        keywords_prefix = 'PROXY'
+        keywords_suffix = 'REGISTRY'
+        index = []
+        for id in id_to_state_vars:
+            for key in id_to_state_vars[id]:
+                # match prefix
+                if any([w in key.upper() and w for w in keywords_prefix.split(',')]):
+                    # match suffix
+                    if any([w in key.upper() and w for w in keywords_suffix.split(',')]):
+                        if slot_map[id][key]["slot_id"] is not None and slot_map[id][key]["type"] == "address":
+                            index.append(slot_map[id][key]["slot_id"])
+        return index

@@ -7,10 +7,12 @@ import six
 from crytic_compile import CryticCompile, InvalidCompilation
 
 import global_params
-from input.source_map import SourceMap
+from inputter.slot_map import SlotMap
+from inputter.source_map import SourceMap
 
 
 class InputHelper:
+    # not support bytecode yet
     BYTECODE = 0
     SOLIDITY = 1
 
@@ -36,46 +38,42 @@ class InputHelper:
 
     def get_inputs(self, targetContracts=None):
         inputs = []
-        if self.input_type == InputHelper.BYTECODE:
-            with open(self.source, 'r') as f:
-                bytecode = f.read()
-            self._prepare_disasm_file(self.source, bytecode)
 
-            disasm_file = self._get_temporary_files(self.source)['disasm']
-            inputs.append({'disasm_file': disasm_file})
-        else:
-            # adapt to the new version of crytic which supports solc 0.8.x
-            contracts = self._get_compiled_contracts()
-            global_params.CONTRACT_COUNT = len(contracts)
-            self._prepare_disasm_files_for_analysis(contracts)
-            for contract, _ in contracts:
-                c_source, cname = contract.split(':')
+        # adapt to the new version of crytic which supports solc 0.8.x
+        # make NFTGuard capable of analyzing contracts with a higher solc version
+        contracts = self._get_compiled_contracts()
 
-                if targetContracts is not None and cname not in targetContracts:
-                    continue
-                c_source = re.sub(self.root_path, "", c_source)
-                if self.input_type == InputHelper.SOLIDITY:
-                    source_map = SourceMap(contract, self.source, 'solidity')
+        # mark contract number in a Solidity file
+        global_params.CONTRACT_COUNT = len(contracts)
+        self._prepare_disasm_files_for_analysis(contracts)
+        for contract, _ in contracts:
+            c_source, cname = contract.split(':')
 
-                disasm_file = self._get_temporary_files(contract)['disasm']
-                inputs.append({
-                    'contract': contract,
-                    'source_map': source_map,
-                    'source': self.source,
-                    'c_source': c_source,
-                    'c_name': cname,
-                    'disasm_file': disasm_file
-                })
-                print("contract:", contract)
+            if targetContracts is not None and cname not in targetContracts:
+                continue
+            c_source = re.sub(self.root_path, "", c_source)
+            if self.input_type == InputHelper.SOLIDITY:
+                source_map = SourceMap(contract, self.source, 'solidity')
+                slot_map = SlotMap(contract, self.source)
+
+            disasm_file = self._get_temporary_files(contract)['disasm']
+            inputs.append({
+                'contract': contract,
+                'source_map': source_map,
+                'source': self.source,
+                'c_source': c_source,
+                'c_name': cname,
+                'disasm_file': disasm_file,
+                "slot_map": slot_map
+            })
+            print("contract:", contract)
         if targetContracts is not None and not inputs:
-            raise ValueError("Targeted contracts weren't found in the source code!")
+            raise ValueError(
+                "Targeted contracts weren't found in the source code!")
         return inputs
 
     def rm_tmp_files(self):
-        if self.input_type == InputHelper.BYTECODE:
-            self._rm_tmp_files(self.source)
-        else:
-            self._rm_tmp_files_of_multiple_contracts(self.compiled_contracts)
+        self._rm_tmp_files_of_multiple_contracts(self.compiled_contracts)
 
     def _get_compiled_contracts(self):
         if not self.compiled_contracts:
@@ -96,7 +94,8 @@ class InputHelper:
 
             for contract in units.filename_to_contracts[file]:
                 if units.bytecode_runtime(contract):
-                    contracts.append((file.relative + ':' + contract, contract2bin[contract]))
+                    contracts.append(
+                        (file.relative + ':' + contract, contract2bin[contract]))
 
         return contracts
 
@@ -108,11 +107,13 @@ class InputHelper:
             com = CryticCompile(self.target)
             contracts = self._extract_bin_obj(com)
 
-            libs = com.filenames.difference(com.compilation_units[self.target].contracts_names_without_libraries)
+            libs = com.filenames.difference(
+                com.compilation_units[self.target].contracts_names_without_libraries)
             return contracts
         except InvalidCompilation as err:
             if not self.compilation_err:
-                logging.critical("Solidity compilation failed. Please use -ce flag to see the detail.")
+                logging.critical(
+                    "Solidity compilation failed. Please use -ce flag to see the detail.")
             else:
                 logging.critical("solc output:\n" + self.source)
                 logging.critical(err)

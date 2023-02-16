@@ -4,8 +4,8 @@ import json
 import six
 
 import global_params
-from input.ast_helper import AstHelper
-from utils import run_command
+from inputter.ast.ast_helper import AstHelper
+from cfg_builder.utils import run_command
 
 
 class Source:
@@ -29,9 +29,6 @@ class SourceMap:
     sources = {}
     ast_helper = None
     func_to_sig_by_contract = {}
-    # scalability
-    method_to_ref_decl_ids = {}
-    ref_id_to_state_vars = {}
 
     def __init__(self, cname, parent_filename, input_type, root_path=""):
         self.root_path = root_path
@@ -42,22 +39,24 @@ class SourceMap:
             if input_type == "solidity":
                 SourceMap.position_groups = SourceMap._load_position_groups()
             else:
-                raise Exception("There is no such type of input")
-            SourceMap.ast_helper = AstHelper(SourceMap.parent_filename, input_type)
+                # TODO add more type of inputter
+                raise Exception("There is no such type of inputter")
+            SourceMap.ast_helper = AstHelper(
+                SourceMap.parent_filename, input_type)
             SourceMap.func_to_sig_by_contract = SourceMap._get_sig_to_func_by_contract()
         self.source = self._get_source()
         self.positions = self._get_positions()
         self.instr_positions = {}
         self.var_names = self._get_var_names()
+        # mark state variable counts
         global_params.STORAGE_VAR_COUNT = len(self.var_names)
         self.func_call_names = self._get_func_call_names()
         self.callee_src_pairs = self._get_callee_src_pairs()
         self.func_name_to_params = self._get_func_name_to_params()
         self.sig_to_func = self._get_sig_to_func()
 
+        # mark public function counts
         global_params.PUB_FUN_COUNT = len(self.sig_to_func.keys())
-        self.state_def = self.ast_helper.extract_states_definitions()
-        self.ref_id_to_state_vars = self._get_ref_id_to_state_vars()
 
     def get_source_code(self, pc):
         try:
@@ -80,14 +79,16 @@ class SourceMap:
         except:
             return ""
         location = self.get_location(pc)
-        begin = self.source.line_break_positions[location['begin']['line'] - 1] + 1
+        begin = self.source.line_break_positions[location['begin']
+                                                 ['line'] - 1] + 1
         end = pos['end']
         return self.source.content[begin:end]
 
     def get_buggy_line_from_src(self, src):
         pos = self._convert_src_to_pos(src)
         location = self.get_location_from_src(src)
-        begin = self.source.line_break_positions[location['begin']['line'] - 1] + 1
+        begin = self.source.line_break_positions[location['begin']
+                                                 ['line'] - 1] + 1
         end = pos['end']
         return self.source.content[begin:end]
 
@@ -128,7 +129,8 @@ class SourceMap:
         return dict((sig, func) for func, sig in six.iteritems(func_to_sig))
 
     def _get_func_name_to_params(self):
-        func_name_to_params = SourceMap.ast_helper.get_func_name_to_params(self.cname)
+        func_name_to_params = SourceMap.ast_helper.get_func_name_to_params(
+            self.cname)
         for func_name in func_name_to_params:
             calldataload_position = 0
             for param in func_name_to_params[func_name]:
@@ -152,17 +154,9 @@ class SourceMap:
     def _get_var_names(self):
         return SourceMap.ast_helper.extract_state_variable_names(self.cname)
 
-    def _get_ref_id_to_state_vars(self):
-        state_vars = self.state_def[self.cname]
-        var_dict = {}
-        for state_v in state_vars:
-            var_dict[state_v['id']] = {
-                state_v['name']: {"type": state_v['typeDescriptions']['typeString'], "constant": state_v['constant'],
-                                  "mutability": state_v['mutability']}}
-        return var_dict
-
     def _get_func_call_names(self):
-        func_call_srcs = SourceMap.ast_helper.extract_func_call_srcs(self.cname)
+        func_call_srcs = SourceMap.ast_helper.extract_func_call_srcs(
+            self.cname)
         func_call_names = []
         for src in func_call_srcs:
             src = src.split(":")
@@ -187,7 +181,7 @@ class SourceMap:
 
     def _get_positions(self):
         if self.input_type == "solidity":
-            # * For different relative path (in the project or outside directory)
+            # for different relative path (in the project or outside directory)
             # self.cname = self.cname.replace("/path1", "/path2")
             asm = SourceMap.position_groups[self.cname]['asm']['.data']['0']
         else:

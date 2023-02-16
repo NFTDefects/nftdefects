@@ -9,9 +9,9 @@ import time
 import six
 
 import global_params
-import sym_exec
-from input.input_helper import InputHelper
-from utils import run_command
+from cfg_builder import sym_exec
+from cfg_builder.utils import run_command
+from inputter.input_helper import InputHelper
 
 
 def cmd_exists(cmd):
@@ -42,11 +42,13 @@ def has_dependencies_installed():
                 "You are using an untested version of z3. %s is the officially tested version" % tested_z3_version)
     except e:
         logging.critical(e)
-        logging.critical("Z3 is not available. Please install z3 from https://github.com/Z3Prover/z3.")
+        logging.critical(
+            "Z3 is not available. Please install z3 from https://github.com/Z3Prover/z3.")
         return False
 
     if not cmd_exists("evm"):
-        logging.critical("Please install evm from go-ethereum and make sure it is in the path.")
+        logging.critical(
+            "Please install evm from go-ethereum and make sure it is in the path.")
         return False
     else:
         cmd = "evm --version"
@@ -58,7 +60,8 @@ def has_dependencies_installed():
                 "You are using evm version %s. The supported version is %s" % (evm_version, tested_evm_version))
 
     if not cmd_exists("solc"):
-        logging.critical("solc is missing. Please install the solidity compiler and make sure solc is in the path.")
+        logging.critical(
+            "solc is missing. Please install the solidity compiler and make sure solc is in the path.")
         return False
     else:
         cmd = "solc --version"
@@ -72,31 +75,16 @@ def has_dependencies_installed():
     return True
 
 
-def analyze_bytecode():
-    global args
-
-    helper = InputHelper(InputHelper.BYTECODE, source=args.source, evm=args.evm)
-    inp = helper.get_inputs()[0]
-
-    result, exit_code = sym_exec.run(disasm_file=inp['disasm_file'])
-    helper.rm_tmp_files()
-
-    return exit_code
-
-
 def run_solidity_analysis(inputs):
     results = {}
     exit_code = 0
 
     # for our tool, we must find some key features
-
     for inp in inputs:
-        # print()
-        # print("==========================")
         logging.info("contract %s:", inp['contract'])
-        # print(ref_dict[inp['contract']])
 
         result, return_code = sym_exec.run(disasm_file=inp['disasm_file'], source_map=inp['source_map'],
+                                           slot_map=inp['slot_map'],
                                            source_file=inp['source'])
 
         try:
@@ -112,11 +100,21 @@ def run_solidity_analysis(inputs):
 
 
 def analyze_solidity(input_type='solidity'):
+    """entrance to analyze solidity and prepare MUST info from Inputter for feature_detector
+
+    Args:
+        input_type (str, optional): _description_. Defaults to 'solidity'.
+
+    Returns:
+        integer: exit status of the execution
+    """
     global args
 
     if input_type == 'solidity':
         helper = InputHelper(InputHelper.SOLIDITY, source=args.source, evm=args.evm,
                              compilation_err=args.compilation_error)
+    else:
+        return
     inputs = helper.get_inputs(global_params.TARGET_CONTRACTS)
 
     results, exit_code = run_solidity_analysis(inputs)
@@ -133,34 +131,47 @@ def main():
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group(required=True)
 
+    # supported arguments refer to Oyente
     group.add_argument("-s", "--source", type=str,
                        help="local source file name. Solidity by default. Use -b to process evm instead. Use stdin to read from stdin.")
 
     parser.add_argument("-cnames", "--target-contracts", type=str, nargs="+",
                         help="The name of targeted contracts. If specified, only the specified contracts in the source code will be processed. By default, all contracts in Solidity code are processed.")
 
-    parser.add_argument("--version", action="version", version="NFTGuard version 0.1.0 - Boom")
+    parser.add_argument("--version", action="version",
+                        version="NFTGuard version 0.1.0 - Boom")
 
-    parser.add_argument("-t", "--timeout", help="Timeout for Z3 in ms.", action="store", type=int)
-    parser.add_argument("-gl", "--gaslimit", help="Limit Gas", action="store", dest="gas_limit", type=int)
-    parser.add_argument("-ll", "--looplimit", help="Limit number of loops", action="store", dest="loop_limit", type=int)
-    parser.add_argument("-dl", "--depthlimit", help="Limit DFS depth", action="store", dest="depth_limit", type=int)
+    parser.add_argument("-t", "--timeout",
+                        help="Timeout for Z3 in ms.", action="store", type=int)
+    parser.add_argument("-gl", "--gaslimit", help="Limit Gas",
+                        action="store", dest="gas_limit", type=int)
+    parser.add_argument("-ll", "--looplimit", help="Limit number of loops",
+                        action="store", dest="loop_limit", type=int)
+    parser.add_argument("-dl", "--depthlimit", help="Limit DFS depth",
+                        action="store", dest="depth_limit", type=int)
 
     parser.add_argument("-glt", "--global-timeout", help="Timeout for symbolic execution", action="store",
                         dest="global_timeout", type=int)
     parser.add_argument("-addr", "--address", help="Mark contract address in the json output (-j)", action="store",
                         dest="address", type=str)
 
-    parser.add_argument("-e", "--evm", help="Do not remove the .evm file.", action="store_true")
-    parser.add_argument("-j", "--json", help="Redirect results to a json file.", action="store_true")
-    parser.add_argument("-p", "--paths", help="Print path condition information.", action="store_true")
-    parser.add_argument("-db", "--debug", help="Display debug information", action="store_true")
-    parser.add_argument("-r", "--report", help="Create .report file.", action="store_true")
-    parser.add_argument("-v", "--verbose", help="Verbose output, print everything.", action="store_true")
+    parser.add_argument(
+        "-e", "--evm", help="Do not remove the .evm file.", action="store_true")
+    parser.add_argument(
+        "-j", "--json", help="Redirect results to a json file.", action="store_true")
+    parser.add_argument(
+        "-p", "--paths", help="Print path condition information.", action="store_true")
+    parser.add_argument(
+        "-db", "--debug", help="Display debug information", action="store_true")
+    parser.add_argument(
+        "-r", "--report", help="Create .report file.", action="store_true")
+    parser.add_argument(
+        "-v", "--verbose", help="Verbose output, print everything.", action="store_true")
     parser.add_argument("-pl", "--parallel",
                         help="Run NFTGuard in parallel. Note: The performance may depend on the contract",
                         action="store_true")
-    parser.add_argument("-ce", "--compilation-error", help="Display compilation errors", action="store_true")
+    parser.add_argument("-ce", "--compilation-error",
+                        help="Display compilation errors", action="store_true")
     parser.add_argument("-gtc", "--generate-test-cases",
                         help="Generate test cases each branch of symbolic execution tree", action="store_true")
 
@@ -184,6 +195,7 @@ def main():
     global_params.DEBUG_MODE = 1 if args.debug else 0
     global_params.GENERATE_TEST_CASES = 1 if args.generate_test_cases else 0
     global_params.PARALLEL = 1 if args.parallel else 0
+    # for writing contract address
     if args.address:
         global_params.CONTRACT_ADDRESS = args.address
 
@@ -191,6 +203,7 @@ def main():
 
     global_params.SOURCE = args.source
 
+    # set limit to set execution bounds
     if args.depth_limit:
         global_params.DEPTH_LIMIT = args.depth_limit
     if args.gas_limit:
@@ -204,9 +217,8 @@ def main():
     if not has_dependencies_installed():
         return
 
-    # time
-    global_params.START = time.time()
 
+    # analyze Solidity source code
     exit_code = analyze_solidity()
 
     exit(exit_code)
