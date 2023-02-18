@@ -9,3 +9,4 @@ six==1.16.0
 urllib3==1.26.13
 z3-solver==4.11.2.0
 solc-select==0.2.1
+rich==13.3.1
