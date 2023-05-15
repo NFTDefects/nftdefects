@@ -38,7 +38,7 @@ def to_symbolic(number):
 
 def to_unsigned(number):
     if number < 0:
-        return number + 2 ** 256
+        return number + 2**256
     return number
 
 
@@ -74,14 +74,15 @@ def custom_deepcopy(input):
 
 
 def is_storage_var(var):
-    if not isinstance(var, str): var = var.decl().name()
-    return var.startswith('Ia_store')
+    if not isinstance(var, str):
+        var = var.decl().name()
+    return var.startswith("Ia_store")
 
 
 # copy only storage values/ variables from a given global state
 # TODO: add balance in the future
 def copy_global_values(global_state):
-    return global_state['Ia']
+    return global_state["Ia"]
 
 
 # check if a variable is in an expression
@@ -109,8 +110,9 @@ def get_all_vars(exprs):
 
 
 def get_storage_position(var):
-    if not isinstance(var, str): var = var.decl().name()
-    pos = var.split('-')[1]
+    if not isinstance(var, str):
+        var = var.decl().name()
+    pos = var.split("-")[1]
     try:
         return int(pos)
     except:
@@ -118,8 +120,9 @@ def get_storage_position(var):
 
 
 def get_storage_var_name(var):
-    if not isinstance(var, str): var = var.decl().name()
-    pos = var.split('-')[2]
+    if not isinstance(var, str):
+        var = var.decl().name()
+    pos = var.split("-")[2]
     return pos
     # try: return int(pos)
     # except: return pos
@@ -147,7 +150,7 @@ def rename_vars(pcs, global_states):
                     if pos not in global_states:
                         continue
                 # otherwise, change the name of the variable
-                new_var_name = var_name + '_old'
+                new_var_name = var_name + "_old"
                 new_var = BitVec(new_var_name, 256)
                 vars_mapping[var] = new_var
                 expr = substitute(expr, (var, vars_mapping[var]))
@@ -167,12 +170,12 @@ def rename_vars(pcs, global_states):
                 var_name = var.decl().name()
                 # check if a var is global
                 if var_name.startswith("Ia_store_"):
-                    position = int(var_name.split('_')[len(var_name.split('_')) - 1])
+                    position = int(var_name.split("_")[len(var_name.split("_")) - 1])
                     # if it is not modified
                     if position not in global_states:
                         continue
                 # otherwise, change the name of the variable
-                new_var_name = var_name + '_old'
+                new_var_name = var_name + "_old"
                 new_var = BitVec(new_var_name, 256)
                 vars_mapping[var] = new_var
                 expr = substitute(expr, (var, vars_mapping[var]))
@@ -190,12 +193,16 @@ def split_dicts(filename, nsub=500):
         for u, v in c.iteritems():
             current_file[u] = v
             if len(current_file) == nsub:
-                with open(filename.split(".")[0] + "_" + str(file_index) + '.json', 'w') as outfile:
+                with open(
+                    filename.split(".")[0] + "_" + str(file_index) + ".json", "w"
+                ) as outfile:
                     json.dump(current_file, outfile)
                     file_index += 1
                     current_file.clear()
         if len(current_file):
-            with open(filename.split(".")[0] + "_" + str(file_index) + '.json', 'w') as outfile:
+            with open(
+                filename.split(".")[0] + "_" + str(file_index) + ".json", "w"
+            ) as outfile:
                 json.dump(current_file, outfile)
                 current_file.clear()
 
@@ -208,7 +215,7 @@ def do_split_dicts():
 
 def run_re_file(re_str, fn):
     size = os.stat(fn).st_size
-    with open(fn, 'r') as tf:
+    with open(fn, "r") as tf:
         data = mmap.mmap(tf.fileno(), size, access=mmap.ACCESS_READ)
         return re.findall(re_str, data)
 
@@ -227,13 +234,20 @@ def get_contract_info(contract_addr):
         value = run_re_file(re_str_value, file_name2)
     except Exception as e:
         try:
-            os.system("wget -O %s http://etherscan.io/txs?a=%s" % (file_name1, contract_addr))
-            re_txs_value = r"<span>A total of (.+?) transactions found for address</span>"
+            os.system(
+                "wget -O %s http://etherscan.io/txs?a=%s" % (file_name1, contract_addr)
+            )
+            re_txs_value = (
+                r"<span>A total of (.+?) transactions found for address</span>"
+            )
             txs = run_re_file(re_txs_value, file_name1)
 
             # get balance
             re_str_value = r"<td>ETH Balance:\n<\/td>\n<td>\n(.+?)\n<\/td>"
-            os.system("wget -O %s https://etherscan.io/address/%s" % (file_name2, contract_addr))
+            os.system(
+                "wget -O %s https://etherscan.io/address/%s"
+                % (file_name2, contract_addr)
+            )
             value = run_re_file(re_str_value, file_name2)
         except Exception as e:
             pass
@@ -242,14 +256,31 @@ def get_contract_info(contract_addr):
 
 def get_contract_stats(list_of_contracts):
     with open("concurr.csv", "w") as stats_file:
-        fp = csv.writer(stats_file, delimiter=',')
-        fp.writerow(["Contract address", "No. of paths", "No. of concurrency pairs", "Balance", "No. of TXs", "Note"])
+        fp = csv.writer(stats_file, delimiter=",")
+        fp.writerow(
+            [
+                "Contract address",
+                "No. of paths",
+                "No. of concurrency pairs",
+                "Balance",
+                "No. of TXs",
+                "Note",
+            ]
+        )
         with open(list_of_contracts, "r") as f:
             for contract in f.readlines():
                 contract_addr = contract.split()[0]
                 value, txs = get_contract_info(contract_addr)
-                fp.writerow([contract_addr, contract.split()[1], contract.split()[2],
-                             value, txs, contract.split()[3:]])
+                fp.writerow(
+                    [
+                        contract_addr,
+                        contract.split()[1],
+                        contract.split()[2],
+                        value,
+                        txs,
+                        contract.split()[3:],
+                    ]
+                )
 
 
 def get_distinct_contracts(list_of_contracts="concurr.csv"):
@@ -276,7 +307,7 @@ def get_distinct_contracts(list_of_contracts="concurr.csv"):
                 if (npath_i == npath_j) and (npair_i == npair_j):
                     file_j = "stats/tmp_" + contract_j + ".evm"
 
-                    with open(file_i, 'r') as f1, open(file_j, 'r') as f2:
+                    with open(file_i, "r") as f1, open(file_j, "r") as f2:
                         code_i = f1.readlines()
                         code_j = f2.readlines()
                         if abs(len(code_i) - len(code_j)) >= 5:
@@ -292,15 +323,17 @@ def get_distinct_contracts(list_of_contracts="concurr.csv"):
 
 
 def run_command(cmd):
-    FNULL = open(os.devnull, 'w')
+    FNULL = open(os.devnull, "w")
     solc_p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE, stderr=FNULL)
-    return solc_p.communicate()[0].decode('utf-8', 'strict')
+    return solc_p.communicate()[0].decode("utf-8", "strict")
 
 
 def run_command_with_err(cmd):
-    FNULL = open(os.devnull, 'w')
-    solc_p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    FNULL = open(os.devnull, "w")
+    solc_p = subprocess.Popen(
+        shlex.split(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE
+    )
     out, err = solc_p.communicate()
-    out = out.decode('utf-8', 'strict')
-    err = err.decode('utf-8', 'strict')
+    out = out.decode("utf-8", "strict")
+    err = err.decode("utf-8", "strict")
     return out, err

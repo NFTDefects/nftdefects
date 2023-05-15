@@ -8,22 +8,19 @@ import traceback
 import zlib
 from collections import namedtuple
 from tokenize import NUMBER, NAME, NEWLINE
-from rich.progress import track
 
 from numpy import mod
 from defect_identifier.identifier import Identifier
 
 from feature_detector.semantic_analysis import *
 from cfg_builder.basicblock import BasicBlock
-from cfg_builder.execution_states import (
-    UNKNOWN_INSTRUCTION, EXCEPTION, PICKLE_PATH)
+from cfg_builder.execution_states import UNKNOWN_INSTRUCTION, EXCEPTION, PICKLE_PATH
 from cfg_builder.vargenerator import *
 from cfg_builder.utils import *
-from defect_identifier.defect import PublicBurnDefect, ReentrancyDefect, RiskyProxyDefect, UnlimitedMintingDefect, ViolationDefect
 
 log = logging.getLogger(__name__)
 
-UNSIGNED_BOUND_NUMBER = 2 ** 256 - 1
+UNSIGNED_BOUND_NUMBER = 2**256 - 1
 CONSTANT_ONES_159 = BitVecVal((1 << 160) - 1, 256)
 
 
@@ -39,9 +36,9 @@ class Parameter:
             "analysis": {},
             "sha3_list": {},
             "global_state": {},
-            "path_conditions_and_vars": {}
+            "path_conditions_and_vars": {},
         }
-        for (attr, default) in six.iteritems(attr_defaults):
+        for attr, default in six.iteritems(attr_defaults):
             setattr(self, attr, kwargs.get(attr, default))
 
     def copy(self):
@@ -65,9 +62,9 @@ def initGlobalVars():
     revertible_overflow_pcs = set()
 
     global g_disasm_file
-    with open(g_disasm_file, 'r') as f:
+    with open(g_disasm_file, "r") as f:
         disasm = f.read()
-    if 'MSIZE' in disasm:
+    if "MSIZE" in disasm:
         MSIZE = True
 
     global g_timeout
@@ -82,43 +79,43 @@ def initGlobalVars():
         start_block_to_func_sig = {}
 
         results = {
-            'evm_code_coverage': '',
-            'instructions': '',
-            'time': '',
-            'analysis': {
-                'proxy': [],
-                'burn': [],
-                'reentrancy': [],
-                'unlimited_minting': [],
-                'violation': [],
+            "evm_code_coverage": "",
+            "instructions": "",
+            "time": "",
+            "analysis": {
+                "proxy": [],
+                "burn": [],
+                "reentrancy": [],
+                "unlimited_minting": [],
+                "violation": [],
             },
-            'bool_defect': {
-                'proxy': False,
-                'burn': False,
-                'reentrancy': False,
-                'unlimited_minting': False,
-                'violation': False,
-            }
+            "bool_defect": {
+                "proxy": False,
+                "burn": False,
+                "reentrancy": False,
+                "unlimited_minting": False,
+                "violation": False,
+            },
         }
     else:
         results = {
-            'evm_code_coverage': '',
-            'instructions': '',
-            'time': '',
-            'analysis': {
-                'proxy': [],
-                'burn': [],
-                'reentrancy': [],
-                'unlimited_minting': [],
-                'violation': [],
+            "evm_code_coverage": "",
+            "instructions": "",
+            "time": "",
+            "analysis": {
+                "proxy": [],
+                "burn": [],
+                "reentrancy": [],
+                "unlimited_minting": [],
+                "violation": [],
             },
-            'bool_defect': {
-                'proxy': False,
-                'burn': False,
-                'reentrancy': False,
-                'unlimited_minting': False,
-                'violation': False,
-            }
+            "bool_defect": {
+                "proxy": False,
+                "burn": False,
+                "reentrancy": False,
+                "unlimited_minting": False,
+                "violation": False,
+            },
         }
 
     global calls_affect_state
@@ -160,8 +157,13 @@ def initGlobalVars():
     path_conditions = []
 
     global global_problematic_pcs
-    global_problematic_pcs = {"proxy_defect": [], "burn_defect": [], "reentrancy_defect": [],
-                              "unlimited_minting_defect": [], "violation_defect": []}
+    global_problematic_pcs = {
+        "proxy_defect": [],
+        "burn_defect": [],
+        "reentrancy_defect": [],
+        "unlimited_minting_defect": [],
+        "violation_defect": [],
+    }
 
     # store global variables, e.g. storage, balance of all paths
     global all_gs
@@ -179,7 +181,7 @@ def initGlobalVars():
 
     global rfile
     if global_params.REPORT_MODE:
-        rfile = open(g_disasm_file + '.report', 'w')
+        rfile = open(g_disasm_file + ".report", "w")
 
 
 def is_testing_evm():
@@ -187,7 +189,7 @@ def is_testing_evm():
 
 
 def compare_storage_and_gas_unit_test(global_state, analysis):
-    unit_test = pickle.load(open(PICKLE_PATH, 'rb'))
+    unit_test = pickle.load(open(PICKLE_PATH, "rb"))
     test_status = unit_test.compare_with_symExec_result(global_state, analysis)
     exit(test_status)
 
@@ -196,22 +198,16 @@ def change_format():
     with open(g_disasm_file) as disasm_file:
         file_contents = disasm_file.readlines()
         i = 0
-        firstLine = file_contents[0].strip('\n')
+        firstLine = file_contents[0].strip("\n")
         for line in file_contents:
-            if "SLOAD" in line:
-                global_params.SLOAD_COUNT += 1
-            if "SSTORE" in line:
-                global_params.SSTORE_COUNT += 1
-            if "KECCAK256" in line:
-                global_params.KECCAK256_COUNT += 1
-            line = line.replace(':', '')
-            lineParts = line.split(' ')
+            line = line.replace(":", "")
+            lineParts = line.split(" ")
             try:  # removing initial zeroes
                 lineParts[0] = str(int(lineParts[0], 16))
 
             except:
                 lineParts[0] = lineParts[0]
-            lineParts[-1] = lineParts[-1].strip('\n')
+            lineParts[-1] = lineParts[-1].strip("\n")
             try:  # adding arrow if last is a number
                 lastInt = lineParts[-1]
                 if (int(lastInt, 16) or int(lastInt, 16) == 0) and len(lineParts) > 2:
@@ -219,19 +215,19 @@ def change_format():
                     lineParts.append(lastInt)
             except Exception:
                 pass
-            file_contents[i] = ' '.join(lineParts)
+            file_contents[i] = " ".join(lineParts)
             i = i + 1
         file_contents[0] = firstLine
-        file_contents[-1] += '\n'
+        file_contents[-1] += "\n"
 
-    with open(g_disasm_file, 'w') as disasm_file:
+    with open(g_disasm_file, "w") as disasm_file:
         disasm_file.write("\n".join(file_contents))
 
 
 def build_cfg_and_analyze():
     change_format()
     logging.info("Building CFG...")
-    with open(g_disasm_file, 'r') as disasm_file:
+    with open(g_disasm_file, "r") as disasm_file:
         disasm_file.readline()  # Remove first line
         tokens = tokenize.generate_tokens(disasm_file.readline)
         collect_vertices(tokens)
@@ -246,27 +242,33 @@ def print_cfg():
     log.debug(str(edges))
 
 
-def mapping_push_instruction(current_line_content, current_ins_address, idx, positions, length):
+def mapping_push_instruction(
+    current_line_content, current_ins_address, idx, positions, length
+):
     global g_src_map
-    while (idx < length):
+    while idx < length:
         if not positions[idx]:
             return idx + 1
-        name = positions[idx]['name']
+        name = positions[idx]["name"]
         if name.startswith("tag"):
             idx += 1
         else:
             if name.startswith("PUSH"):
                 if name == "PUSH":
-                    value = positions[idx]['value']
+                    value = positions[idx]["value"]
                     instr_value = current_line_content.split(" ")[1]
                     if int(value, 16) == int(instr_value, 16):
-                        g_src_map.instr_positions[current_ins_address] = g_src_map.positions[idx]
+                        g_src_map.instr_positions[
+                            current_ins_address
+                        ] = g_src_map.positions[idx]
                         idx += 1
                         break
                     else:
                         raise Exception("Source map error")
                 else:
-                    g_src_map.instr_positions[current_ins_address] = g_src_map.positions[idx]
+                    g_src_map.instr_positions[
+                        current_ins_address
+                    ] = g_src_map.positions[idx]
                     idx += 1
                     break
             else:
@@ -274,23 +276,36 @@ def mapping_push_instruction(current_line_content, current_ins_address, idx, pos
     return idx
 
 
-def mapping_non_push_instruction(current_line_content, current_ins_address, idx, positions, length):
+def mapping_non_push_instruction(
+    current_line_content, current_ins_address, idx, positions, length
+):
     global g_src_map
-    while (idx < length):
+    while idx < length:
         if not positions[idx]:
             return idx + 1
-        name = positions[idx]['name']
+        name = positions[idx]["name"]
         if name.startswith("tag"):
             idx += 1
         else:
             instr_name = current_line_content.split(" ")[0]
-            if name == instr_name or name == "INVALID" and instr_name == "ASSERTFAIL" or name == "KECCAK256" and instr_name == "SHA3" or name == "SELFDESTRUCT" and instr_name == "SUICIDE":
-                g_src_map.instr_positions[current_ins_address] = g_src_map.positions[idx]
+            if (
+                name == instr_name
+                or name == "INVALID"
+                and instr_name == "ASSERTFAIL"
+                or name == "KECCAK256"
+                and instr_name == "SHA3"
+                or name == "SELFDESTRUCT"
+                and instr_name == "SUICIDE"
+            ):
+                g_src_map.instr_positions[current_ins_address] = g_src_map.positions[
+                    idx
+                ]
                 idx += 1
                 break
             else:
                 raise RuntimeError(
-                    F"Source map error, unknown name({name}) or instr_name({instr_name})")
+                    f"Source map error, unknown name({name}) or instr_name({instr_name})"
+                )
     return idx
 
 
@@ -323,10 +338,19 @@ def collect_vertices(tokens):
             for ptok_type, ptok_string, _, _, _ in tokens:
                 if ptok_type == NEWLINE:
                     is_new_line = True
-                    current_line_content += push_val + ' '
+                    current_line_content += push_val + " "
                     instructions[current_ins_address] = current_line_content
-                    idx = mapping_push_instruction(
-                        current_line_content, current_ins_address, idx, positions, length) if g_src_map else None
+                    idx = (
+                        mapping_push_instruction(
+                            current_line_content,
+                            current_ins_address,
+                            idx,
+                            positions,
+                            length,
+                        )
+                        if g_src_map
+                        else None
+                    )
                     log.debug(current_line_content)
                     current_line_content = ""
                     wait_for_push = False
@@ -354,8 +378,13 @@ def collect_vertices(tokens):
             is_new_line = True
             log.debug(current_line_content)
             instructions[current_ins_address] = current_line_content
-            idx = mapping_non_push_instruction(
-                current_line_content, current_ins_address, idx, positions, length) if g_src_map else None
+            idx = (
+                mapping_non_push_instruction(
+                    current_line_content, current_ins_address, idx, positions, length
+                )
+                if g_src_map
+                else None
+            )
             current_line_content = ""
             continue
         elif tok_type == NAME:
@@ -364,7 +393,13 @@ def collect_vertices(tokens):
                     end_ins_dict[current_block] = last_ins_address
                 current_block = current_ins_address
                 is_new_block = False
-            elif tok_string == "STOP" or tok_string == "RETURN" or tok_string == "SUICIDE" or tok_string == "REVERT" or tok_string == "ASSERTFAIL":
+            elif (
+                tok_string == "STOP"
+                or tok_string == "RETURN"
+                or tok_string == "SUICIDE"
+                or tok_string == "REVERT"
+                or tok_string == "ASSERTFAIL"
+            ):
                 jump_type[current_block] = "terminal"
                 end_ins_dict[current_block] = current_ins_address
             elif tok_string == "JUMP":
@@ -375,7 +410,7 @@ def collect_vertices(tokens):
                 jump_type[current_block] = "conditional"
                 end_ins_dict[current_block] = current_ins_address
                 is_new_block = True
-            elif tok_string.startswith('PUSH', 0):
+            elif tok_string.startswith("PUSH", 0):
                 wait_for_push = True
             is_new_line = False
         if tok_string != "=" and tok_string != ">":
@@ -427,7 +462,11 @@ def add_falls_to():
     key_list = sorted(jump_type.keys())
     length = len(key_list)
     for i, key in enumerate(key_list):
-        if jump_type[key] != "terminal" and jump_type[key] != "unconditional" and i + 1 < length:
+        if (
+            jump_type[key] != "terminal"
+            and jump_type[key] != "unconditional"
+            and i + 1 < length
+        ):
             target = key_list[i + 1]
             edges[key].append(target)
             vertices[key].set_falls_to(target)
@@ -435,7 +474,27 @@ def add_falls_to():
 
 def get_init_global_state(path_conditions_and_vars):
     global_state = {"balance": {}, "pc": 0}
-    init_is = init_ia = deposited_value = sender_address = receiver_address = gas_price = origin = currentCoinbase = currentNumber = currentDifficulty = currentGasLimit = currentChainId = currentSelfBalance = currentBaseFee = callData = None
+    init_is = (
+        init_ia
+    ) = (
+        deposited_value
+    ) = (
+        sender_address
+    ) = (
+        receiver_address
+    ) = (
+        gas_price
+    ) = (
+        origin
+    ) = (
+        currentCoinbase
+    ) = (
+        currentNumber
+    ) = (
+        currentDifficulty
+    ) = (
+        currentGasLimit
+    ) = currentChainId = currentSelfBalance = currentBaseFee = callData = None
 
     sender_address = BitVec("Is", 256)
     receiver_address = BitVec("Ia", 256)
@@ -449,17 +508,17 @@ def get_init_global_state(path_conditions_and_vars):
 
     # from s to a, s is sender, a is receiver
     # v is the amount of ether deposited and transferred
-    constraint = (deposited_value >= BitVecVal(0, 256))
+    constraint = deposited_value >= BitVecVal(0, 256)
     path_conditions_and_vars["path_condition"].append(constraint)
-    constraint = (init_is >= deposited_value)
+    constraint = init_is >= deposited_value
     path_conditions_and_vars["path_condition"].append(constraint)
-    constraint = (init_ia >= BitVecVal(0, 256))
+    constraint = init_ia >= BitVecVal(0, 256)
     path_conditions_and_vars["path_condition"].append(constraint)
 
     # update the balances of the "caller" and "callee"
 
-    global_state["balance"]["Is"] = (init_is - deposited_value)
-    global_state["balance"]["Ia"] = (init_ia + deposited_value)
+    global_state["balance"]["Is"] = init_is - deposited_value
+    global_state["balance"]["Ia"] = init_ia + deposited_value
 
     if not gas_price:
         new_var_name = gen.gen_gas_price_var()
@@ -534,7 +593,7 @@ def get_init_global_state(path_conditions_and_vars):
         "pc": [],
         "key": None,
         "check": False,
-        "var": []
+        "var": [],
     }
 
     global_state["standard_violation"] = {
@@ -551,14 +610,12 @@ def get_init_global_state(path_conditions_and_vars):
     global_state["mint"] = {
         "trigger": False,
         "to": None,
-
         "token_id": None,
         "quantity": None,
-
         "hash": None,
         "MSTORE_1": False,
         "MSTORE_2": False,
-        "valid": False
+        "valid": False,
     }
 
     global_state["approve"] = {
@@ -572,7 +629,7 @@ def get_init_global_state(path_conditions_and_vars):
         "MSTORE_2": False,
         # *Note the hash of owner(_owners[tokenId])
         "MSTORE_owner": False,
-        "valid": False
+        "valid": False,
     }
 
     global_state["transfer"] = {
@@ -582,14 +639,13 @@ def get_init_global_state(path_conditions_and_vars):
         "from": None,
         "MSTORE_owner": False,
         "owner_hash": None,
-        "MSTORE_2": False
+        "MSTORE_2": False,
     }
 
     global_state["setApprovalForAll"] = {
         "trigger": False,
         "operator": None,
         "approved": None,
-
         "MSTORE_1": False,
         "MSTORE_2": False,
         "MSTORE_3": False,
@@ -605,7 +661,7 @@ def get_init_global_state(path_conditions_and_vars):
         "MSTORE_2": False,
         "sload": None,
         "valid": False,
-        "pc": None
+        "pc": None,
     }
 
     return global_state
@@ -615,14 +671,14 @@ def get_start_block_to_func_sig():
     state = 0
     func_sig = None
     for pc, instr in six.iteritems(instructions):
-        if state == 0 and instr.startswith('PUSH4'):
+        if state == 0 and instr.startswith("PUSH4"):
             state += 1
-            func_sig = instr.split(' ')[1][2:]
-        elif state == 1 and instr.startswith('EQ'):
+            func_sig = instr.split(" ")[1][2:]
+        elif state == 1 and instr.startswith("EQ"):
             state += 1
-        elif state == 2 and instr.startswith('PUSH'):
+        elif state == 2 and instr.startswith("PUSH"):
             state = 0
-            pc = instr.split(' ')[1]
+            pc = instr.split(" ")[1]
             pc = int(pc, 16)
             start_block_to_func_sig[pc] = func_sig
         else:
@@ -635,12 +691,15 @@ def full_sym_exec():
     path_conditions_and_vars = {"path_condition": []}
     global_state = get_init_global_state(path_conditions_and_vars)
     analysis = init_analysis()
-    params = Parameter(path_conditions_and_vars=path_conditions_and_vars,
-                       global_state=global_state, analysis=analysis)
+    params = Parameter(
+        path_conditions_and_vars=path_conditions_and_vars,
+        global_state=global_state,
+        analysis=analysis,
+    )
     if g_src_map:
         start_block_to_func_sig = get_start_block_to_func_sig()
 
-    return sym_exec_block(params, 0, 0, 0, -1, 'fallback')
+    return sym_exec_block(params, 0, 0, 0, -1, "fallback")
 
 
 # Symbolically executing a block from the start address
@@ -676,7 +735,7 @@ def sym_exec_block(params, block, pre_block, depth, func_call, current_func_name
         if block in start_block_to_func_sig:
             func_sig = start_block_to_func_sig[block]
             current_func_name = g_src_map.sig_to_func[func_sig]
-            pattern = r'(\w[\w\d_]*)\((.*)\)$'
+            pattern = r"(\w[\w\d_]*)\((.*)\)$"
             match = re.match(pattern, current_func_name)
             if match:
                 current_func_name = list(match.groups())[0]
@@ -701,8 +760,7 @@ def sym_exec_block(params, block, pre_block, depth, func_call, current_func_name
     try:
         block_ins = vertices[block].get_instructions()
     except KeyError:
-        log.debug(
-            "This path results in an exception, possibly an invalid jump address")
+        log.debug("This path results in an exception, possibly an invalid jump address")
         return ["ERROR"]
 
     for instr in block_ins:
@@ -724,10 +782,9 @@ def sym_exec_block(params, block, pre_block, depth, func_call, current_func_name
                 model = solver.model()
                 no_of_test_cases += 1
                 filename = "test%s.otest" % no_of_test_cases
-                with open(filename, 'w') as f:
+                with open(filename, "w") as f:
                     for variable in model.decls():
-                        f.write(str(variable) + " = " +
-                                str(model[variable]) + "\n")
+                        f.write(str(variable) + " = " + str(model[variable]) + "\n")
                 if os.stat(filename).st_size == 0:
                     os.remove(filename)
                     no_of_test_cases -= 1
@@ -744,19 +801,20 @@ def sym_exec_block(params, block, pre_block, depth, func_call, current_func_name
         new_params = params.copy()
         new_params.global_state["pc"] = successor
         if g_src_map:
-            source_code = g_src_map.get_source_code(global_state['pc'])
+            source_code = g_src_map.get_source_code(global_state["pc"])
             if source_code in g_src_map.func_call_names:
-                func_call = global_state['pc']
-        sym_exec_block(new_params, successor, block,
-                       depth, func_call, current_func_name)
+                func_call = global_state["pc"]
+        sym_exec_block(
+            new_params, successor, block, depth, func_call, current_func_name
+        )
     elif jump_type[block] == "falls_to":  # just follow to the next basic block
         successor = vertices[block].get_falls_to()
         new_params = params.copy()
         new_params.global_state["pc"] = successor
-        sym_exec_block(new_params, successor, block,
-                       depth, func_call, current_func_name)
+        sym_exec_block(
+            new_params, successor, block, depth, func_call, current_func_name
+        )
     elif jump_type[block] == "conditional":  # executing "JUMPI"
-
         # A choice point, we proceed with depth first search
 
         branch_expression = vertices[block].get_branch_expression()
@@ -770,17 +828,19 @@ def sym_exec_block(params, block, pre_block, depth, func_call, current_func_name
         try:
             if solver.check() == unsat:
                 log.debug("INFEASIBLE PATH DETECTED")
-                # print("INFEASIBLE PATH DETECTED")
             else:
                 left_branch = vertices[block].get_jump_target()
                 new_params = params.copy()
                 new_params.global_state["pc"] = left_branch
                 new_params.path_conditions_and_vars["path_condition"].append(
-                    branch_expression)
-                last_idx = len(
-                    new_params.path_conditions_and_vars["path_condition"]) - 1
-                sym_exec_block(new_params, left_branch, block,
-                               depth, func_call, current_func_name)
+                    branch_expression
+                )
+                last_idx = (
+                    len(new_params.path_conditions_and_vars["path_condition"]) - 1
+                )
+                sym_exec_block(
+                    new_params, left_branch, block, depth, func_call, current_func_name
+                )
         except TimeoutError:
             raise
         except Exception as e:
@@ -793,8 +853,7 @@ def sym_exec_block(params, block, pre_block, depth, func_call, current_func_name
         negated_branch_expression = Not(branch_expression)
         solver.add(negated_branch_expression)
 
-        log.debug("Negated branch expression: " +
-                  str(negated_branch_expression))
+        log.debug("Negated branch expression: " + str(negated_branch_expression))
 
         try:
             if solver.check() == unsat:
@@ -807,11 +866,14 @@ def sym_exec_block(params, block, pre_block, depth, func_call, current_func_name
                 new_params = params.copy()
                 new_params.global_state["pc"] = right_branch
                 new_params.path_conditions_and_vars["path_condition"].append(
-                    negated_branch_expression)
-                last_idx = len(
-                    new_params.path_conditions_and_vars["path_condition"]) - 1
-                sym_exec_block(new_params, right_branch, block,
-                               depth, func_call, current_func_name)
+                    negated_branch_expression
+                )
+                last_idx = (
+                    len(new_params.path_conditions_and_vars["path_condition"]) - 1
+                )
+                sym_exec_block(
+                    new_params, right_branch, block, depth, func_call, current_func_name
+                )
         except TimeoutError:
             raise
         except Exception as e:
@@ -823,7 +885,7 @@ def sym_exec_block(params, block, pre_block, depth, func_call, current_func_name
     else:
         updated_count_number = visited_edges[current_edge] - 1
         visited_edges.update({current_edge: updated_count_number})
-        raise Exception('Unknown Jump-Type')
+        raise Exception("Unknown Jump-Type")
 
 
 # Symbolically executing an instruction
@@ -854,7 +916,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
     # flush coverage
     perc = float(len(visited_pcs)) / len(instructions.keys())
 
-    instr_parts = str.split(instr, ' ')
+    instr_parts = str.split(instr, " ")
     opcode = instr_parts[0]
 
     if opcode == "INVALID":
@@ -865,8 +927,20 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
     # collecting the analysis result by calling this skeletal function
     # this should be done before symbolically executing the instruction,
     # since SE will modify the stack and mem
-    semantic_analysis(analysis, opcode, stack, mem, global_state, global_problematic_pcs,
-                      current_func_name, g_src_map, path_conditions_and_vars, solver, instructions, g_slot_map)
+    semantic_analysis(
+        analysis,
+        opcode,
+        stack,
+        mem,
+        global_state,
+        global_problematic_pcs,
+        current_func_name,
+        g_src_map,
+        path_conditions_and_vars,
+        solver,
+        instructions,
+        g_slot_map,
+    )
 
     log.debug("==============================")
     log.debug("EXECUTING: " + instr)
@@ -892,22 +966,32 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             else:
                 # both are real and we need to manually modulus with 2 ** 256
                 # if both are symbolic z3 takes care of modulus automatically
-                computed = (first + second) % (2 ** 256)
+                computed = (first + second) % (2**256)
             computed = simplify(computed) if is_expr(computed) else computed
 
             check_revert = False
-            if jump_type[block] == 'conditional':
+            if jump_type[block] == "conditional":
                 jump_target = vertices[block].get_jump_target()
                 falls_to = vertices[block].get_falls_to()
-                check_revert = any([True for instruction in vertices[jump_target].get_instructions(
-                ) if instruction.startswith('REVERT')])
+                check_revert = any(
+                    [
+                        True
+                        for instruction in vertices[jump_target].get_instructions()
+                        if instruction.startswith("REVERT")
+                    ]
+                )
                 if not check_revert:
-                    check_revert = any([True for instruction in vertices[falls_to].get_instructions(
-                    ) if instruction.startswith('REVERT')])
+                    check_revert = any(
+                        [
+                            True
+                            for instruction in vertices[falls_to].get_instructions()
+                            if instruction.startswith("REVERT")
+                        ]
+                    )
 
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "MUL":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -921,7 +1005,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "SUB":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -934,22 +1018,32 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 second = BitVecVal(second, 256)
                 computed = first - second
             else:
-                computed = (first - second) % (2 ** 256)
+                computed = (first - second) % (2**256)
             computed = simplify(computed) if is_expr(computed) else computed
 
             check_revert = False
-            if jump_type[block] == 'conditional':
+            if jump_type[block] == "conditional":
                 jump_target = vertices[block].get_jump_target()
                 falls_to = vertices[block].get_falls_to()
-                check_revert = any([True for instruction in vertices[jump_target].get_instructions(
-                ) if instruction.startswith('REVERT')])
+                check_revert = any(
+                    [
+                        True
+                        for instruction in vertices[jump_target].get_instructions()
+                        if instruction.startswith("REVERT")
+                    ]
+                )
                 if not check_revert:
-                    check_revert = any([True for instruction in vertices[falls_to].get_instructions(
-                    ) if instruction.startswith('REVERT')])
+                    check_revert = any(
+                        [
+                            True
+                            for instruction in vertices[falls_to].get_instructions()
+                            if instruction.startswith("REVERT")
+                        ]
+                    )
 
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "DIV":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -975,7 +1069,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "SDIV":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -986,8 +1080,8 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 second = to_signed(second)
                 if second == 0:
                     computed = 0
-                elif first == -2 ** 255 and second == -1:
-                    computed = -2 ** 255
+                elif first == -(2**255) and second == -1:
+                    computed = -(2**255)
                 else:
                     sign = -1 if (first / second) < 0 else 1
                     computed = sign * (abs(first) / abs(second))
@@ -1000,9 +1094,9 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                     computed = 0
                 else:
                     solver.push()
-                    solver.add(Not(And(first == -2 ** 255, second == -1)))
+                    solver.add(Not(And(first == -(2**255), second == -1)))
                     if check_sat(solver) == unsat:
-                        computed = -2 ** 255
+                        computed = -(2**255)
                     else:
                         solver.push()
                         solver.add(first / second < 0)
@@ -1020,7 +1114,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "MOD":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -1050,7 +1144,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "SMOD":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -1074,11 +1168,13 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                     # it is provable that second is indeed equal to zero
                     computed = 0
                 else:
-
                     solver.push()
                     solver.add(first < 0)  # check sign of first element
-                    sign = BitVecVal(-1, 256) if check_sat(solver) == sat \
+                    sign = (
+                        BitVecVal(-1, 256)
+                        if check_sat(solver) == sat
                         else BitVecVal(1, 256)
+                    )
                     solver.pop()
 
                     def z3_abs(x):
@@ -1093,7 +1189,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "ADDMOD":
         if len(stack) > 2:
             global_state["pc"] = global_state["pc"] + 1
@@ -1123,7 +1219,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "MULMOD":
         if len(stack) > 2:
             global_state["pc"] = global_state["pc"] + 1
@@ -1153,7 +1249,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "EXP":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -1161,7 +1257,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             exponent = stack.pop(0)
             # Type conversion is needed when they are mismatched
             if isAllReal(base, exponent):
-                computed = pow(base, exponent, 2 ** 256)
+                computed = pow(base, exponent, 2**256)
             else:
                 # The computed value is unknown, this is because power is
                 # not supported in bit-vector theory
@@ -1170,7 +1266,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "SIGNEXTEND":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -1182,11 +1278,9 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 else:
                     signbit_index_from_right = 8 * first + 7
                     if second & (1 << signbit_index_from_right):
-                        computed = second | (
-                            2 ** 256 - (1 << signbit_index_from_right))
+                        computed = second | (2**256 - (1 << signbit_index_from_right))
                     else:
-                        computed = second & (
-                            (1 << signbit_index_from_right) - 1)
+                        computed = second & ((1 << signbit_index_from_right) - 1)
             else:
                 first = to_symbolic(first)
                 second = to_symbolic(second)
@@ -1199,17 +1293,15 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                     solver.push()
                     solver.add(second & (1 << signbit_index_from_right) == 0)
                     if check_sat(solver) == unsat:
-                        computed = second | (
-                            2 ** 256 - (1 << signbit_index_from_right))
+                        computed = second | (2**256 - (1 << signbit_index_from_right))
                     else:
-                        computed = second & (
-                            (1 << signbit_index_from_right) - 1)
+                        computed = second & ((1 << signbit_index_from_right) - 1)
                     solver.pop()
                 solver.pop()
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     #
     #  10s: Comparison and Bitwise Logic Operations
     #
@@ -1227,12 +1319,11 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 else:
                     computed = 0
             else:
-                computed = If(ULT(first, second), BitVecVal(
-                    1, 256), BitVecVal(0, 256))
+                computed = If(ULT(first, second), BitVecVal(1, 256), BitVecVal(0, 256))
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "GT":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -1247,12 +1338,11 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 else:
                     computed = 0
             else:
-                computed = If(UGT(first, second), BitVecVal(
-                    1, 256), BitVecVal(0, 256))
+                computed = If(UGT(first, second), BitVecVal(1, 256), BitVecVal(0, 256))
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "SLT":  # Not fully faithful to signed comparison
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -1266,12 +1356,11 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 else:
                     computed = 0
             else:
-                computed = If(first < second, BitVecVal(
-                    1, 256), BitVecVal(0, 256))
+                computed = If(first < second, BitVecVal(1, 256), BitVecVal(0, 256))
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "SGT":  # Not fully faithful to signed comparison
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -1285,12 +1374,11 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 else:
                     computed = 0
             else:
-                computed = If(first > second, BitVecVal(
-                    1, 256), BitVecVal(0, 256))
+                computed = If(first > second, BitVecVal(1, 256), BitVecVal(0, 256))
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "EQ":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -1302,12 +1390,11 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 else:
                     computed = 0
             else:
-                computed = If(first == second, BitVecVal(
-                    1, 256), BitVecVal(0, 256))
+                computed = If(first == second, BitVecVal(1, 256), BitVecVal(0, 256))
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "ISZERO":
         # Tricky: this instruction works on both boolean and integer,
         # when we have a symbolic expression, type error might occur
@@ -1325,7 +1412,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "AND":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -1335,7 +1422,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "OR":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -1347,7 +1434,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             stack.insert(0, computed)
 
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "XOR":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -1359,7 +1446,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             stack.insert(0, computed)
 
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "NOT":
         if len(stack) > 0:
             global_state["pc"] = global_state["pc"] + 1
@@ -1368,7 +1455,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "BYTE":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -1396,7 +1483,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     #
     # 20s: SHA3/KECCAK256
     #
@@ -1408,16 +1495,15 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             slot = None
             if isAllReal(s0, s1):
                 # simulate the hashing of sha3
-                data = [str(x) for x in memory[s0: s0 + s1]]
+                data = [str(x) for x in memory[s0 : s0 + s1]]
 
                 # *Slot id in memory[63] <= MSTORE(64, slot)
-                # print(memory[63])
                 slot = memory[63]
-                position = ''.join(data)
-                position = re.sub('[\s+]', '', position)
+                position = "".join(data)
+                position = re.sub("[\s+]", "", position)
                 position = zlib.compress(six.b(position), 9)
                 position = base64.b64encode(position)
-                position = position.decode('utf-8', 'strict')
+                position = position.decode("utf-8", "strict")
                 if position in sha3_list:
                     stack.insert(0, sha3_list[position])
                 else:
@@ -1454,7 +1540,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 global_state["transfer"]["MSTORE_2"] = False
 
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     #
     # 30s: Environment Information
     #
@@ -1479,7 +1565,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             global_state["balance"][hashed_address] = new_var
             stack.insert(0, new_var)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "CALLER":  # get caller address
         # that is directly responsible for this execution
         global_state["pc"] = global_state["pc"] + 1
@@ -1497,14 +1583,17 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             global_state["pc"] = global_state["pc"] + 1
             position = stack.pop(0)
             if g_src_map:
-                source_code = g_src_map.get_source_code(global_state['pc'] - 1)
-                if source_code.startswith("function") and isReal(
-                        position) and current_func_name in g_src_map.func_name_to_params:
+                source_code = g_src_map.get_source_code(global_state["pc"] - 1)
+                if (
+                    source_code.startswith("function")
+                    and isReal(position)
+                    and current_func_name in g_src_map.func_name_to_params
+                ):
                     params = g_src_map.func_name_to_params[current_func_name]
                     param_idx = (position - 4) // 32
                     for param in params:
-                        if param_idx == param['position']:
-                            new_var_name = param['name']
+                        if param_idx == param["position"]:
+                            new_var_name = param["name"]
                             g_src_map.var_names.append(new_var_name)
                 else:
                     new_var_name = gen.gen_data_var(position)
@@ -1517,7 +1606,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 path_conditions_and_vars[new_var_name] = new_var
             stack.insert(0, new_var)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "CALLDATASIZE":
         global_state["pc"] = global_state["pc"] + 1
         new_var_name = gen.gen_data_size()
@@ -1535,14 +1624,14 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             stack.pop(0)
             stack.pop(0)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "CODESIZE":
         global_state["pc"] = global_state["pc"] + 1
-        if g_disasm_file.endswith('.disasm'):
+        if g_disasm_file.endswith(".disasm"):
             evm_file_name = g_disasm_file[:-7]
         else:
             evm_file_name = g_disasm_file
-        with open(evm_file_name, 'r') as evm_file:
+        with open(evm_file_name, "r") as evm_file:
             evm = evm_file.read()[:-1]
             code_size = len(evm) / 2
             stack.insert(0, code_size)
@@ -1556,24 +1645,22 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
 
             if isAllReal(mem_location, current_miu_i, code_from, no_bytes):
                 if six.PY2:
-                    temp = long(
-                        math.ceil((mem_location + no_bytes) / float(32)))
+                    temp = long(math.ceil((mem_location + no_bytes) / float(32)))
                 else:
-                    temp = int(
-                        math.ceil((mem_location + no_bytes) / float(32)))
+                    temp = int(math.ceil((mem_location + no_bytes) / float(32)))
 
                 if temp > current_miu_i:
                     current_miu_i = temp
 
-                if g_disasm_file.endswith('.disasm'):
+                if g_disasm_file.endswith(".disasm"):
                     evm_file_name = g_disasm_file[:-7]
                 else:
                     evm_file_name = g_disasm_file
-                with open(evm_file_name, 'r') as evm_file:
+                with open(evm_file_name, "r") as evm_file:
                     evm = evm_file.read()[:-1]
                     start = code_from * 2
                     end = start + no_bytes * 2
-                    code = evm[start: end]
+                    code = evm[start:end]
                 mem[mem_location] = int(code, 16)
             else:
                 new_var_name = gen.gen_code_var("Ia", code_from, no_bytes)
@@ -1596,7 +1683,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 mem[str(mem_location)] = new_var
             global_state["miu_i"] = current_miu_i
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "RETURNDATACOPY":
         if len(stack) > 2:
             global_state["pc"] += 1
@@ -1604,7 +1691,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             stack.pop(0)
             stack.pop(0)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "RETURNDATASIZE":
         global_state["pc"] += 1
         new_var_name = gen.gen_arbitrary_var()
@@ -1627,7 +1714,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 path_conditions_and_vars[new_var_name] = new_var
             stack.insert(0, new_var)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "EXTCODECOPY":
         if len(stack) > 3:
             global_state["pc"] = global_state["pc"] + 1
@@ -1657,7 +1744,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             mem[str(mem_location)] = new_var
             global_state["miu_i"] = current_miu_i
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     #
     #  40s: Block Information
     #
@@ -1673,7 +1760,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 path_conditions_and_vars[new_var_name] = new_var
             stack.insert(0, new_var)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "COINBASE":  # information from block header
         global_state["pc"] = global_state["pc"] + 1
         stack.insert(0, global_state["currentCoinbase"])
@@ -1697,7 +1784,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             global_state["pc"] = global_state["pc"] + 1
             stack.pop(0)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "MLOAD":
         if len(stack) > 0:
             global_state["pc"] = global_state["pc"] + 1
@@ -1736,7 +1823,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                     mem[str(address)] = new_var
             global_state["miu_i"] = current_miu_i
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "MSTORE":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -1779,7 +1866,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 mem[str(stored_address)] = stored_value
             global_state["miu_i"] = current_miu_i
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "MSTORE8":
         if len(stack) > 1:
             global_state["pc"] = global_state["pc"] + 1
@@ -1812,7 +1899,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 mem[str(stored_address)] = stored_value
             global_state["miu_i"] = current_miu_i
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "SLOAD":
         if len(stack) > 0:
             global_state["pc"] = global_state["pc"] + 1
@@ -1830,23 +1917,23 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                         position = simplify(position)
                     if g_src_map:
                         # ?Prev Edition to get param name
-                        new_var_name = g_src_map.get_source_code(
-                            global_state['pc'] - 1)
-                        operators = '[-+*/%|&^!><=]'
-                        new_var_name = re.compile(operators).split(
-                            new_var_name)[0].strip()
+                        new_var_name = g_src_map.get_source_code(global_state["pc"] - 1)
+                        operators = "[-+*/%|&^!><=]"
+                        new_var_name = (
+                            re.compile(operators).split(new_var_name)[0].strip()
+                        )
                         # judge the load operation of storage varible
                         new_var_name = g_src_map.get_parameter_or_state_var(
-                            new_var_name)
+                            new_var_name
+                        )
                         if new_var_name:
                             new_var_name = gen.gen_owner_store_var(
-                                position, new_var_name)
+                                position, new_var_name
+                            )
                         else:
                             new_var_name = gen.gen_owner_store_var(position)
-                            # print(position)
                     else:
                         new_var_name = gen.gen_owner_store_var(position)
-                        # print(position)
 
                     if new_var_name in path_conditions_and_vars:
                         new_var = path_conditions_and_vars[new_var_name]
@@ -1861,7 +1948,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             if global_state["burn"]["hash"] != None:
                 global_state["burn"]["sload"] = stack[0]
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
 
     elif opcode == "SSTORE":
         if len(stack) > 1:
@@ -1878,7 +1965,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 # note that the stored_value could be unknown
                 global_state["Ia"][str(stored_address)] = stored_value
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "JUMP":
         if len(stack) > 0:
             target_address = stack.pop(0)
@@ -1891,7 +1978,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             if target_address not in edges[block]:
                 edges[block].append(target_address)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "JUMPI":
         # We need to prepare two branches
         if len(stack) > 1:
@@ -1904,17 +1991,17 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                     raise TypeError("Target address must be an integer")
             vertices[block].set_jump_target(target_address)
             flag = stack.pop(0)
-            branch_expression = (BitVecVal(0, 1) == BitVecVal(1, 1))
+            branch_expression = BitVecVal(0, 1) == BitVecVal(1, 1)
             if isReal(flag):
                 if flag != 0:
                     branch_expression = True
             else:
-                branch_expression = (flag != 0)
+                branch_expression = flag != 0
             vertices[block].set_branch_expression(branch_expression)
             if target_address not in edges[block]:
                 edges[block].append(target_address)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "PC":
         stack.insert(0, global_state["pc"])
         global_state["pc"] = global_state["pc"] + 1
@@ -1938,7 +2025,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
     #
     #  60s & 70s: Push Operations
     #
-    elif opcode.startswith('PUSH', 0):  # this is a push instruction
+    elif opcode.startswith("PUSH", 0):  # this is a push instruction
         position = int(opcode[4:], 10)
         global_state["pc"] = global_state["pc"] + 1 + position
         pushed_value = int(instr_parts[1], 16)
@@ -1955,7 +2042,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             duplicate = stack[position]
             stack.insert(0, duplicate)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
 
     #
     #  90s: Swap Operations
@@ -1972,7 +2059,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 global_state["burn"]["valid"] = True
                 global_state["burn"]["trigger"] = False
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
 
     #
     #  a0s: Logging Operations
@@ -1998,7 +2085,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             new_var = BitVec(new_var_name, 256)
             stack.insert(0, new_var)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "CALL":
         # TODO: Need to handle miu_i
         if len(stack) > 6:
@@ -2025,7 +2112,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
 
             # Let us ignore the call depth
             balance_ia = global_state["balance"]["Ia"]
-            is_enough_fund = (transfer_amount <= balance_ia)
+            is_enough_fund = transfer_amount <= balance_ia
             solver.push()
             solver.add(is_enough_fund)
 
@@ -2038,21 +2125,19 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 stack.insert(0, 1)  # x = 1
                 solver.pop()
                 solver.add(is_enough_fund)
-                path_conditions_and_vars["path_condition"].append(
-                    is_enough_fund)
+                path_conditions_and_vars["path_condition"].append(is_enough_fund)
                 last_idx = len(path_conditions_and_vars["path_condition"]) - 1
                 # analysis["time_dependency_bug"][last_idx] = global_state["pc"] - 1
-                new_balance_ia = (balance_ia - transfer_amount)
+                new_balance_ia = balance_ia - transfer_amount
                 global_state["balance"]["Ia"] = new_balance_ia
                 address_is = path_conditions_and_vars["Is"]
-                address_is = (address_is & CONSTANT_ONES_159)
-                boolean_expression = (recipient != address_is)
+                address_is = address_is & CONSTANT_ONES_159
+                boolean_expression = recipient != address_is
                 solver.push()
                 solver.add(boolean_expression)
                 if check_sat(solver) == unsat:
                     solver.pop()
-                    new_balance_is = (
-                        global_state["balance"]["Is"] + transfer_amount)
+                    new_balance_is = global_state["balance"]["Is"] + transfer_amount
                     global_state["balance"]["Is"] = new_balance_is
                 else:
                     solver.pop()
@@ -2063,15 +2148,13 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                     old_balance_name = gen.gen_arbitrary_var()
                     old_balance = BitVec(old_balance_name, 256)
                     path_conditions_and_vars[old_balance_name] = old_balance
-                    constraint = (old_balance >= 0)
+                    constraint = old_balance >= 0
                     solver.add(constraint)
-                    path_conditions_and_vars["path_condition"].append(
-                        constraint)
-                    new_balance = (old_balance + transfer_amount)
+                    path_conditions_and_vars["path_condition"].append(constraint)
+                    new_balance = old_balance + transfer_amount
                     global_state["balance"][new_address_name] = new_balance
-            # print(stack)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "CALLCODE":
         # TODO: Need to handle miu_i
         if len(stack) > 6:
@@ -2098,7 +2181,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
 
             # Let us ignore the call depth
             balance_ia = global_state["balance"]["Ia"]
-            is_enough_fund = (transfer_amount <= balance_ia)
+            is_enough_fund = transfer_amount <= balance_ia
             solver.push()
             solver.add(is_enough_fund)
 
@@ -2111,11 +2194,10 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 stack.insert(0, 1)  # x = 1
                 solver.pop()
                 solver.add(is_enough_fund)
-                path_conditions_and_vars["path_condition"].append(
-                    is_enough_fund)
+                path_conditions_and_vars["path_condition"].append(is_enough_fund)
                 last_idx = len(path_conditions_and_vars["path_condition"]) - 1
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode in ("DELEGATECALL", "STATICCALL"):
         if len(stack) > 5:
             global_state["pc"] += 1
@@ -2130,7 +2212,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             new_var = BitVec(new_var_name, 256)
             stack.insert(0, new_var)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode in ("RETURN", "REVERT"):
         # TODO: Need to handle miu_i
         if len(stack) > 1:
@@ -2142,7 +2224,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             # TODO
             pass
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
     elif opcode == "SELFDESTRUCT":
         global_state["pc"] = global_state["pc"] + 1
         recipient = stack.pop(0)
@@ -2155,10 +2237,10 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
         old_balance_name = gen.gen_arbitrary_var()
         old_balance = BitVec(old_balance_name, 256)
         path_conditions_and_vars[old_balance_name] = old_balance
-        constraint = (old_balance >= 0)
+        constraint = old_balance >= 0
         solver.add(constraint)
         path_conditions_and_vars["path_condition"].append(constraint)
-        new_balance = (old_balance + transfer_amount)
+        new_balance = old_balance + transfer_amount
         global_state["balance"][new_address_name] = new_balance
         # TODO
         return
@@ -2173,7 +2255,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             exponent = stack.pop(0)
             # Type conversion is needed when they are mismatched
             if isAllReal(base, exponent):
-                computed = pow(base, exponent, 2 ** 256)
+                computed = pow(base, exponent, 2**256)
             else:
                 # The computed value is unknown, this is because power is
                 # not supported in bit-vector theory
@@ -2210,10 +2292,9 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             #     computed = mod((second + 2 ^ first), 2 ^ 256)
 
             # computed = simplify(computed) if is_expr(computed) else computed
-            # print(computed)
             # stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
 
     elif opcode == "SHR":
         if len(stack) > 1:
@@ -2272,7 +2353,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
 
     elif opcode == "SAR":
         if len(stack) > 1:
@@ -2347,7 +2428,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             computed = simplify(computed) if is_expr(computed) else computed
             stack.insert(0, computed)
         else:
-            raise ValueError('STACK underflow')
+            raise ValueError("STACK underflow")
 
     elif opcode == "SELFBALANCE":
         # address(this).balance
@@ -2375,7 +2456,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
         if global_params.UNIT_TEST == 2 or global_params.UNIT_TEST == 3:
             log.critical("Unknown instruction: %s" % opcode)
             exit(UNKNOWN_INSTRUCTION)
-        raise Exception('UNKNOWN INSTRUCTION: ' + opcode)
+        raise Exception("UNKNOWN INSTRUCTION: " + opcode)
 
 
 class TimeoutError(Exception):
@@ -2411,7 +2492,7 @@ def run_build_cfg_and_analyze(timeout_cb=do_nothing):
     try:
         with Timeout(sec=global_params.GLOBAL_TIMEOUT):
             build_cfg_and_analyze()
-        log.debug('Done Symbolic execution')
+        log.debug("Done Symbolic execution")
     except TimeoutError:
         g_timeout = True
         timeout_cb()
@@ -2455,5 +2536,12 @@ def run(disasm_file=None, source_file=None, source_map=None, slot_map=None):
         log.info("\t============ Results of %s===========" % source_map.cname)
         analyze()
         ret = Identifier.detect_defects(
-            instructions, results, g_src_map, visited_pcs, global_problematic_pcs, begin, g_disasm_file)
+            instructions,
+            results,
+            g_src_map,
+            visited_pcs,
+            global_problematic_pcs,
+            begin,
+            g_disasm_file,
+        )
         return ret

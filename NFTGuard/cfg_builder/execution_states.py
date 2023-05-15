@@ -6,4 +6,4 @@ EXCEPTION = 104
 EMPTY_RESULT = 105
 INCORRECT_GAS = 106
 
-PICKLE_PATH = 'current_test.pickle'
+PICKLE_PATH = "current_test.pickle"

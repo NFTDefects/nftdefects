@@ -20,7 +20,7 @@ contract token is ERC721Enumerable, Ownable {
         require(success, reason);
 
         for (uint256 i = 0; i < _numOfTokens; i++) {
-            // ERC-721 R-eentrancy
+            // ERC-721 Reentrancy
             _safeMint(msg.sender, totalSupply() + i);
         }
         addressMinted[msg.sender] = true;
@@ -51,7 +51,7 @@ contract token is ERC721Enumerable, Ownable {
     }
 
     function setProxyRegistryAddress(address _proxyRegistryAddress) external {
-        // Risky Proxy
+        // Risky Mutable Proxy
         proxyRegistryAddress = _proxyRegistryAddress;
     }
 }

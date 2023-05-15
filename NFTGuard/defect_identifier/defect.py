@@ -46,57 +46,57 @@ class Defect:
         return warnings
 
     def _warning_content(self, pc, source_code):
-        new_line_idx = source_code.find('\n')
-        source_code = source_code.split('\n', 1)[0]
+        new_line_idx = source_code.find("\n")
+        source_code = source_code.split("\n", 1)[0]
         location = self.source_map.get_location(pc)
 
-        source = re.sub(self.source_map.root_path, '', self.source_map.get_filename())
-        line = location['begin']['line'] + 1
-        column = location['begin']['column'] + 1
-        s = '%s:%s:%s: Warning: %s.\n' % (source, line, column, self.name)
+        source = re.sub(self.source_map.root_path, "", self.source_map.get_filename())
+        line = location["begin"]["line"] + 1
+        column = location["begin"]["column"] + 1
+        s = "%s:%s:%s: Warning: %s.\n" % (source, line, column, self.name)
         s += source_code
         if new_line_idx != -1:
-            s += '\n' + self._leading_spaces(source_code) + '^\n'
-            s += 'Spanning multiple lines.'
+            s += "\n" + self._leading_spaces(source_code) + "^\n"
+            s += "Spanning multiple lines."
         return s
 
     def _leading_spaces(self, s):
-        stripped_s = s.lstrip('[ \t]')
+        stripped_s = s.lstrip("[ \t]")
         len_of_leading_spaces = len(s) - len(stripped_s)
         return s[0:len_of_leading_spaces]
 
     def __str__(self):
-        s = ''
+        s = ""
         for warning in self.warnings:
-            s += '\n' + warning
-        return s.lstrip('\n')
+            s += "\n" + warning
+        return s.lstrip("\n")
 
 
 class ViolationDefect(Defect):
     def __init__(self, source_map, pcs):
-        self.name = 'ERC721 Standard Violation Defect'
+        self.name = "ERC721 Standard Violation Defect"
         Defect.__init__(self, source_map, pcs)
 
 
 class ReentrancyDefect(Defect):
     def __init__(self, source_map, pcs):
-        self.name = 'ERC721 Reentrancy Defect'
+        self.name = "ERC721 Reentrancy Defect"
         Defect.__init__(self, source_map, pcs)
 
 
 class RiskyProxyDefect(Defect):
     def __init__(self, source_map, pcs):
-        self.name = 'Risky Mutable Proxy Defect'
+        self.name = "Risky Mutable Proxy Defect"
         Defect.__init__(self, source_map, pcs)
 
 
 class UnlimitedMintingDefect(Defect):
     def __init__(self, source_map, pcs):
-        self.name = 'Unlimited Minting Defect'
+        self.name = "Unlimited Minting Defect"
         Defect.__init__(self, source_map, pcs)
 
 
 class PublicBurnDefect(Defect):
     def __init__(self, source_map, pcs):
-        self.name = 'Public Burn Defect'
+        self.name = "Public Burn Defect"
         Defect.__init__(self, source_map, pcs)

@@ -5,8 +5,8 @@ from inputter.ast.ast_helper import AstHelper
 
 
 class SlotMap:
-    """GENESIS: simple and heuristic method for marking critical vars to make a quick feature_detector in complex NFT contracts
-    """
+    """GENESIS: simple and heuristic method for marking critical vars to make a quick feature_detector in complex NFT contracts"""
+
     ref_id_to_state_vars = {}
     parent_filename = ""
     slot_map = []
@@ -19,14 +19,13 @@ class SlotMap:
     supply_index = None
     proxy_index = None
 
-    def __init__(self, cname, parent_filename, input_type='solidity', root_path=""):
+    def __init__(self, cname, parent_filename, input_type="solidity", root_path=""):
         self.root_path = root_path
         self.cname = cname
         if not SlotMap.parent_filename:
             SlotMap.parent_filename = parent_filename
             if input_type == "solidity":
-                SlotMap.ast_helper = AstHelper(
-                    SlotMap.parent_filename, input_type)
+                SlotMap.ast_helper = AstHelper(SlotMap.parent_filename, input_type)
             else:
                 # TODO add more type of inputter
                 raise Exception("There is no such type of inputter")
@@ -36,7 +35,11 @@ class SlotMap:
 
             # name_to_type: mark var name => type
             # simpler_slot_map: mark var slot id
-            self.slot_map, self.simpler_slot_map, self.name_to_type = self.calculate_slot()
+            (
+                self.slot_map,
+                self.simpler_slot_map,
+                self.name_to_type,
+            ) = self.calculate_slot()
 
             # simple and heuristic keyword-matching strategy (extensible and to be refined)
             self.owner_index = self.match_owner()
@@ -53,9 +56,13 @@ class SlotMap:
         state_vars = self.state_def[self.cname]
         var_dict = {}
         for state_v in state_vars:
-            var_dict[state_v['id']] = {
-                state_v['name']: {"type": state_v['typeDescriptions']['typeString'], "constant": state_v['constant'],
-                                  "mutability": state_v['mutability']}}
+            var_dict[state_v["id"]] = {
+                state_v["name"]: {
+                    "type": state_v["typeDescriptions"]["typeString"],
+                    "constant": state_v["constant"],
+                    "mutability": state_v["mutability"],
+                }
+            }
         return var_dict
 
     def calculate_slot(self):
@@ -66,9 +73,9 @@ class SlotMap:
         name_to_type = {}
         for id in id_to_state_vars:
             for key in id_to_state_vars[id]:
-                constant = id_to_state_vars[id][key]['constant']
-                mutable = id_to_state_vars[id][key]['mutability']
-                type = id_to_state_vars[id][key]['type']
+                constant = id_to_state_vars[id][key]["constant"]
+                mutable = id_to_state_vars[id][key]["mutability"]
+                type = id_to_state_vars[id][key]["type"]
                 name_to_type[key] = type
                 neg = 0
 
@@ -81,19 +88,19 @@ class SlotMap:
                     neg = 1
                 elif type == "string":
                     neg = 256
-                elif len(re.findall('mapping(.*)', type)) > 0:
+                elif len(re.findall("mapping(.*)", type)) > 0:
                     neg = 256
                 elif type.startswith("uint"):
-                    if re.findall('\d+', type):
-                        neg = int(re.findall('\d+', type)[0])
+                    if re.findall("\d+", type):
+                        neg = int(re.findall("\d+", type)[0])
                     else:
                         neg = 256
                 elif type.startswith("bytes"):
-                    if re.findall('\d+', type):
-                        neg = int(re.findall('\d+', type)[0]) * 8
+                    if re.findall("\d+", type):
+                        neg = int(re.findall("\d+", type)[0]) * 8
                     else:
                         neg = 256
-                elif len(re.findall('(.*)\[(.*?)\]', type)) > 0:
+                elif len(re.findall("(.*)\[(.*?)\]", type)) > 0:
                     neg = 256
                 elif type.startswith("struct"):
                     neg = 256
@@ -113,11 +120,11 @@ class SlotMap:
         id_to_state_vars = self._get_ref_id_to_state_vars()
         slot_map = self.slot_map
         # usually _owners, _tokenApprovals, _operatorApprovals, _ownerships, etc.
-        keywords = 'OWNER'
+        keywords = "OWNER"
         index = []
         for id in id_to_state_vars:
             for key in id_to_state_vars[id]:
-                if any([w in key.upper() and w for w in keywords.split(',')]):
+                if any([w in key.upper() and w for w in keywords.split(",")]):
                     if slot_map[id][key]["slot_id"] is not None:
                         index.append(slot_map[id][key]["slot_id"])
         return index
@@ -126,11 +133,11 @@ class SlotMap:
         id_to_state_vars = self._get_ref_id_to_state_vars()
         slot_map = self.slot_map
         # usually _owners, _tokenApprovals, _operatorApprovals, _ownerships, etc.
-        keywords = 'APPROVAL,OPERATOR'
+        keywords = "APPROVAL,OPERATOR"
         index = []
         for id in id_to_state_vars:
             for key in id_to_state_vars[id]:
-                if any([w in key.upper() and w for w in keywords.split(',')]):
+                if any([w in key.upper() and w for w in keywords.split(",")]):
                     if slot_map[id][key]["slot_id"] is not None:
                         index.append(slot_map[id][key]["slot_id"])
         return index
@@ -142,22 +149,24 @@ class SlotMap:
         # add others: nextToken, totalMinted
 
         # seperate to prefix and suffix
-        keywords_prefix = 'ALL,MAX,TOTAL,CURRENT,NEXT,TOTAL,TOKEN'
-        keywords_suffix = 'TOKEN,SUPPLY,INDEX,MINTED'
-        whole = 'COUNTER,SUPPLY,MINTCOUNT'
+        keywords_prefix = "ALL,MAX,TOTAL,CURRENT,NEXT,TOTAL,TOKEN"
+        keywords_suffix = "TOKEN,SUPPLY,INDEX,MINTED"
+        whole = "COUNTER,SUPPLY,MINTCOUNT"
         index = []
         for id in id_to_state_vars:
             for key in id_to_state_vars[id]:
                 # match prefix
-                if any([w in key.upper() and w for w in keywords_prefix.split(',')]):
+                if any([w in key.upper() and w for w in keywords_prefix.split(",")]):
                     # match suffix
-                    if any([w in key.upper() and w for w in keywords_suffix.split(',')]):
+                    if any(
+                        [w in key.upper() and w for w in keywords_suffix.split(",")]
+                    ):
                         if slot_map[id][key]["slot_id"] is not None:
                             index.append(slot_map[id][key]["slot_id"])
 
         for id in id_to_state_vars:
             for key in id_to_state_vars[id]:
-                if any(w in key.upper() and w for w in whole.split(',')):
+                if any(w in key.upper() and w for w in whole.split(",")):
                     if slot_map[id][key]["slot_id"] is not None:
                         index.append(slot_map[id][key]["slot_id"])
         return index
@@ -166,15 +175,20 @@ class SlotMap:
         id_to_state_vars = self._get_ref_id_to_state_vars()
         slot_map = self.slot_map
         # should find address type vars
-        keywords_prefix = 'PROXY'
-        keywords_suffix = 'REGISTRY'
+        keywords_prefix = "PROXY"
+        keywords_suffix = "REGISTRY"
         index = []
         for id in id_to_state_vars:
             for key in id_to_state_vars[id]:
                 # match prefix
-                if any([w in key.upper() and w for w in keywords_prefix.split(',')]):
+                if any([w in key.upper() and w for w in keywords_prefix.split(",")]):
                     # match suffix
-                    if any([w in key.upper() and w for w in keywords_suffix.split(',')]):
-                        if slot_map[id][key]["slot_id"] is not None and slot_map[id][key]["type"] == "address":
+                    if any(
+                        [w in key.upper() and w for w in keywords_suffix.split(",")]
+                    ):
+                        if (
+                            slot_map[id][key]["slot_id"] is not None
+                            and slot_map[id][key]["type"] == "address"
+                        ):
                             index.append(slot_map[id][key]["slot_id"])
         return index

@@ -8,7 +8,7 @@ A static analysis tool for detecting NFT-related contract defects based on a sym
 
 - Specializing on 5 kind of defects
   - *Risky Mutable Proxy*
-  - *ERC-721 Re-entrancy*
+  - *ERC-721 Reentrancy*
   - *Unlimited Minting*
   - *Public Burn*
   - *Missing Requirements*
@@ -20,7 +20,7 @@ A static analysis tool for detecting NFT-related contract defects based on a sym
 
 The design refers to the architecture shown below:
 
-<img src="./test/arch.png" alt="arch" style="zoom: 50%;" />
+<img src="./images/arch.png" alt="arch" style="zoom: 50%;" />
 
 - `inputter`: **_Inputter_** module for compiling the source code of Solidity smart contracts and extracting useful information for further analysis before symbolic execution.
 - `cfg_builder`: **_CFG Builder_** module for analysis, including essential data structures, and symbolic execution of evm opcodes.
@@ -64,6 +64,6 @@ The design refers to the architecture shown below:
    $ python3 tool.py -s test/demo.sol -cnames token -j
    ```
 
-   It woul take minutes to show the result in the console, and there will be a json file to store the results in the same directory of the tested contract. Below image shows the output in the console.
+   It would take minutes to show the result in the console, and there will be a json file to store the results in the same directory of the tested contract. Below image shows the output in the console.
 
-   ![output](./test/output.png)
+   ![output](./images/output.png)

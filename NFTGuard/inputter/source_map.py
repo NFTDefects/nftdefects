@@ -15,12 +15,12 @@ class Source:
         self.line_break_positions = self._load_line_break_positions()
 
     def _load_content(self):
-        with open(self.filename, 'rb') as f:
-            content = f.read().decode('UTF-8')
+        with open(self.filename, "rb") as f:
+            content = f.read().decode("UTF-8")
         return content
 
     def _load_line_break_positions(self):
-        return [i for i, letter in enumerate(self.content) if letter == '\n']
+        return [i for i, letter in enumerate(self.content) if letter == "\n"]
 
 
 class SourceMap:
@@ -41,8 +41,7 @@ class SourceMap:
             else:
                 # TODO add more type of inputter
                 raise Exception("There is no such type of inputter")
-            SourceMap.ast_helper = AstHelper(
-                SourceMap.parent_filename, input_type)
+            SourceMap.ast_helper = AstHelper(SourceMap.parent_filename, input_type)
             SourceMap.func_to_sig_by_contract = SourceMap._get_sig_to_func_by_contract()
         self.source = self._get_source()
         self.positions = self._get_positions()
@@ -63,8 +62,8 @@ class SourceMap:
             pos = self.instr_positions[pc]
         except:
             return ""
-        begin = pos['begin']
-        end = pos['end']
+        begin = pos["begin"]
+        end = pos["end"]
         return self.source.content[begin:end]
 
     def get_source_code_from_src(self, src):
@@ -79,17 +78,15 @@ class SourceMap:
         except:
             return ""
         location = self.get_location(pc)
-        begin = self.source.line_break_positions[location['begin']
-                                                 ['line'] - 1] + 1
-        end = pos['end']
+        begin = self.source.line_break_positions[location["begin"]["line"] - 1] + 1
+        end = pos["end"]
         return self.source.content[begin:end]
 
     def get_buggy_line_from_src(self, src):
         pos = self._convert_src_to_pos(src)
         location = self.get_location_from_src(src)
-        begin = self.source.line_break_positions[location['begin']
-                                                 ['line'] - 1] + 1
-        end = pos['end']
+        begin = self.source.line_break_positions[location["begin"]["line"] - 1] + 1
+        end = pos["end"]
         return self.source.content[begin:end]
 
     def get_location(self, pc):
@@ -107,7 +104,8 @@ class SourceMap:
     def get_parameter_or_state_var(self, var_name):
         try:
             names = [
-                node.id for node in ast.walk(ast.parse(var_name))
+                node.id
+                for node in ast.walk(ast.parse(var_name))
                 if isinstance(node, ast.Name)
             ]
             if names[0] in self.var_names:
@@ -119,26 +117,25 @@ class SourceMap:
     def _convert_src_to_pos(self, src):
         pos = {}
         src = src.split(":")
-        pos['begin'] = int(src[0])
+        pos["begin"] = int(src[0])
         length = int(src[1])
-        pos['end'] = pos['begin'] + length - 1
+        pos["end"] = pos["begin"] + length - 1
         return pos
 
     def _get_sig_to_func(self):
-        func_to_sig = SourceMap.func_to_sig_by_contract[self.cname]['hashes']
+        func_to_sig = SourceMap.func_to_sig_by_contract[self.cname]["hashes"]
         return dict((sig, func) for func, sig in six.iteritems(func_to_sig))
 
     def _get_func_name_to_params(self):
-        func_name_to_params = SourceMap.ast_helper.get_func_name_to_params(
-            self.cname)
+        func_name_to_params = SourceMap.ast_helper.get_func_name_to_params(self.cname)
         for func_name in func_name_to_params:
             calldataload_position = 0
             for param in func_name_to_params[func_name]:
-                if param['type'] == 'ArrayTypeName':
-                    param['position'] = calldataload_position
-                    calldataload_position += param['value']
+                if param["type"] == "ArrayTypeName":
+                    param["position"] = calldataload_position
+                    calldataload_position += param["value"]
                 else:
-                    param['position'] = calldataload_position
+                    param["position"] = calldataload_position
                     calldataload_position += 1
         return func_name_to_params
 
@@ -155,8 +152,7 @@ class SourceMap:
         return SourceMap.ast_helper.extract_state_variable_names(self.cname)
 
     def _get_func_call_names(self):
-        func_call_srcs = SourceMap.ast_helper.extract_func_call_srcs(
-            self.cname)
+        func_call_srcs = SourceMap.ast_helper.extract_func_call_srcs(self.cname)
         func_call_names = []
         for src in func_call_srcs:
             src = src.split(":")
@@ -167,43 +163,45 @@ class SourceMap:
 
     @classmethod
     def _get_sig_to_func_by_contract(cls):
-        cmd = 'solc --combined-json hashes %s' % cls.parent_filename
+        cmd = "solc --combined-json hashes %s" % cls.parent_filename
         out = run_command(cmd)
         out = json.loads(out)
-        return out['contracts']
+        return out["contracts"]
 
     @classmethod
     def _load_position_groups(cls):
         cmd = "solc --combined-json asm %s" % cls.parent_filename
         out = run_command(cmd)
         out = json.loads(out)
-        return out['contracts']
+        return out["contracts"]
 
     def _get_positions(self):
         if self.input_type == "solidity":
             # for different relative path (in the project or outside directory)
             # self.cname = self.cname.replace("/path1", "/path2")
-            asm = SourceMap.position_groups[self.cname]['asm']['.data']['0']
+            asm = SourceMap.position_groups[self.cname]["asm"][".data"]["0"]
         else:
             filename, contract_name = self.cname.split(":")
-            asm = SourceMap.position_groups[filename][contract_name]['evm']['legacyAssembly']['.data']['0']
-        positions = asm['.code']
-        while (True):
+            asm = SourceMap.position_groups[filename][contract_name]["evm"][
+                "legacyAssembly"
+            ][".data"]["0"]
+        positions = asm[".code"]
+        while True:
             try:
                 positions.append(None)
-                positions += asm['.data']['0']['.code']
-                asm = asm['.data']['0']
+                positions += asm[".data"]["0"][".code"]
+                asm = asm[".data"]["0"]
             except:
                 break
         return positions
 
     def _convert_offset_to_line_column(self, pos):
         ret = {}
-        ret['begin'] = None
-        ret['end'] = None
-        if pos['begin'] >= 0 and (pos['end'] - pos['begin'] + 1) >= 0:
-            ret['begin'] = self._convert_from_char_pos(pos['begin'])
-            ret['end'] = self._convert_from_char_pos(pos['end'])
+        ret["begin"] = None
+        ret["end"] = None
+        if pos["begin"] >= 0 and (pos["end"] - pos["begin"] + 1) >= 0:
+            ret["begin"] = self._convert_from_char_pos(pos["begin"])
+            ret["end"] = self._convert_from_char_pos(pos["end"])
         return ret
 
     def _convert_from_char_pos(self, pos):
@@ -212,7 +210,7 @@ class SourceMap:
             line += 1
         begin_col = 0 if line == 0 else self.source.line_break_positions[line - 1] + 1
         col = pos - begin_col
-        return {'line': line, 'column': col}
+        return {"line": line, "column": col}
 
     def _find_lower_bound(self, target, array):
         start = 0
