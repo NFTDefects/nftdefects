@@ -68,7 +68,7 @@ class InputHelper:
                     "slot_map": slot_map,
                 }
             )
-            logging.info("contract:", contract)
+            logging.info("contract:" + contract)
         if targetContracts is not None and not inputs:
             raise ValueError("Targeted contracts weren't found in the source code!")
         return inputs
