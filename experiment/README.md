@@ -6,7 +6,7 @@ The results of our experiments.
 
   - `results_1000`: source outputs of the 6 tools.
   - `contracts_1000.zip`: dataset for conducting the comparison experiment.
-  - **`issuetype_paperortool.csv`**: the collected **papers/tools** from conferences/journals of **software** and **securiy** with **issue types** they support to detect.
+  - **`issuetype_paperortool.csv`**: the collected **papers/tools** from conferences/journals of **software** and **security** with **issue types** they support to detect.
 
 - `evaluation`: evaluation results of NFTGuard.
 
