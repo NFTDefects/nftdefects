@@ -10,6 +10,7 @@ from collections import namedtuple
 from tokenize import NUMBER, NAME, NEWLINE
 
 from numpy import mod
+from defect_identifier.defect import *
 from defect_identifier.identifier import Identifier
 
 from feature_detector.semantic_analysis import *
@@ -17,11 +18,97 @@ from cfg_builder.basicblock import BasicBlock
 from cfg_builder.execution_states import UNKNOWN_INSTRUCTION, EXCEPTION, PICKLE_PATH
 from cfg_builder.vargenerator import *
 from cfg_builder.utils import *
+from rich.table import Table
+from rich.console import Console
+from rich.live import Live
+
+console = Console()
+table = Table()
+live = Live(table, console=console, vertical_overflow="crop", auto_refresh=False)
 
 log = logging.getLogger(__name__)
 
+visited_blocks = set()
+
 UNSIGNED_BOUND_NUMBER = 2**256 - 1
 CONSTANT_ONES_159 = BitVecVal((1 << 160) - 1, 256)
+
+
+def dynamic_defect_identification(g_src_map, global_problematic_pcs):
+    public_burn = PublicBurnDefect(g_src_map, global_problematic_pcs["burn_defect"])
+    unlimited_minting = UnlimitedMintingDefect(
+        g_src_map, global_problematic_pcs["unlimited_minting_defect"]
+    )
+    proxy = RiskyProxyDefect(g_src_map, global_problematic_pcs["proxy_defect"])
+    reentrancy = ReentrancyDefect(
+        g_src_map, global_problematic_pcs["reentrancy_defect"]
+    )
+    violation = ViolationDefect(g_src_map, global_problematic_pcs["violation_defect"])
+    return proxy, reentrancy, unlimited_minting, violation, public_burn
+
+
+def generate_table(
+    opcode, block_cov, pc, perc, g_src_map, global_problematic_pcs
+) -> Table:
+    (
+        proxy,
+        reentrancy,
+        unlimited_minting,
+        violation,
+        public_burn,
+    ) = dynamic_defect_identification(g_src_map, global_problematic_pcs)
+    """Make a new table."""
+    defect_table = Table()
+
+    defect_table.add_column("Defect", justify="right", style="dim", no_wrap=True)
+    defect_table.add_column("Status", style="green")
+    defect_table.add_column("Location", justify="left", style="cyan")
+
+    defect_table.add_row("Risky Mutable Proxy", str(proxy.is_defective()), str(proxy))
+    defect_table.add_row(
+        "ERC-721 Reentrancy", str(reentrancy.is_defective()), str(reentrancy)
+    )
+    defect_table.add_row(
+        "Unlimited Minting",
+        str(unlimited_minting.is_defective()),
+        str(unlimited_minting),
+    )
+    defect_table.add_row(
+        "Missing Requirements", str(violation.is_defective()), str(violation)
+    )
+    defect_table.add_row(
+        "Public Burn", str(public_burn.is_defective()), str(public_burn)
+    )
+    end = time.time()
+
+    time_coverage_table = Table()
+    time_coverage_table.add_column("Time", justify="left", style="cyan", no_wrap=True)
+    time_coverage_table.add_column(
+        "Code Coverage", justify="left", style="yellow", no_wrap=True
+    )
+    time_coverage_table.add_column(
+        "Opcode", justify="left", style="yellow", no_wrap=True
+    )
+    time_coverage_table.add_row(str(round(end - begin, 1)), str(round(perc, 1)), opcode)
+
+    block_table = Table()
+    block_table.add_column("Current PC", justify="left", style="cyan", no_wrap=True)
+    block_table.add_column(
+        "Block Coverage", justify="left", style="yellow", no_wrap=True
+    )
+
+    block_table.add_row(str(pc), str(round(block_cov, 1)))
+
+    state_table = Table.grid(expand=True)
+    state_table.add_column(justify="center")
+    state_table.add_row(time_coverage_table)
+    state_table.add_row(block_table)
+
+    reporter = Table(title="NFTGuard GENESIS v0.0.1")
+    reporter.add_column("Defect Detection", justify="center")
+    reporter.add_column("Execution States", justify="center")
+    reporter.add_row(defect_table, state_table)
+    return reporter
 
 
 class Parameter:
@@ -516,7 +603,6 @@ def get_init_global_state(path_conditions_and_vars):
     path_conditions_and_vars["path_condition"].append(constraint)
 
     # update the balances of the "caller" and "callee"
-
     global_state["balance"]["Is"] = init_is - deposited_value
     global_state["balance"]["Ia"] = init_ia + deposited_value
 
@@ -588,7 +674,7 @@ def get_init_global_state(path_conditions_and_vars):
     global_state["currentSelfBalance"] = currentSelfBalance
     global_state["currentBaseFee"] = currentBaseFee
 
-    # the state of gates to detect defect
+    # the state of gates to detect each defect
     global_state["ERC721_reentrancy"] = {
         "pc": [],
         "key": None,
@@ -699,7 +785,8 @@ def full_sym_exec():
     if g_src_map:
         start_block_to_func_sig = get_start_block_to_func_sig()
 
-    return sym_exec_block(params, 0, 0, 0, -1, "fallback")
+    with live:
+        return sym_exec_block(params, 0, 0, 0, -1, "fallback")
 
 
 # Symbolically executing a block from the start address
@@ -913,9 +1000,6 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
 
     visited_pcs.add(global_state["pc"])
 
-    # flush coverage
-    perc = float(len(visited_pcs)) / len(instructions.keys())
-
     instr_parts = str.split(instr, " ")
     opcode = instr_parts[0]
 
@@ -941,6 +1025,34 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
         instructions,
         g_slot_map,
     )
+    # identifier = Identifier()
+    # identifier.detect_violation(results, g_src_map, global_problematic_pcs)
+    # identifier.detect_reentrancy(results, g_src_map, global_problematic_pcs)
+    # identifier.detect_proxy(results, g_src_map, global_problematic_pcs)
+    # identifier.detect_unlimited_minting(results, g_src_map, global_problematic_pcs)
+    # identifier.detect_public_burn(results, g_src_map, global_problematic_pcs)
+
+    # block coverage
+    total_blocks = len(vertices)
+    visited_blocks.add(block)
+    block_coverage = len(visited_blocks) / total_blocks * 100
+
+    # instruction coverage
+    perc = float(len(visited_pcs)) / len(instructions.keys()) * 100
+
+    # update per 5% change in code coverage
+    if int(perc) % 5 == 0:
+        live.update(
+            generate_table(
+                opcode,
+                block_coverage,
+                global_state["pc"],
+                perc,
+                g_src_map,
+                global_problematic_pcs,
+            ),
+            refresh=True,
+        )
 
     log.debug("==============================")
     log.debug("EXECUTING: " + instr)
@@ -1644,11 +1756,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             current_miu_i = global_state["miu_i"]
 
             if isAllReal(mem_location, current_miu_i, code_from, no_bytes):
-                if six.PY2:
-                    temp = long(math.ceil((mem_location + no_bytes) / float(32)))
-                else:
-                    temp = int(math.ceil((mem_location + no_bytes) / float(32)))
-
+                temp = int(math.ceil((mem_location + no_bytes) / float(32)))
                 if temp > current_miu_i:
                     current_miu_i = temp
 
@@ -1791,10 +1899,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             address = stack.pop(0)
             current_miu_i = global_state["miu_i"]
             if isAllReal(address, current_miu_i) and address in mem:
-                if six.PY2:
-                    temp = long(math.ceil((address + 32) / float(32)))
-                else:
-                    temp = int(math.ceil((address + 32) / float(32)))
+                temp = int(math.ceil((address + 32) / float(32)))
                 if temp > current_miu_i:
                     current_miu_i = temp
                 value = mem[address]
@@ -1844,10 +1949,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                     memory[stored_address + i] = value % 256
                     value /= 256
             if isAllReal(stored_address, current_miu_i):
-                if six.PY2:
-                    temp = long(math.ceil((stored_address + 32) / float(32)))
-                else:
-                    temp = int(math.ceil((stored_address + 32) / float(32)))
+                temp = int(math.ceil((stored_address + 32) / float(32)))
                 if temp > current_miu_i:
                     current_miu_i = temp
                 # note that the stored_value could be symbolic
@@ -1875,10 +1977,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             stored_value = temp_value % 256  # get the least byte
             current_miu_i = global_state["miu_i"]
             if isAllReal(stored_address, current_miu_i):
-                if six.PY2:
-                    temp = long(math.ceil((stored_address + 1) / float(32)))
-                else:
-                    temp = int(math.ceil((stored_address + 1) / float(32)))
+                temp = int(math.ceil((stored_address + 1) / float(32)))
                 if temp > current_miu_i:
                     current_miu_i = temp
                 # note that the stored_value could be symbolic

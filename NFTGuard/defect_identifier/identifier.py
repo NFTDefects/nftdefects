@@ -72,16 +72,28 @@ class Identifier:
             param_table = Table()
             param_table.add_column("Time", justify="left", style="cyan", no_wrap=True)
             param_table.add_column(
-                "Coverage", justify="left", style="yellow", no_wrap=True
+                "Code Coverage", justify="left", style="yellow", no_wrap=True
             )
             param_table.add_row(
                 str(round(end - begin, 1)), str(round(evm_code_coverage, 1))
             )
 
+            instruct = Table()
+            instruct.add_column(
+                "Instruction Number", justify="left", style="cyan", no_wrap=True
+            )
+
+            instruct.add_row(results["instructions"])
+
+            state_table = Table.grid(expand=True)
+            state_table.add_column(justify="center")
+            state_table.add_row(param_table)
+            state_table.add_row(instruct)
+
             reporter = Table(title="NFTGuard GENESIS v0.0.1")
-            reporter.add_column("Defect Detection", justify="left")
-            reporter.add_column("Execution States", justify="left")
-            reporter.add_row(defect_table, param_table)
+            reporter.add_column("Defect Detection", justify="center")
+            reporter.add_column("Execution States", justify="center")
+            reporter.add_row(defect_table, state_table)
 
             console = Console()
             console.print(reporter)

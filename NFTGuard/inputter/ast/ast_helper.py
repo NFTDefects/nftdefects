@@ -6,6 +6,7 @@ from cfg_builder.utils import run_command
 
 class AstHelper:
     # scalability, method to its declaration id in AST
+    # adapted to solidity 0.8.x
     method_to_ref_decl_ids = {}
 
     def __init__(self, filename, input_type):

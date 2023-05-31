@@ -1,6 +1,6 @@
 # NFTDefects
 
-This is the repository of our work on the definition and detection of defects in NFT smart contracts.
+This is the repository of our work on the *Definition and Detection of Defects in NFT Smart Contracts*, accepted by [ISSTA '23](https://2023.issta.org/details/issta-2023-technical-papers/23/Definition-and-Detection-of-Defects-in-NFT-Smart-Contracts).
 Please **enter into** each directory for further information (with a `README` file per directory).
 
 ### NFTGuard
