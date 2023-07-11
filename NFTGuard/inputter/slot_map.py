@@ -32,6 +32,9 @@ class SlotMap:
             # extension of AST feature_detector (e.g., ref id in AST => {var name => type, immutabily, const, etc.})
             self.state_def = self.ast_helper.extract_states_definitions()
             self.ref_id_to_state_vars = self._get_ref_id_to_state_vars()
+            self.ref_id_to_slot_id = self.ast_helper.extract_states_storage_layouts()[
+                self.cname
+            ]
 
             # name_to_type: mark var name => type
             # simpler_slot_map: mark var slot id
@@ -40,6 +43,17 @@ class SlotMap:
                 self.simpler_slot_map,
                 self.name_to_type,
             ) = self.calculate_slot()
+
+            # new Solidity version support slot id output
+            # solc --combined-json storage-layout ...
+            # for this case, use the following code for extracting slots
+            """
+            (
+                self.slot_map,
+                self.simpler_slot_map,
+                self.name_to_type,
+            ) = self.calculate_extracted_slot()
+            """
 
             # simple and heuristic keyword-matching strategy (extensible and to be refined)
             self.owner_index = self.match_owner()
@@ -65,8 +79,30 @@ class SlotMap:
             }
         return var_dict
 
+    def calculate_extracted_slot(self):
+        id_to_state_vars = self.ref_id_to_state_vars
+        slots = self.ref_id_to_slot_id
+        simpler_slot_map = {}
+        name_to_type = {}
+        for id in id_to_state_vars:
+            for key in id_to_state_vars[id]:
+                constant = id_to_state_vars[id][key]["constant"]
+                mutable = id_to_state_vars[id][key]["mutability"]
+                type = id_to_state_vars[id][key]["type"]
+                name_to_type[key] = type
+                if id in slots:
+                    id_to_state_vars[id][key]["slot_id"] = slots[id]
+                else:
+                    id_to_state_vars[id][key]["slot_id"] = None
+
+                if slots[id] in simpler_slot_map:
+                    simpler_slot_map[slots[id]].append({key: type})
+                else:
+                    simpler_slot_map[slots[id]] = [key]
+        return id_to_state_vars, simpler_slot_map, name_to_type
+
     def calculate_slot(self):
-        id_to_state_vars = self._get_ref_id_to_state_vars()
+        id_to_state_vars = self.ref_id_to_state_vars
         slot_id = 0
         bit_remain = 256
         simpler_slot_map = {}

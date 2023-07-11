@@ -27,6 +27,7 @@ class Identifier:
         begin,
         g_disasm_file,
     ):
+        """Analyzes defects and reports the final results."""
         if instructions:
             evm_code_coverage = float(len(visited_pcs)) / len(instructions.keys()) * 100
             results["evm_code_coverage"] = str(round(evm_code_coverage, 1))
@@ -80,7 +81,11 @@ class Identifier:
 
             instruct = Table()
             instruct.add_column(
-                "Instruction Number", justify="left", style="cyan", no_wrap=True
+                "Total Instructions",
+                justify="left",
+                style="cyan",
+                no_wrap=True,
+                width=20,
             )
 
             instruct.add_row(results["instructions"])

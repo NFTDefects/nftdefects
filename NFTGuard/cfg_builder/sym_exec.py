@@ -22,12 +22,14 @@ from rich.table import Table
 from rich.console import Console
 from rich.live import Live
 
+# Initiate table for live print.
 console = Console()
 table = Table()
 live = Live(table, console=console, vertical_overflow="crop", auto_refresh=False)
 
 log = logging.getLogger(__name__)
 
+# Store visited blocks
 visited_blocks = set()
 
 UNSIGNED_BOUND_NUMBER = 2**256 - 1
@@ -35,6 +37,15 @@ CONSTANT_ONES_159 = BitVecVal((1 << 160) - 1, 256)
 
 
 def dynamic_defect_identification(g_src_map, global_problematic_pcs):
+    """Find defects during execution
+
+    Args:
+        g_src_map (_type_): source map
+        global_problematic_pcs (_type_): defects pcs
+
+    Returns:
+        defects: defects detection results during execution
+    """
     public_burn = PublicBurnDefect(g_src_map, global_problematic_pcs["burn_defect"])
     unlimited_minting = UnlimitedMintingDefect(
         g_src_map, global_problematic_pcs["unlimited_minting_defect"]
@@ -48,7 +59,7 @@ def dynamic_defect_identification(g_src_map, global_problematic_pcs):
 
 
 def generate_table(
-    opcode, block_cov, pc, perc, g_src_map, global_problematic_pcs
+    opcode, block_cov, pc, perc, g_src_map, global_problematic_pcs, current_func_name
 ) -> Table:
     (
         proxy,
@@ -57,7 +68,11 @@ def generate_table(
         violation,
         public_burn,
     ) = dynamic_defect_identification(g_src_map, global_problematic_pcs)
-    """Make a new table."""
+    """Make a new table for live presentation
+
+    Returns:
+        table: table for live show
+    """
     defect_table = Table()
 
     defect_table.add_column("Defect", justify="right", style="dim", no_wrap=True)
@@ -82,22 +97,29 @@ def generate_table(
     end = time.time()
 
     time_coverage_table = Table()
-    time_coverage_table.add_column("Time", justify="left", style="cyan", no_wrap=True)
+    time_coverage_table.add_column(
+        "Time", justify="left", style="cyan", no_wrap=True, width=8
+    )
     time_coverage_table.add_column(
         "Code Coverage", justify="left", style="yellow", no_wrap=True
     )
     time_coverage_table.add_column(
-        "Opcode", justify="left", style="yellow", no_wrap=True
-    )
-    time_coverage_table.add_row(str(round(end - begin, 1)), str(round(perc, 1)), opcode)
-
-    block_table = Table()
-    block_table.add_column("Current PC", justify="left", style="cyan", no_wrap=True)
-    block_table.add_column(
         "Block Coverage", justify="left", style="yellow", no_wrap=True
     )
+    time_coverage_table.add_row(
+        str(round(end - begin, 1)), str(round(perc, 1)), str(round(block_cov, 1))
+    )
 
-    block_table.add_row(str(pc), str(round(block_cov, 1)))
+    block_table = Table()
+    block_table.add_column("PC", justify="left", style="cyan", no_wrap=True, width=8)
+    block_table.add_column(
+        "Opcode", justify="left", style="yellow", no_wrap=True, width=8
+    )
+    block_table.add_column(
+        "Current Function", justify="left", style="yellow", no_wrap=True, min_width=19
+    )
+
+    block_table.add_row(str(pc), opcode, current_func_name)
 
     state_table = Table.grid(expand=True)
     state_table.add_column(justify="center")
@@ -134,12 +156,11 @@ class Parameter:
 
 
 def initGlobalVars():
+    # Initialize global variables
     global g_src_map
     global solver
     # Z3 solver
-
     solver = Solver()
-
     solver.set("timeout", global_params.TIMEOUT)
 
     global MSIZE
@@ -189,13 +210,6 @@ def initGlobalVars():
             "evm_code_coverage": "",
             "instructions": "",
             "time": "",
-            "analysis": {
-                "proxy": [],
-                "burn": [],
-                "reentrancy": [],
-                "unlimited_minting": [],
-                "violation": [],
-            },
             "bool_defect": {
                 "proxy": False,
                 "burn": False,
@@ -243,7 +257,7 @@ def initGlobalVars():
     global path_conditions
     path_conditions = []
 
-    global global_problematic_pcs
+    global global_problematic_pcs  # for different defects
     global_problematic_pcs = {
         "proxy_defect": [],
         "burn_defect": [],
@@ -282,6 +296,7 @@ def compare_storage_and_gas_unit_test(global_state, analysis):
 
 
 def change_format():
+    """Change format for tokenization and buildng CFG"""
     with open(g_disasm_file) as disasm_file:
         file_contents = disasm_file.readlines()
         i = 0
@@ -312,14 +327,15 @@ def change_format():
 
 
 def build_cfg_and_analyze():
+    """Build cfg and perform symbolic execution"""
     change_format()
     logging.info("Building CFG...")
     with open(g_disasm_file, "r") as disasm_file:
         disasm_file.readline()  # Remove first line
-        tokens = tokenize.generate_tokens(disasm_file.readline)
-        collect_vertices(tokens)
+        tokens = tokenize.generate_tokens(disasm_file.readline)  # tokenization
+        collect_vertices(tokens)  # find vertices
         construct_bb()
-        construct_static_edges()
+        construct_static_edges()  # find static edges from stack top
         full_sym_exec()  # jump targets are constructed on the fly
 
 
@@ -754,6 +770,11 @@ def get_init_global_state(path_conditions_and_vars):
 
 
 def get_start_block_to_func_sig():
+    """Map block to function signature
+
+    Returns:
+        dict: pc tp function signature
+    """
     state = 0
     func_sig = None
     for pc, instr in six.iteritems(instructions):
@@ -1025,12 +1046,6 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
         instructions,
         g_slot_map,
     )
-    # identifier = Identifier()
-    # identifier.detect_violation(results, g_src_map, global_problematic_pcs)
-    # identifier.detect_reentrancy(results, g_src_map, global_problematic_pcs)
-    # identifier.detect_proxy(results, g_src_map, global_problematic_pcs)
-    # identifier.detect_unlimited_minting(results, g_src_map, global_problematic_pcs)
-    # identifier.detect_public_burn(results, g_src_map, global_problematic_pcs)
 
     # block coverage
     total_blocks = len(vertices)
@@ -1050,6 +1065,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 perc,
                 g_src_map,
                 global_problematic_pcs,
+                current_func_name,
             ),
             refresh=True,
         )
@@ -1629,6 +1645,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 new_var = BitVec(new_var_name, 256)
                 path_conditions_and_vars[new_var_name] = new_var
                 stack.insert(0, new_var)
+            # find special stack&mem events during SE
             if global_state["mint"]["MSTORE_2"] == True:
                 global_state["mint"]["hash"] = stack[0]
                 global_state["mint"]["MSTORE_2"] = False
@@ -2616,6 +2633,7 @@ def analyze():
 
 
 def run(disasm_file=None, source_file=None, source_map=None, slot_map=None):
+    """Run specific contracts with the given sources and extracted slot map"""
     global g_disasm_file
     global g_source_file
     global g_src_map

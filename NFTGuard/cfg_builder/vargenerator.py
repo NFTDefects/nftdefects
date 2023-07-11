@@ -1,4 +1,6 @@
 class Generator:
+    """Generate variables and identifiers for symbolic execution"""
+
     def __init__(self):
         self.countstack = 0
         self.countdata = 0

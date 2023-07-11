@@ -2,6 +2,8 @@ import re
 
 
 class Defect:
+    """Define the general data structure of Defects"""
+
     def __init__(self, source_map, pcs):
         self.source_map = source_map
         self.pcs = self._rm_general_false_positives(pcs)
@@ -72,6 +74,7 @@ class Defect:
         return s.lstrip("\n")
 
 
+# define 5 defects (for more defects, declare more defect classes)
 class ViolationDefect(Defect):
     def __init__(self, source_map, pcs):
         self.name = "ERC721 Standard Violation Defect"

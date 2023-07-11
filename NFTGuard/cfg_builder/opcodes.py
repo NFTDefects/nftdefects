@@ -85,6 +85,7 @@ opcodes = {
     "CALLSTATIC": [0xFD, 7, 1],
     "INVALID": [0xFE, 0, 0],  # Not an opcode use to cause an exception
     "SUICIDE": [0xFF, 1, 0],
+    "SELFDESTRUCT": [0xFF, 1, 0],  # Same semantic as SUICIDE
     "SHR": [0x1C, 2, 1],
     "SHL": [0x1B, 2, 1],
     "SAR": [0x1D, 2, 1],

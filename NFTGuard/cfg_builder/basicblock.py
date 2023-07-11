@@ -2,6 +2,8 @@ import six
 
 
 class BasicBlock:
+    """Data stucture definition for basic blocks"""
+
     def __init__(self, start_address, end_address):
         self.start = start_address
         self.end = end_address

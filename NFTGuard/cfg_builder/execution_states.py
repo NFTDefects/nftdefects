@@ -1,3 +1,5 @@
+# Execution states definition
+
 PASS = 100
 FAIL = 101
 TIME_OUT = 102

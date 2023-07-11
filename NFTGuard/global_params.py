@@ -1,3 +1,5 @@
+"""Global configuration variables for running program"""
+
 # enable reporting of the result
 REPORT_MODE = 0
 

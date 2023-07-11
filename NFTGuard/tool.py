@@ -5,9 +5,7 @@ import logging
 import re
 import subprocess
 import time
-
 import six
-
 import global_params
 from cfg_builder import sym_exec
 from cfg_builder.utils import run_command
@@ -15,6 +13,14 @@ from inputter.input_helper import InputHelper
 
 
 def cmd_exists(cmd):
+    """Check the command in system's PATH
+
+    Args:
+        cmd (_type_): given command
+
+    Returns:
+        bool: command installed or not
+    """
     return (
         subprocess.call(
             "type " + cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
@@ -24,6 +30,13 @@ def cmd_exists(cmd):
 
 
 def compare_versions(version1, version2):
+    """Compare two given versions
+
+    Args:
+        version1 (_type_): one version
+        version2 (_type_): the other version
+    """
+
     def normalize(v):
         return [int(x) for x in re.sub(r"(\.0+)*$", "", v).split(".")]
 
@@ -36,6 +49,11 @@ def compare_versions(version1, version2):
 
 
 def has_dependencies_installed():
+    """Checks whether all the necessary dependencies are installed
+
+    Returns:
+        bool: whether dependencies are installed
+    """
     try:
         import z3
         import z3.z3util
@@ -88,6 +106,14 @@ def has_dependencies_installed():
 
 
 def run_solidity_analysis(inputs):
+    """Run analysis for solidity input
+
+    Args:
+        inputs (_type_): input contracts
+
+    Returns:
+        _type_: analysis results and run status
+    """
     results = {}
     exit_code = 0
 
@@ -143,6 +169,7 @@ def analyze_solidity(input_type="solidity"):
 
 
 def main():
+    """Entrance for the analysis with input options"""
     # TODO: Implement -o switch.
 
     global args

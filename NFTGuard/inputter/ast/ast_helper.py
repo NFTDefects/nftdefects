@@ -13,6 +13,7 @@ class AstHelper:
         self.input_type = input_type
         if input_type == "solidity":
             self.source_list = self.get_source_list(filename)
+            self.storage_layouts = self.get_storage_layouts(filename)
         else:
             raise Exception("There is no such type of inputter")
         self.contracts = self.extract_contract_definitions(self.source_list)
@@ -22,6 +23,12 @@ class AstHelper:
         out = run_command(cmd)
         out = json.loads(out)
         return out["sources"]
+
+    def get_storage_layouts(self, filename):
+        cmd = "solc --combined-json storage-layout %s" % filename
+        out = run_command(cmd)
+        out = json.loads(out)
+        return out["contracts"]
 
     def extract_contract_definitions(self, sourcesList):
         ret = {"contractsById": {}, "contractsByName": {}, "sourcesByContract": {}}
@@ -72,6 +79,23 @@ class AstHelper:
             full_name = source + ":" + name
             ret[full_name] = self.extract_state_definitions(full_name)
         return ret
+
+    def extract_states_storage_layouts(self):
+        ret = {}
+        for contract in self.contracts["contractsById"]:
+            name = self.contracts["contractsById"][contract]["name"]
+            source = self.contracts["sourcesByContract"][contract]
+            full_name = source + ":" + name
+            ret[full_name] = self.extract_state_storage_layouts(full_name)
+        return ret
+
+    def extract_state_storage_layouts(self, c_name):
+        node = self.storage_layouts[c_name]["storage-layout"]["storage"]
+        id_to_state_vars = {}
+        if node:
+            for i in node:
+                id_to_state_vars[i["astId"]] = i["slot"]
+        return id_to_state_vars
 
     def extract_func_call_definitions(self, c_name):
         node = self.contracts["contractsByName"][c_name]

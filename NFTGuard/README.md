@@ -6,7 +6,7 @@ A static analysis tool for detecting NFT-related contract defects based on a sym
 
 ## Features
 
-- Specializing on 5 kind of defects
+- Specializing on 5 kinds of defects
   - *Risky Mutable Proxy*
   - *ERC-721 Reentrancy*
   - *Unlimited Minting*
@@ -65,5 +65,8 @@ The design refers to the architecture shown below:
    ```
 
    It would take minutes to show the result in the console, and there will be a json file to store the results in the same directory of the tested contract. Below image shows the output in the console.
-
+   
+   *Processing*
+   ![output](./images/processing.png)
+   *Result*
    ![output](./images/output.png)
