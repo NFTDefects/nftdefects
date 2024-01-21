@@ -31,7 +31,7 @@ class InputHelper:
 
         for attr, default in six.iteritems(attr_defaults):
             val = kwargs.get(attr, default)
-            if val == None:
+            if val is None:
                 raise Exception("'%s' attribute can't be None" % attr)
             else:
                 setattr(self, attr, val)
