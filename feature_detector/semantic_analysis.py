@@ -54,14 +54,14 @@ def calculate_gas(opcode, stack, mem, global_state, analysis, solver):
             try:
                 try:
                     storage_value = global_state["Ia"][int(stack[0])]
-                except:
+                except Exception:
                     storage_value = global_state["Ia"][str(stack[0])]
                 # when we change storage value from zero to non-zero
                 if storage_value == 0 and stack[1] != 0:
                     gas_increment += GCOST["Gsset"]
                 else:
                     gas_increment += GCOST["Gsreset"]
-            except:  # when storage address at considered key is empty
+            except Exception:  # when storage address at considered key is empty
                 if stack[1] != 0:
                     gas_increment += GCOST["Gsset"]
                 elif stack[1] == 0:
@@ -70,7 +70,7 @@ def calculate_gas(opcode, stack, mem, global_state, analysis, solver):
             try:
                 try:
                     storage_value = global_state["Ia"][int(stack[0])]
-                except:
+                except Exception:
                     storage_value = global_state["Ia"][str(stack[0])]
                 solver.push()
                 solver.add(Not(And(storage_value == 0, stack[1] != 0)))
@@ -150,14 +150,14 @@ def semantic_analysis(
 
         if isReal(stored_address):
             value = stored_value
-            if global_state["mint"]["trigger"] == True:
+            if global_state["mint"]["trigger"] is True:
                 # *Other cases, the second param of mint is quantity
                 # if value == global_state["mint"]["token_id"]:
                 # global_state["mint"]["MSTORE_1"] = True
                 if value in g_slot_map.owner_index:
                     global_state["mint"]["MSTORE_2"] = True
 
-            if global_state["approve"]["trigger"] == True:
+            if global_state["approve"]["trigger"] is True:
                 if value == global_state["approve"]["token_id"]:
                     global_state["approve"]["MSTORE_1"] = True
                 elif value in g_slot_map.owner_index:
@@ -165,13 +165,13 @@ def semantic_analysis(
                 elif value in g_slot_map.owner_index:
                     global_state["approve"]["MSTORE_2"] = True
 
-            if global_state["burn"]["trigger"] == True:
+            if global_state["burn"]["trigger"] is True:
                 if value == global_state["burn"]["token_id"]:
                     global_state["burn"]["MSTORE_1"] = True
                 elif value in g_slot_map.owner_index:
                     global_state["burn"]["MSTORE_2"] = True
 
-            if global_state["setApprovalForAll"]["trigger"] == True:
+            if global_state["setApprovalForAll"]["trigger"] is True:
                 if str(global_state["sender_address"]) in str(value):
                     global_state["setApprovalForAll"]["MSTORE_1"] = True
                 elif value in g_slot_map.approval_index:
@@ -534,13 +534,13 @@ def semantic_analysis(
                     global_state["burn"]["pc"] = global_state["pc"]
 
     elif opcode == "CALL":
-        if global_state["ERC721_reentrancy"]["check"] == True:
+        if global_state["ERC721_reentrancy"]["check"] is True:
             reentrancy_result = check_reentrancy_bug(
                 path_conditions_and_vars, stack, mem
             )
 
             # *Also check the validity of mint
-            if reentrancy_result == True and global_state["mint"]["valid"]:
+            if reentrancy_result is True and global_state["mint"]["valid"]:
                 for pc in global_state["ERC721_reentrancy"]["pc"]:
                     pass
 

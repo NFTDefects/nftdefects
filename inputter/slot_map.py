@@ -1,6 +1,5 @@
 import re
 
-import global_params
 from inputter.ast.ast_helper import AstHelper
 
 
@@ -47,13 +46,11 @@ class SlotMap:
             # new Solidity version support slot id output
             # solc --combined-json storage-layout ...
             # for this case, use the following code for extracting slots
-            """
-            (
-                self.slot_map,
-                self.simpler_slot_map,
-                self.name_to_type,
-            ) = self.calculate_extracted_slot()
-            """
+            # (
+            #     self.slot_map,
+            #     self.simpler_slot_map,
+            #     self.name_to_type,
+            # ) = self.calculate_extracted_slot()
 
             # simple and heuristic keyword-matching strategy (extensible and to be refined)
             self.owner_index = self.match_owner()
@@ -80,6 +77,15 @@ class SlotMap:
         return var_dict
 
     def calculate_extracted_slot(self):
+        """
+        Calculates the extracted slot for each state variable.
+
+        Returns:
+            Tuple: A tuple containing the following:
+                - id_to_state_vars (dict): A dictionary mapping IDs to state variables.
+                - simpler_slot_map (dict): A simplified slot map.
+                - name_to_type (dict): A dictionary mapping variable names to their types.
+        """
         id_to_state_vars = self.ref_id_to_state_vars
         slots = self.ref_id_to_slot_id
         simpler_slot_map = {}
@@ -99,6 +105,7 @@ class SlotMap:
                     simpler_slot_map[slots[id]].append({key: type})
                 else:
                     simpler_slot_map[slots[id]] = [key]
+        print(simpler_slot_map)
         return id_to_state_vars, simpler_slot_map, name_to_type
 
     def calculate_slot(self):
@@ -153,6 +160,12 @@ class SlotMap:
         return id_to_state_vars, simpler_slot_map, name_to_type
 
     def match_owner(self):
+        """
+        Returns a list of slot IDs that match the owner keywords in the state variables.
+
+        Returns:
+            list: A list of slot IDs.
+        """
         id_to_state_vars = self._get_ref_id_to_state_vars()
         slot_map = self.slot_map
         # usually _owners, _tokenApprovals, _operatorApprovals, _ownerships, etc.
@@ -166,6 +179,12 @@ class SlotMap:
         return index
 
     def match_approval(self):
+        """
+        Returns a list of slot IDs that correspond to state variables related to approvals.
+
+        Returns:
+            list: A list of slot IDs.
+        """
         id_to_state_vars = self._get_ref_id_to_state_vars()
         slot_map = self.slot_map
         # usually _owners, _tokenApprovals, _operatorApprovals, _ownerships, etc.
@@ -179,6 +198,12 @@ class SlotMap:
         return index
 
     def match_supply(self):
+        """
+        Matches the supply-related state variables in the slot map and returns their corresponding slot IDs.
+
+        Returns:
+            list: A list of slot IDs corresponding to the supply-related state variables.
+        """
         id_to_state_vars = self._get_ref_id_to_state_vars()
         slot_map = self.slot_map
         # usually MAX_SUPPLY, _TOTALSUPPLY, MAX_TOKENS, etc.
@@ -208,6 +233,12 @@ class SlotMap:
         return index
 
     def match_proxy(self):
+        """
+        Finds the slot IDs of address type variables that match the specified keywords.
+
+        Returns:
+            list: A list of slot IDs.
+        """
         id_to_state_vars = self._get_ref_id_to_state_vars()
         slot_map = self.slot_map
         # should find address type vars
