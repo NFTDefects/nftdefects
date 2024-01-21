@@ -13,13 +13,13 @@ from inputter.input_helper import InputHelper
 
 
 def cmd_exists(cmd):
-    """Check the command in system's PATH
+    """Check if the command is installed in the system's PATH.
 
     Args:
-        cmd (_type_): given command
+        cmd (str): The command to check.
 
     Returns:
-        bool: command installed or not
+        bool: True if the command is installed, False otherwise.
     """
     return (
         subprocess.call(
@@ -35,6 +35,11 @@ def compare_versions(version1, version2):
     Args:
         version1 (_type_): one version
         version2 (_type_): the other version
+
+    Returns:
+        int: 0 if version1 is equal to version2,
+             -1 if version1 is less than version2,
+             1 if version1 is greater than version2
     """
 
     def normalize(v):
@@ -42,10 +47,7 @@ def compare_versions(version1, version2):
 
     version1 = normalize(version1)
     version2 = normalize(version2)
-    if six.PY2:
-        return cmp(version1, version2)
-    else:
-        return (version1 > version2) - (version1 < version2)
+    return (version1 > version2) - (version1 < version2)
 
 
 def has_dependencies_installed():
@@ -60,10 +62,12 @@ def has_dependencies_installed():
 
         z3_version = z3.get_version_string()
         tested_z3_version = "4.8.13"
-        # if compare_versions(z3_version, tested_z3_version) > 0:
-        #     logging.warning(
-        #         "You are using an untested version of z3. %s is the officially tested version" % tested_z3_version)
-    except e:
+        if compare_versions(z3_version, tested_z3_version) > 0:
+            logging.warning(
+                "You are using an untested version of z3. %s is the officially tested version"
+                % tested_z3_version
+            )
+    except Exception as e:
         logging.critical(e)
         logging.critical(
             "Z3 is not available. Please install z3 from https://github.com/Z3Prover/z3."
@@ -112,7 +116,10 @@ def run_solidity_analysis(inputs):
         inputs (_type_): input contracts
 
     Returns:
-        _type_: analysis results and run status
+        Tuple[Dict[str, Dict[str, Any]], int]: analysis results and run status
+            The analysis results are stored in a dictionary where the keys are the contract source files and the values are dictionaries.
+            Each inner dictionary contains the analysis results for a specific contract source file, where the keys are the contract function names and the values are the results.
+            The run status is an integer indicating the exit code of the analysis.
     """
     results = {}
     exit_code = 0
@@ -141,13 +148,14 @@ def run_solidity_analysis(inputs):
 
 
 def analyze_solidity(input_type="solidity"):
-    """entrance to analyze solidity and prepare MUST info from Inputter for feature_detector
+    """
+    entrance to analyze solidity and prepare MUST info from Inputter for feature_detector
 
     Args:
-        input_type (str, optional): _description_. Defaults to 'solidity'.
+        input_type (str, optional): The type of input. Defaults to 'solidity'.
 
     Returns:
-        integer: exit status of the execution
+        integer: The exit status of the execution.
     """
     global args
 
@@ -162,7 +170,7 @@ def analyze_solidity(input_type="solidity"):
         return
     inputs = helper.get_inputs(global_params.TARGET_CONTRACTS)
 
-    results, exit_code = run_solidity_analysis(inputs)
+    _, exit_code = run_solidity_analysis(inputs)
     helper.rm_tmp_files()
 
     return exit_code

@@ -47,7 +47,7 @@ class AstWalker:
         if not isinstance(node, dict):
             return False
         for name in attributes:
-            if type(attributes[name]) == str:
+            if isinstance(attributes[name], str):
                 if name not in node or attributes[name] != node[name]:
                     return False
             elif name not in node or node[name] != attributes[name]:

@@ -37,6 +37,22 @@ class InputHelper:
                 setattr(self, attr, val)
 
     def get_inputs(self, targetContracts=None):
+        """
+        Retrieves the inputs required for NFTGuard analysis.
+
+        Args:
+            targetContracts (list): List of target contract names to analyze. If None, all contracts will be analyzed.
+
+        Returns:
+            list: List of dictionaries containing the inputs for analysis. Each dictionary contains the following keys:
+                - "contract": The contract name.
+                - "source_map": The source map for the contract.
+                - "source": The source code of the contract.
+                - "c_source": The path to the contract source file.
+                - "c_name": The name of the contract.
+                - "disasm_file": The path to the disassembly file for the contract.
+                - "slot_map": The slot map for the contract.
+        """
         inputs = []
 
         # adapt to the new version of crytic which supports solc 0.8.x
@@ -166,7 +182,7 @@ class InputHelper:
                 ["evm", "disasm", evm_file], stdout=subprocess.PIPE
             )
             disasm_out = disasm_p.communicate()[0].decode("utf-8", "strict")
-        except:
+        except Exception:
             logging.critical("Disassembly failed.")
             exit()
 

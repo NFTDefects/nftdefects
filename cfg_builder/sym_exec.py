@@ -7,20 +7,20 @@ import tokenize
 import traceback
 import zlib
 from collections import namedtuple
-from tokenize import NUMBER, NAME, NEWLINE
+from tokenize import NAME, NEWLINE, NUMBER
 
 from numpy import mod
-from defect_identifier.defect import *
-from defect_identifier.identifier import Identifier
-
-from feature_detector.semantic_analysis import *
-from cfg_builder.basicblock import BasicBlock
-from cfg_builder.execution_states import UNKNOWN_INSTRUCTION, EXCEPTION, PICKLE_PATH
-from cfg_builder.vargenerator import *
-from cfg_builder.utils import *
-from rich.table import Table
 from rich.console import Console
 from rich.live import Live
+from rich.table import Table
+
+from cfg_builder.basicblock import BasicBlock
+from cfg_builder.execution_states import EXCEPTION, PICKLE_PATH, UNKNOWN_INSTRUCTION
+from cfg_builder.utils import *
+from cfg_builder.vargenerator import *
+from defect_identifier.defect import *
+from defect_identifier.identifier import Identifier
+from feature_detector.semantic_analysis import *
 
 # Initiate table for live print.
 console = Console()
@@ -896,7 +896,7 @@ def sym_exec_block(params, block, pre_block, depth, func_call, current_func_name
                 if os.stat(filename).st_size == 0:
                     os.remove(filename)
                     no_of_test_cases -= 1
-            except Exception as e:
+            except Exception:
                 pass
 
         log.debug("TERMINATING A PATH ...")
@@ -951,7 +951,7 @@ def sym_exec_block(params, block, pre_block, depth, func_call, current_func_name
                 )
         except TimeoutError:
             raise
-        except Exception as e:
+        except Exception:
             if global_params.DEBUG_MODE:
                 traceback.print_exc()
 
@@ -984,7 +984,7 @@ def sym_exec_block(params, block, pre_block, depth, func_call, current_func_name
                 )
         except TimeoutError:
             raise
-        except Exception as e:
+        except Exception:
             if global_params.DEBUG_MODE:
                 traceback.print_exc()
         solver.pop()  # POP SOLVER CONTEXT
