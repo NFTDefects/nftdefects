@@ -2,7 +2,7 @@ certifi==2022.12.7
 charset-normalizer==2.0.12
 crytic-compile==0.2.3
 idna==3.4
-numpy==1.24.4
+numpy
 pysha3==1.0.2
 requests==2.27.1
 six==1.16.0

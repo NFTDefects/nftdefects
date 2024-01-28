@@ -1,6 +1,6 @@
 <!-- <h1 align="center">Welcome to NFTDefects 👋</h1> -->
 <p>
-  <img alt="Static Badge" src="https://img.shields.io/badge/python-3.8-blue">
+  <img alt="Static Badge" src="https://img.shields.io/badge/python-3.6-blue">
   <img alt="Static Badge" src="https://img.shields.io/badge/ubuntu-20.04-yellow">
   <img alt="Static Badge" src="https://img.shields.io/badge/docker-v0.1-purple">
   <a href="doc url" target="_blank">
@@ -27,15 +27,15 @@
   <h3 align="center">NFTDefects</h3>
 
   <p align="center">
-    1. Datasets for defining NFT-related contract defects.
+    1. <a href='./defects_definition/README.md'>Datasets</a> for defining NFT-related contract defects.
     <br/>
     2. Tool NFTGuard for detecting NFT contract defects.
     <br />
     <!-- <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a> -->
     <!-- <br /> -->
     <br />
-    <!-- <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a> -->
-    <!-- · -->
+    <a href="https://hub.docker.com/r/shuoyang233/nftguard/tags">View Docker Hub</a>
+    ·
     <a href="https://github.com/NFTDefects/nftdefects/issues">Report Bug</a>
     ·
     <a href="https://github.com/NFTDefects/nftdefects/issues">Request Feature</a>
@@ -50,14 +50,14 @@
 
 ## Prerequisites
 
--   python >= 3.8
+-   python >= 3.6
 -   evm >= 1.10.21
     Download version 1.10.21 (tested) from [go-ethereum](https://geth.ethereum.org/downloads) and add executable bins in the `$PATH`.
 
     ```sh
     wget https://gethstore.blob.core.windows.net/builds/geth-alltools-linux-amd64-1.10.21-67109427.tar.gz > evm-1.10.21.tar.gz
     tar -zxvf evm-1.10.21.tar.gz
-    cp geth-alltools-linux-amd64-1.10.21-67109427/evm /usr/local/bin/ # $PATH
+    cp geth-alltools-linux-amd64-1.10.21-67109427/evm /usr/local/bin/ #$PATH
     ```
 
 -   solc >= 0.8.16
@@ -77,10 +77,11 @@
 pip3 install -r requirements.txt
 ```
 
-2. Or you can build a docker image.
+2. Or you can build or pull the docker image.
 
 ```sh
 docker build -t nftguard:v0.1 .
+docker pull shuoyang233/nftguard:v0.1
 ```
 
 ## Usage
@@ -128,17 +129,17 @@ The design refers to the architecture shown below:
     -   _Unlimited Minting_
     -   _Public Burn_
     -   _Missing Requirements_
--   NFTGuard is also [extensible](https://github.com/enzymefinance/oyente/tree/master) for smart contracts with Solidity versions higher than _0.8.0_.
+-   NFTGuard is [extensible](https://github.com/enzymefinance/oyente/tree/master) for smart contracts with Solidity versions higher than _0.8.0_.
 
 ## Publication
 
-NFTGuard and the datasets for defining NFT defects are proposed from the ISSTA'23 paper [Definition and Detection of Defects in NFT Smart Contracts](https://dl.acm.org/doi/10.1145/3597926.3598063).
+ISSTA'23 paper [Definition and Detection of Defects in NFT Smart Contracts](https://dl.acm.org/doi/10.1145/3597926.3598063).
 
 ## Author
 
 👤 **Shuo Yang**
 
--   Website: shuo-young.github.io
+-   Website: [shuo-young.github.io](https://shuo-young.github.io/)
 -   Twitter: [@shall_yangshuo](https://twitter.com/shall_yangshuo)
 -   Github: [@shuo-young](https://github.com/shuo-young)
 
