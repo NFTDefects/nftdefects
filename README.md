@@ -98,15 +98,10 @@ It would take minutes to show the result in the console, and there will be a jso
 ![output](./images/processing.png)
 _Result_
 ![output](./images/output.png) -->
-<div style="display: flex; justify-content: space-between;">
-  <div style="flex: 1; text-align: center;">
-    <p><em>Processing</em></p>
-    <img src="./images/processing.png" alt="Processing">
-  </div>
-  <div style="flex: 1; text-align: center;">
-    <p><em>Result</em></p>
-    <img src="./images/output.png" alt="Result">
-  </div>
+
+<div style="display: flex; justify-content: space-around; align-items: center;">
+  <img src="./images/processing.png" alt="Processing" style="width: 50%;" />
+  <img src="./images/output.png" alt="Result" style="width: 50%;" />
 </div>
 
 ### Docker
@@ -121,7 +116,9 @@ docker run -v test:/NFTGuard/test nftguard:v0.1 -s test/demo.sol -cnames token -
 
 The design refers to the architecture shown below:
 
-<img src="./images/arch.png" alt="arch" style="zoom: 30%;" />
+<div align="center">
+  <img src="./images/arch.png" alt="arch" style="zoom: 30%" />
+</div>
 
 -   `inputter`: **_Inputter_** module for compiling the source code of Solidity smart contracts and extracting useful information for further analysis before symbolic execution.
 -   `cfg_builder`: **_CFG Builder_** module for analysis, including essential data structures, and symbolic execution of evm opcodes.
