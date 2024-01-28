@@ -94,10 +94,20 @@ python3 tool.py -s test/demo.sol -cnames token -j
 
 It would take minutes to show the result in the console, and there will be a json file to store the results in the same directory of the tested contract. Below image shows the output in the console.
 
-_Processing_
+<!-- _Processing_
 ![output](./images/processing.png)
 _Result_
-![output](./images/output.png)
+![output](./images/output.png) -->
+<div style="display: flex; justify-content: space-between;">
+  <div style="flex: 1; text-align: center;">
+    <p><em>Processing</em></p>
+    <img src="./images/processing.png" alt="Processing">
+  </div>
+  <div style="flex: 1; text-align: center;">
+    <p><em>Result</em></p>
+    <img src="./images/output.png" alt="Result">
+  </div>
+</div>
 
 ### Docker
 
@@ -111,7 +121,7 @@ docker run -v test:/NFTGuard/test nftguard:v0.1 -s test/demo.sol -cnames token -
 
 The design refers to the architecture shown below:
 
-<img src="./images/arch.png" alt="arch" style="zoom: 50%;" />
+<img src="./images/arch.png" alt="arch" style="zoom: 30%;" />
 
 -   `inputter`: **_Inputter_** module for compiling the source code of Solidity smart contracts and extracting useful information for further analysis before symbolic execution.
 -   `cfg_builder`: **_CFG Builder_** module for analysis, including essential data structures, and symbolic execution of evm opcodes.
