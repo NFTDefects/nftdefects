@@ -8,6 +8,7 @@ from crytic_compile import CryticCompile, InvalidCompilation
 
 import global_params
 from inputter.slot_map import SlotMap
+from inputter.solc_version_switcher import *
 from inputter.source_map import SourceMap
 
 
@@ -27,6 +28,8 @@ class InputHelper:
                 "root_path": "",
                 "compiled_contracts": [],
                 "compilation_err": False,
+                "allow_paths": "",
+                "remap": "",
             }
 
         for attr, default in six.iteritems(attr_defaults):
@@ -62,15 +65,18 @@ class InputHelper:
         # mark contract number in a Solidity file
         global_params.CONTRACT_COUNT = len(contracts)
         self._prepare_disasm_files_for_analysis(contracts)
-        for contract, _ in contracts:
+        for (
+            contract,
+            _,
+        ) in contracts:
             c_source, cname = contract.split(":")
 
             if targetContracts is not None and cname not in targetContracts:
                 continue
             c_source = re.sub(self.root_path, "", c_source)
             if self.input_type == InputHelper.SOLIDITY:
-                source_map = SourceMap(contract, self.source, "solidity")
-                slot_map = SlotMap(contract, self.source)
+                source_map = SourceMap(contract, self.source, self.remap, "solidity")
+                slot_map = SlotMap(contract, self.source, self.remap)
 
             disasm_file = self._get_temporary_files(contract)["disasm"]
             inputs.append(
@@ -101,38 +107,50 @@ class InputHelper:
 
     def _extract_bin_obj(self, com: CryticCompile):
         contracts = []
-        contract2bin = {}
 
-        units = com.compilation_units[self.target]
+        file2units = com.compilation_units[self.target]._source_units
 
-        for contract in units.contracts_names:
-            contract2bin[contract] = units.bytecode_runtime(contract)
-        for file in com.filenames:
-            for contract in units.filename_to_contracts[file]:
-                if units.bytecode_runtime(contract):
-                    contracts.append(
-                        (file.relative + ":" + contract, contract2bin[contract])
+        for filename in file2units.keys():
+            source_unit = file2units[filename]
+            for contract in source_unit._contracts_name:
+                contracts.append(
+                    (
+                        filename.relative + ":" + contract,
+                        source_unit._runtime_bytecodes[contract],
                     )
+                )
 
         return contracts
 
     def _compile_solidity(self):
         try:
+            switcher = SolidityVersionSwitcher(self.target)
+            switcher.run()
             options = []
+            if self.allow_paths:
+                options.append(f"--allow-paths {self.allow_paths}")
             logging.info("Compiling solidity...")
+            logging.info("solc options: " + " ".join(options))
 
-            com = CryticCompile(self.target)
+            com = CryticCompile(
+                self.target,
+                solc_args=" ".join(options),
+                solc_remaps=self.remap,
+            )
             contracts = self._extract_bin_obj(com)
 
-            libs = com.filenames.difference(
-                com.compilation_units[self.target].contracts_names_without_libraries
-            )
+            # libs = com.filenames.difference(
+            #     com.compilation_units[self.target].contracts_names_without_libraries
+            # # )
+            # if libs:
+            #     return self._link_libraries(self.source, libs)
             return contracts
         except InvalidCompilation as err:
             if not self.compilation_err:
                 logging.critical(
                     "Solidity compilation failed. Please use -ce flag to see the detail."
                 )
+                logging.error(err)
             else:
                 logging.critical("solc output:\n" + self.source)
                 logging.critical(err)
@@ -190,7 +208,10 @@ class InputHelper:
             of.write(disasm_out)
 
     def _rm_tmp_files_of_multiple_contracts(self, contracts):
-        for contract, _ in contracts:
+        for (
+            contract,
+            _,
+        ) in contracts:
             self._rm_tmp_files(contract)
 
     def _rm_tmp_files(self, target):

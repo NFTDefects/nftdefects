@@ -1,7 +1,7 @@
 import json
 
-from inputter.ast.ast_walker import AstWalker
 from cfg_builder.utils import run_command
+from inputter.ast.ast_walker import AstWalker
 
 
 class AstHelper:
@@ -9,8 +9,10 @@ class AstHelper:
     # adapted to solidity 0.8.x
     method_to_ref_decl_ids = {}
 
-    def __init__(self, filename, input_type):
+    def __init__(self, filename, remap, input_type):
         self.input_type = input_type
+        self.remap = remap
+        self.filename = filename
         if input_type == "solidity":
             self.source_list = self.get_source_list(filename)
             self.storage_layouts = self.get_storage_layouts(filename)
@@ -19,19 +21,29 @@ class AstHelper:
         self.contracts = self.extract_contract_definitions(self.source_list)
 
     def get_source_list(self, filename):
-        cmd = "solc --combined-json ast %s" % filename
+        cmd = "solc --combined-json ast %s %s" % (
+            filename,
+            " ".join(self.remap),
+        )
         out = run_command(cmd)
         out = json.loads(out)
         return out["sources"]
 
     def get_storage_layouts(self, filename):
-        cmd = "solc --combined-json storage-layout %s" % filename
+        cmd = "solc --combined-json storage-layout %s %s" % (
+            filename,
+            " ".join(self.remap),
+        )
         out = run_command(cmd)
         out = json.loads(out)
         return out["contracts"]
 
     def extract_contract_definitions(self, sourcesList):
-        ret = {"contractsById": {}, "contractsByName": {}, "sourcesByContract": {}}
+        ret = {
+            "contractsById": {},
+            "contractsByName": {},
+            "sourcesByContract": {},
+        }
         walker = AstWalker()
         for k in sourcesList:
             if self.input_type == "solidity":

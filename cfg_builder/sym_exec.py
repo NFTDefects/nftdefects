@@ -9,7 +9,6 @@ import zlib
 from collections import namedtuple
 from tokenize import NAME, NEWLINE, NUMBER
 
-from numpy import mod
 from rich.console import Console
 from rich.live import Live
 from rich.table import Table
@@ -25,7 +24,7 @@ from feature_detector.semantic_analysis import *
 # Initiate table for live print.
 console = Console()
 table = Table()
-live = Live(table, console=console, vertical_overflow="crop", auto_refresh=False)
+live = Live(table, console=console, vertical_overflow="crop", auto_refresh=True)
 
 log = logging.getLogger(__name__)
 
@@ -329,7 +328,7 @@ def change_format():
 def build_cfg_and_analyze():
     """Build cfg and perform symbolic execution"""
     change_format()
-    logging.info("Building CFG...")
+    log.info("Building CFG...")
     with open(g_disasm_file, "r") as disasm_file:
         disasm_file.readline()  # Remove first line
         tokens = tokenize.generate_tokens(disasm_file.readline)  # tokenization
@@ -361,17 +360,17 @@ def mapping_push_instruction(
                     value = positions[idx]["value"]
                     instr_value = current_line_content.split(" ")[1]
                     if int(value, 16) == int(instr_value, 16):
-                        g_src_map.instr_positions[
-                            current_ins_address
-                        ] = g_src_map.positions[idx]
+                        g_src_map.instr_positions[current_ins_address] = (
+                            g_src_map.positions[idx]
+                        )
                         idx += 1
                         break
                     else:
                         raise Exception("Source map error")
                 else:
-                    g_src_map.instr_positions[
-                        current_ins_address
-                    ] = g_src_map.positions[idx]
+                    g_src_map.instr_positions[current_ins_address] = (
+                        g_src_map.positions[idx]
+                    )
                     idx += 1
                     break
             else:
@@ -577,25 +576,9 @@ def add_falls_to():
 
 def get_init_global_state(path_conditions_and_vars):
     global_state = {"balance": {}, "pc": 0}
-    init_is = (
-        init_ia
-    ) = (
-        deposited_value
-    ) = (
-        sender_address
-    ) = (
-        receiver_address
-    ) = (
+    init_is = init_ia = deposited_value = sender_address = receiver_address = (
         gas_price
-    ) = (
-        origin
-    ) = (
-        currentCoinbase
-    ) = (
-        currentNumber
-    ) = (
-        currentDifficulty
-    ) = (
+    ) = origin = currentCoinbase = currentNumber = currentDifficulty = (
         currentGasLimit
     ) = currentChainId = currentSelfBalance = currentBaseFee = callData = None
 
@@ -805,7 +788,6 @@ def full_sym_exec():
     )
     if g_src_map:
         start_block_to_func_sig = get_start_block_to_func_sig()
-
     with live:
         return sym_exec_block(params, 0, 0, 0, -1, "fallback")
 
@@ -1056,19 +1038,19 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
     perc = float(len(visited_pcs)) / len(instructions.keys()) * 100
 
     # update per 5% change in code coverage
-    if int(perc) % 5 == 0:
-        live.update(
-            generate_table(
-                opcode,
-                block_coverage,
-                global_state["pc"],
-                perc,
-                g_src_map,
-                global_problematic_pcs,
-                current_func_name,
-            ),
-            refresh=True,
-        )
+    # if int(perc) % 5 == 0:
+    #     live.update(
+    #         generate_table(
+    #             opcode,
+    #             block_coverage,
+    #             global_state["pc"],
+    #             perc,
+    #             g_src_map,
+    #             global_problematic_pcs,
+    #             current_func_name,
+    #         ),
+    #         refresh=True,
+    #     )
 
     log.debug("==============================")
     log.debug("EXECUTING: " + instr)
@@ -2495,8 +2477,8 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             #     second = to_signed(second)
             #     if second == 0:
             #         computed = 0
-            #     elif first == -2**255 and second == -1:
-            #         computed = -2**255
+            #     elif first == -(2**255) and second == -1:
+            #         computed = -(2**255)
             #     else:
             #         sign = -1 if (first / second) < 0 else 1
             #         computed = sign * (abs(first) / abs(second))
@@ -2509,14 +2491,17 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
             #         computed = 0
             #     else:
             #         solver.push()
-            #         solver.add(Not(And(first == -2**255, second == -1)))
+            #         solver.add(Not(And(first == -(2**255), second == -1)))
             #         if check_sat(solver) == unsat:
-            #             computed = -2**255
+            #             computed = -(2**255)
             #         else:
             #             solver.push()
             #             solver.add(first / second < 0)
             #             sign = -1 if check_sat(solver) == sat else 1
-            #             def z3_abs(x): return If(x >= 0, x, -x)
+
+            #             def z3_abs(x):
+            #                 return If(x >= 0, x, -x)
+
             #             first = z3_abs(first)
             #             second = z3_abs(second)
             #             computed = sign * (first / second)
@@ -2608,7 +2593,7 @@ def run_build_cfg_and_analyze(timeout_cb=do_nothing):
     try:
         with Timeout(sec=global_params.GLOBAL_TIMEOUT):
             build_cfg_and_analyze()
-        log.debug("Done Symbolic execution")
+            log.debug("Done Symbolic execution")
     except TimeoutError:
         g_timeout = True
         timeout_cb()

@@ -4,8 +4,7 @@ import argparse
 import logging
 import re
 import subprocess
-import time
-import six
+
 import global_params
 from cfg_builder import sym_exec
 from cfg_builder.utils import run_command
@@ -163,6 +162,8 @@ def analyze_solidity(input_type="solidity"):
         helper = InputHelper(
             InputHelper.SOLIDITY,
             source=args.source,
+            allow_paths=args.allow_paths,
+            remap=args.remap,
             evm=args.evm,
             compilation_err=args.compilation_error,
         )
@@ -171,7 +172,7 @@ def analyze_solidity(input_type="solidity"):
     inputs = helper.get_inputs(global_params.TARGET_CONTRACTS)
 
     _, exit_code = run_solidity_analysis(inputs)
-    helper.rm_tmp_files()
+    # helper.rm_tmp_files()
 
     return exit_code
 
@@ -191,6 +192,25 @@ def main():
         "--source",
         type=str,
         help="local source file name. Solidity by default. Use -b to process evm instead. Use stdin to read from stdin.",
+    )
+
+    parser.add_argument(
+        "-ap",
+        "--allow-paths",
+        help="Allow a given path for imports",
+        action="store",
+        dest="allow_paths",
+        type=str,
+    )
+
+    parser.add_argument(
+        "-rmp",
+        "--remap",
+        help="Remap directory paths",
+        action="store",
+        type=str,
+        nargs="+",
+        default="",
     )
 
     parser.add_argument(
@@ -288,6 +308,7 @@ def main():
     )
 
     args = parser.parse_args()
+    args.allow_paths = args.allow_paths if args.allow_paths else ""
 
     if args.timeout:
         global_params.TIMEOUT = args.timeout

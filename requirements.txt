@@ -1,6 +1,6 @@
 certifi==2022.12.7
 charset-normalizer==2.0.12
-crytic-compile==0.2.3
+crytic-compile==0.3.6
 idna==3.4
 numpy
 pysha3==1.0.2
