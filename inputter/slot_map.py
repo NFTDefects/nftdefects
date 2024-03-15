@@ -18,22 +18,26 @@ class SlotMap:
     supply_index = None
     proxy_index = None
 
-    def __init__(self, cname, parent_filename, input_type="solidity", root_path=""):
+    def __init__(
+        self, cname, parent_filename, remap, input_type="solidity", root_path=""
+    ):
         self.root_path = root_path
         self.cname = cname
         if not SlotMap.parent_filename:
             SlotMap.parent_filename = parent_filename
             if input_type == "solidity":
-                SlotMap.ast_helper = AstHelper(SlotMap.parent_filename, input_type)
+                SlotMap.ast_helper = AstHelper(
+                    SlotMap.parent_filename, remap, input_type
+                )
             else:
                 # TODO add more type of inputter
                 raise Exception("There is no such type of inputter")
             # extension of AST feature_detector (e.g., ref id in AST => {var name => type, immutabily, const, etc.})
             self.state_def = self.ast_helper.extract_states_definitions()
             self.ref_id_to_state_vars = self._get_ref_id_to_state_vars()
-            self.ref_id_to_slot_id = self.ast_helper.extract_states_storage_layouts()[
-                self.cname
-            ]
+            # self.ref_id_to_slot_id = self.ast_helper.extract_states_storage_layouts()[
+            #     self.cname
+            # ]
 
             # name_to_type: mark var name => type
             # simpler_slot_map: mark var slot id
@@ -75,6 +79,8 @@ class SlotMap:
                 }
             }
         return var_dict
+
+    # def _get_compiler_version(self):
 
     def calculate_extracted_slot(self):
         """

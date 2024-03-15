@@ -11,7 +11,6 @@
   </a>
   <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/NFTDefects/nftdefects/publish-docker-image.yml">
   <img alt="GitHub forks" src="https://img.shields.io/github/forks/NFTDefects/nftdefects">
-
   <img alt="GitHub forks" src="https://img.shields.io/github/stars/NFTDefects/nftdefects">
 
   <!-- <a href="https://twitter.com/shall_yangshuo" target="_blank">
@@ -54,18 +53,16 @@
     Download version 1.10.21 (tested) from [go-ethereum](https://geth.ethereum.org/downloads) and add executable bins in the `$PATH`.
 
     ```sh
-    wget https://gethstore.blob.core.windows.net/builds/geth-alltools-linux-amd64-1.10.21-67109427.tar.gz > evm-1.10.21.tar.gz
-    tar -zxvf evm-1.10.21.tar.gz
+    wget https://gethstore.blob.core.windows.net/builds/geth-alltools-linux-amd64-1.10.21-67109427.tar.gz
+    tar -zxvf geth-alltools-linux-amd64-1.10.21-67109427.tar.gz
     cp geth-alltools-linux-amd64-1.10.21-67109427/evm /usr/local/bin/ #$PATH
     ```
 
--   solc >= 0.8.16
+-   solc
     Recommend solc-select to manage Solidity compiler versions.
 
     ```sh
-    pip3 install solc-select==0.2.1
-    solc-select install 0.8.16
-    solc-select use 0.8.16
+    pip3 install solc-select
     ```
 
 ## Install
@@ -87,9 +84,22 @@ docker pull ghcr.io/nftdefects/nftdefects:latest
 
 ### Local
 
+For one solidity file.
+
 ```sh
-python3 tool.py -s test/demo.sol -cnames token -j
+python3 tool.py -s test/token.sol -cnames token -j
 ```
+
+For solidity project (supports newest version crytic-compile toolset). Remember to use remap to link the outside libraries (openzeppelin, etc).
+
+```sh
+python3 tool.py -s "path/to/.sol" -rmp "remapping/import_lib/path" -cnames "contract name"
+# python3 tool.py -s test/8liens/contracts/8liens/8liensMinter.sol -rmp erc721a=test/8liens/erc721a @openzeppelin=test/8liens/@openzeppelin -cnames \$8liensMinter
+```
+
+Other utils.
+
+crawl for contract/dapp's sourcecode by address. see <a href='./crawler/crawl.py'>crawler</a>. The utils can help recover the original structure of the DApp contracts.
 
 ### Docker
 
@@ -122,21 +132,13 @@ This repository was proposed in the [ISSTA'23 paper](<(https://dl.acm.org/doi/10
 
 ```latex
 @inproceedings{yang2023definition,
-  title = {Definition and Detection of Defects in NFT Smart Contracts},
-  author = {Yang, Shuo and Chen, Jiachi and Zheng, Zibin},
-  booktitle = {Proceedings of the 32nd ACM SIGSOFT International Symposium on Software Testing and Analysis},
-  pages = {373–384},
-  year = {2023}
+  title={Definition and Detection of Defects in NFT Smart Contracts},
+  author={Yang, Shuo and Chen, Jiachi and Zheng, Zibin},
+  booktitle={Proceedings of the 32nd ACM SIGSOFT International Symposium on Software Testing and Analysis},
+  pages={373--384},
+  year={2023}
 }
 ```
-
-## Author
-
-👤 **Shuo Yang**
-
--   Website: [shuo-young.github.io](https://shuo-young.github.io/)
--   Twitter: [@shall_yangshuo](https://twitter.com/shall_yangshuo)
--   Github: [@shuo-young](https://github.com/shuo-young)
 
 ## 📝 License
 

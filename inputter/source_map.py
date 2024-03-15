@@ -4,8 +4,8 @@ import json
 import six
 
 import global_params
-from inputter.ast.ast_helper import AstHelper
 from cfg_builder.utils import run_command
+from inputter.ast.ast_helper import AstHelper
 
 
 class Source:
@@ -30,19 +30,24 @@ class SourceMap:
     ast_helper = None
     func_to_sig_by_contract = {}
 
-    def __init__(self, cname, parent_filename, input_type, root_path=""):
+    def __init__(self, cname, parent_filename, remap, input_type, root_path=""):
         self.root_path = root_path
         self.cname = cname
         self.input_type = input_type
+        self.remap = remap
         if not SourceMap.parent_filename:
             SourceMap.parent_filename = parent_filename
             if input_type == "solidity":
-                SourceMap.position_groups = SourceMap._load_position_groups()
+                SourceMap.position_groups = SourceMap._load_position_groups(remap)
             else:
                 # TODO add more type of inputter
                 raise Exception("There is no such type of inputter")
-            SourceMap.ast_helper = AstHelper(SourceMap.parent_filename, input_type)
-            SourceMap.func_to_sig_by_contract = SourceMap._get_sig_to_func_by_contract()
+            SourceMap.ast_helper = AstHelper(
+                SourceMap.parent_filename, remap, input_type
+            )
+            SourceMap.func_to_sig_by_contract = SourceMap._get_sig_to_func_by_contract(
+                remap
+            )
         self.source = self._get_source()
         self.positions = self._get_positions()
         self.instr_positions = {}
@@ -162,15 +167,22 @@ class SourceMap:
         return func_call_names
 
     @classmethod
-    def _get_sig_to_func_by_contract(cls):
-        cmd = "solc --combined-json hashes %s" % cls.parent_filename
+    def _get_sig_to_func_by_contract(cls, remap):
+        cmd = "solc --combined-json hashes %s %s" % (
+            cls.parent_filename,
+            " ".join(remap),
+        )
         out = run_command(cmd)
         out = json.loads(out)
         return out["contracts"]
 
     @classmethod
-    def _load_position_groups(cls):
-        cmd = "solc --combined-json asm %s" % cls.parent_filename
+    def _load_position_groups(cls, remap):
+        cmd = "solc --combined-json asm %s %s" % (
+            cls.parent_filename,
+            " ".join(remap),
+        )
+        print(cmd)
         out = run_command(cmd)
         out = json.loads(out)
         return out["contracts"]
@@ -179,7 +191,10 @@ class SourceMap:
         if self.input_type == "solidity":
             # for different relative path (in the project or outside directory)
             # self.cname = self.cname.replace("/path1", "/path2")
+            # try:
             asm = SourceMap.position_groups[self.cname]["asm"][".data"]["0"]
+            # except:
+            # return None
         else:
             filename, contract_name = self.cname.split(":")
             asm = SourceMap.position_groups[filename][contract_name]["evm"][
