@@ -4,7 +4,6 @@ from inputter.ast.ast_helper import AstHelper
 
 
 class SlotMap:
-    """GENESIS: simple and heuristic method for marking critical vars to make a quick feature_detector in complex NFT contracts"""
 
     ref_id_to_state_vars = {}
     parent_filename = ""
@@ -35,9 +34,9 @@ class SlotMap:
             # extension of AST feature_detector (e.g., ref id in AST => {var name => type, immutabily, const, etc.})
             self.state_def = self.ast_helper.extract_states_definitions()
             self.ref_id_to_state_vars = self._get_ref_id_to_state_vars()
-            # self.ref_id_to_slot_id = self.ast_helper.extract_states_storage_layouts()[
-            #     self.cname
-            # ]
+            self.ref_id_to_slot_id = self.ast_helper.extract_states_storage_layouts()[
+                self.cname
+            ]
 
             # name_to_type: mark var name => type
             # simpler_slot_map: mark var slot id
@@ -174,7 +173,7 @@ class SlotMap:
         """
         id_to_state_vars = self._get_ref_id_to_state_vars()
         slot_map = self.slot_map
-        # usually _owners, _tokenApprovals, _operatorApprovals, _ownerships, etc.
+        # for _owners, _tokenApprovals, _operatorApprovals, _ownerships, etc.
         keywords = "OWNER"
         index = []
         for id in id_to_state_vars:
@@ -193,7 +192,7 @@ class SlotMap:
         """
         id_to_state_vars = self._get_ref_id_to_state_vars()
         slot_map = self.slot_map
-        # usually _owners, _tokenApprovals, _operatorApprovals, _ownerships, etc.
+        # for _owners, _tokenApprovals, _operatorApprovals, _ownerships, etc.
         keywords = "APPROVAL,OPERATOR"
         index = []
         for id in id_to_state_vars:
@@ -212,8 +211,7 @@ class SlotMap:
         """
         id_to_state_vars = self._get_ref_id_to_state_vars()
         slot_map = self.slot_map
-        # usually MAX_SUPPLY, _TOTALSUPPLY, MAX_TOKENS, etc.
-        # add others: nextToken, totalMinted
+        # for max_supply, _totalsupply, max_tokens, nextToken, totalMinted
 
         # seperate to prefix and suffix
         keywords_prefix = "ALL,MAX,TOTAL,CURRENT,NEXT,TOTAL,TOKEN"

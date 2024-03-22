@@ -2,6 +2,7 @@ import json
 
 from cfg_builder.utils import run_command
 from inputter.ast.ast_walker import AstWalker
+from inputter.ast.safe_fun_walker import SafeFunWalker
 
 
 class AstHelper:
@@ -116,6 +117,13 @@ class AstHelper:
         if node:
             walker.walk(node, {"nodeType": "FunctionCall"}, nodes)
         return nodes
+
+    def extract_safe_func_call_info(self, c_name):
+        node = self.contracts["contractsByName"][c_name]
+        walker = SafeFunWalker()
+        if node:
+            walker.walk_safe_fun(node)
+        return walker.modifications_after_call
 
     def extract_func_calls_definitions(self):
         ret = {}

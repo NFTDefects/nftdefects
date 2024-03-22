@@ -76,7 +76,6 @@ class InputHelper:
             c_source = re.sub(self.root_path, "", c_source)
             if self.input_type == InputHelper.SOLIDITY:
                 source_map = SourceMap(contract, self.source, self.remap, "solidity")
-                slot_map = SlotMap(contract, self.source, self.remap)
 
             disasm_file = self._get_temporary_files(contract)["disasm"]
             inputs.append(
@@ -87,7 +86,7 @@ class InputHelper:
                     "c_source": c_source,
                     "c_name": cname,
                     "disasm_file": disasm_file,
-                    "slot_map": slot_map,
+                    "slot_map": source_map.slot_map,
                 }
             )
             logging.info("contract:" + contract)
@@ -124,8 +123,9 @@ class InputHelper:
 
     def _compile_solidity(self):
         try:
-            switcher = SolidityVersionSwitcher(self.target)
-            switcher.run()
+            if global_params.SOLC_SWITCH:
+                switcher = SolidityVersionSwitcher(self.target)
+                switcher.run()
             options = []
             if self.allow_paths:
                 options.append(f"--allow-paths {self.allow_paths}")
