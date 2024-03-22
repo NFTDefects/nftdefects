@@ -17,7 +17,7 @@ The results of our conducted experiments.
 
 -   `comparison_experiment`: the comparison experiment of NFTGuard with other 6 tools (i.e., Mythril, Oyente, Sailfish, Securify1, Securify2, and Smartian).
 
-    -   `results_1000`: source outputs of the 6 tools.
+    -   `results_1000`: source outputs of the 6 tools, labeled results refer to [ReentrancyStudy Dataset](https://github.com/InPlusLab/ReentrancyStudy-Data/tree/main/reentrant_contracts) while none is a TP reentrancy issue.
     -   `contracts_1000.zip`: dataset for conducting the comparison experiment.
     -   **`issuetype_paperortool.csv`**: the collected **papers/tools** from conferences/journals of **software** and **security** with **issue types** they support to detect.
 

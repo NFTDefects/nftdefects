@@ -46,7 +46,7 @@ def crawl_contract(rootdir, c_address):
     output = rq.get(curl_link, headers=send_headers)
 
     # sleep to avoid ban
-    sleep(5)
+    sleep(2)
     json_res = output.json()
     if "result" in json_res:
         source_code = json_res["result"][0]["SourceCode"]

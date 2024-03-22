@@ -6,6 +6,7 @@ import six
 import global_params
 from cfg_builder.utils import run_command
 from inputter.ast.ast_helper import AstHelper
+from inputter.slot_map import SlotMap
 
 
 class Source:
@@ -28,6 +29,7 @@ class SourceMap:
     position_groups = {}
     sources = {}
     ast_helper = None
+    slot_map = None
     func_to_sig_by_contract = {}
 
     def __init__(self, cname, parent_filename, remap, input_type, root_path=""):
@@ -45,6 +47,7 @@ class SourceMap:
             SourceMap.ast_helper = AstHelper(
                 SourceMap.parent_filename, remap, input_type
             )
+            SourceMap.slot_map = SlotMap(cname, parent_filename, remap)
             SourceMap.func_to_sig_by_contract = SourceMap._get_sig_to_func_by_contract(
                 remap
             )
@@ -54,7 +57,9 @@ class SourceMap:
         self.var_names = self._get_var_names()
         # mark state variable counts
         global_params.STORAGE_VAR_COUNT = len(self.var_names)
+        self.safe_func_call_info = self._get_safe_func_calls()
         self.func_call_names = self._get_func_call_names()
+
         self.callee_src_pairs = self._get_callee_src_pairs()
         self.func_name_to_params = self._get_func_name_to_params()
         self.sig_to_func = self._get_sig_to_func()
@@ -165,6 +170,16 @@ class SourceMap:
             end = start + int(src[1])
             func_call_names.append(self.source.content[start:end])
         return func_call_names
+
+    def _get_safe_func_calls(self):
+        safe_func_call_info = SourceMap.ast_helper.extract_safe_func_call_info(
+            self.cname
+        )
+        locations = []
+        for info in safe_func_call_info:
+            for key in info:
+                locations.append((self.get_location_from_src(key), info[key]))
+        return locations
 
     @classmethod
     def _get_sig_to_func_by_contract(cls, remap):

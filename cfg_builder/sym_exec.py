@@ -9,9 +9,12 @@ import zlib
 from collections import namedtuple
 from tokenize import NAME, NEWLINE, NUMBER
 
+from numpy import mod
 from rich.console import Console
 from rich.live import Live
 from rich.table import Table
+from rich import box
+from rich.console import Console
 
 from cfg_builder.basicblock import BasicBlock
 from cfg_builder.execution_states import EXCEPTION, PICKLE_PATH, UNKNOWN_INSTRUCTION
@@ -72,9 +75,9 @@ def generate_table(
     Returns:
         table: table for live show
     """
-    defect_table = Table()
+    defect_table = Table(box=box.SIMPLE)
 
-    defect_table.add_column("Defect", justify="right", style="dim", no_wrap=True)
+    defect_table.add_column("Defect", justify="right", style="bold", no_wrap=True)
     defect_table.add_column("Status", style="green")
     defect_table.add_column("Location", justify="left", style="cyan")
 
@@ -95,7 +98,7 @@ def generate_table(
     )
     end = time.time()
 
-    time_coverage_table = Table()
+    time_coverage_table = Table(box=box.SIMPLE)
     time_coverage_table.add_column(
         "Time", justify="left", style="cyan", no_wrap=True, width=8
     )
@@ -109,7 +112,7 @@ def generate_table(
         str(round(end - begin, 1)), str(round(perc, 1)), str(round(block_cov, 1))
     )
 
-    block_table = Table()
+    block_table = Table(box=box.SIMPLE)
     block_table.add_column("PC", justify="left", style="cyan", no_wrap=True, width=8)
     block_table.add_column(
         "Opcode", justify="left", style="yellow", no_wrap=True, width=8
@@ -125,7 +128,7 @@ def generate_table(
     state_table.add_row(time_coverage_table)
     state_table.add_row(block_table)
 
-    reporter = Table(title="NFTGuard GENESIS v0.0.1")
+    reporter = Table(box=box.ROUNDED, title="NFTGuard GENESIS v0.0.1")
     reporter.add_column("Defect Detection", justify="center")
     reporter.add_column("Execution States", justify="center")
     reporter.add_row(defect_table, state_table)
@@ -453,7 +456,6 @@ def collect_vertices(tokens):
                         if g_src_map
                         else None
                     )
-                    log.debug(current_line_content)
                     current_line_content = ""
                     wait_for_push = False
                     break
@@ -786,10 +788,18 @@ def full_sym_exec():
         global_state=global_state,
         analysis=analysis,
     )
+    start_block = 0
     if g_src_map:
         start_block_to_func_sig = get_start_block_to_func_sig()
+        logging.info(start_block_to_func_sig)
+        if global_params.TARGET_FUNCTION:
+            start_block = list(start_block_to_func_sig.keys())[
+                list(start_block_to_func_sig.values()).index(
+                    global_params.TARGET_FUNCTION
+                )
+            ]
     with live:
-        return sym_exec_block(params, 0, 0, 0, -1, "fallback")
+        return sym_exec_block(params, start_block, 0, 0, -1, "fallback")
 
 
 # Symbolically executing a block from the start address
@@ -836,7 +846,8 @@ def sym_exec_block(params, block, pre_block, depth, func_call, current_func_name
         visited_edges.update({current_edge: updated_count_number})
     else:
         visited_edges.update({current_edge: 1})
-
+    log.debug(current_edge)
+    log.debug(visited_edges[current_edge])
     if visited_edges[current_edge] > global_params.LOOP_LIMIT:
         log.debug("Overcome a number of loop limit. Terminating this path ...")
         return stack
@@ -925,9 +936,6 @@ def sym_exec_block(params, block, pre_block, depth, func_call, current_func_name
                 new_params.path_conditions_and_vars["path_condition"].append(
                     branch_expression
                 )
-                last_idx = (
-                    len(new_params.path_conditions_and_vars["path_condition"]) - 1
-                )
                 sym_exec_block(
                     new_params, left_branch, block, depth, func_call, current_func_name
                 )
@@ -957,9 +965,6 @@ def sym_exec_block(params, block, pre_block, depth, func_call, current_func_name
                 new_params.global_state["pc"] = right_branch
                 new_params.path_conditions_and_vars["path_condition"].append(
                     negated_branch_expression
-                )
-                last_idx = (
-                    len(new_params.path_conditions_and_vars["path_condition"]) - 1
                 )
                 sym_exec_block(
                     new_params, right_branch, block, depth, func_call, current_func_name
@@ -1036,23 +1041,22 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
 
     # instruction coverage
     perc = float(len(visited_pcs)) / len(instructions.keys()) * 100
-
     # update per 5% change in code coverage
-    # if int(perc) % 5 == 0:
-    #     live.update(
-    #         generate_table(
-    #             opcode,
-    #             block_coverage,
-    #             global_state["pc"],
-    #             perc,
-    #             g_src_map,
-    #             global_problematic_pcs,
-    #             current_func_name,
-    #         ),
-    #         refresh=True,
-    #     )
+    if int(perc) % 5 == 0:
+        live.update(
+            generate_table(
+                opcode,
+                block_coverage,
+                global_state["pc"],
+                perc,
+                g_src_map,
+                global_problematic_pcs,
+                current_func_name,
+            ),
+            refresh=True,
+        )
 
-    log.debug("==============================")
+    log.debug("===============" + current_func_name + "===============")
     log.debug("EXECUTING: " + instr)
 
     #
@@ -2589,7 +2593,6 @@ def do_nothing():
 def run_build_cfg_and_analyze(timeout_cb=do_nothing):
     initGlobalVars()
     global g_timeout
-
     try:
         with Timeout(sec=global_params.GLOBAL_TIMEOUT):
             build_cfg_and_analyze()

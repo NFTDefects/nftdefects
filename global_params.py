@@ -10,7 +10,7 @@ PRINT_MODE = 0
 DEBUG_MODE = 0
 
 # Timeout for z3 in ms
-TIMEOUT = 5000
+TIMEOUT = 1000
 
 # Set this flag to 2 if we want to do evm real value unit test
 # Set this flag to 3 if we want to do evm symbolic unit test
@@ -40,8 +40,14 @@ GENERATE_TEST_CASES = 0
 # Run NFTGuard in parallel
 PARALLEL = 0
 
+SOLC_SWITCH = 0
+
 # Iterable of targeted smart contract names
 TARGET_CONTRACTS = None
+
+TARGET_FUNCTION = None
+
+CRAWL_DIR = "./test/"
 
 SOURCE = None
 

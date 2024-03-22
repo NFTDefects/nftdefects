@@ -27,3 +27,5 @@ web/vendor/
 
 .vscode
 __pycache__
+
+local_test/

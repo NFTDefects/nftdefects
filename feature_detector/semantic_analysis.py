@@ -13,10 +13,6 @@ BOOL_START = "START"
 log = logging.getLogger(__name__)
 
 
-# THIS IS TO DEFINE A SKELETON FOR ANALYSIS
-# FOR NEW TYPE OF ANALYSIS: add necessary details to the skeleton functions
-
-
 def set_cur_file(c_file):
     global cur_file
     cur_file = c_file
@@ -382,104 +378,36 @@ def semantic_analysis(
             if source_code in g_src_map.func_call_names:
                 # *Reentrancy DEFECT
                 # *For _safeMint and safetTransferFrom
-                # TODO Regular Expression to cut the string
                 # *Need to validate the intention => the exitence of calling onERC721Received
-                if (
-                    source_code.startswith("_safeMint")
-                    or source_code.startswith("safeTransferFrom")
-                ) and not global_state["ERC721_reentrancy"]["check"]:
+                if source_code.startswith("_safeMint") or source_code.startswith(
+                    "safeTransferFrom"
+                ):
                     global_state["unlimited_minting"]["pc"].append(global_state["pc"])
-                    # *stack elements
-                    mint_to = stack[2]
-                    mint_amount = stack[1]
-                    jump_pc = stack[0]
-                    return_pc = stack[3]
+                    global_state["ERC721_reentrancy"]["pc"].append(global_state["pc"])
 
                     path_condition = path_conditions_and_vars["path_condition"]
-
-                    new_path_condition = []
-                    not_owner = True
-                    has_mapping = False
                     for expr in path_condition:
                         if not is_expr(expr):
                             continue
                         list_vars = get_vars(expr)
 
                         for var in list_vars:
-                            # check if a var is global
                             if is_storage_var(var):
                                 pos = get_storage_position(var)
-                                global_state["ERC721_reentrancy"]["var"].append(
-                                    str(pos)
-                                )
-                                var_name = get_storage_var_name(var)
-                                # *onlyOwner modifier will not trigger the reentrancy
-                                if var_name == "":
-                                    if pos in g_slot_map.simpler_slot_map:
-                                        var_names = g_slot_map.simpler_slot_map[pos]
-                                        for var_name in var_names:
-                                            if OWNER in var_name:
-                                                not_owner = False
-                                            if g_slot_map.name_to_type[
-                                                var_name
-                                            ].startswith("mapping"):
-                                                has_mapping = True
-                                else:
-                                    if OWNER in var_name:
-                                        not_owner = False
 
-                                    if (
-                                        var_name.split("[")[0]
-                                        in g_slot_map.name_to_type
-                                    ):
-                                        if g_slot_map.name_to_type[
-                                            var_name.split("[")[0]
-                                        ].startswith("mapping"):
-                                            has_mapping = True
+                                var_name = get_storage_var_name(var)
                                 if pos in global_state["Ia"]:
+                                    new_path_condition = []
                                     new_path_condition.append(
                                         var == global_state["Ia"][pos]
                                     )
-
-                    # *Add the constraint of the second param of _safeMint => tokenId/quantity
-                    vars = get_vars(mint_amount)
-                    for var in vars:
-                        if is_storage_var(var):
-                            pos = get_storage_position(var)
-                            if pos in global_state["Ia"]:
-                                new_path_condition.append(
-                                    var == global_state["Ia"][pos]
-                                )
-
-                    solver = Solver()
-                    solver.set("timeout", global_params.TIMEOUT)
-
-                    solver.add(path_condition)
-                    solver.add(new_path_condition)
-                    # *Should mint more than 1 NFT to trigger the reentrancy
-                    solver.add(mint_amount > 0)
-
-                    if not (solver.check() == unsat) and not_owner:
-                        # *Skip double enter in loop
-                        global_state["ERC721_reentrancy"]["check"] = True
-                        global_state["ERC721_reentrancy"]["pc"].append(
-                            global_state["pc"]
-                        )
-                        global_problematic_pcs["reentrancy_defect"].append(
-                            global_state["pc"]
-                        )
-                        # *Judge the end of the function => not intend to modify the state in the function body
-                        # pop_pc = return_pc + 1
-                        # pop_src = g_src_map.get_source_code(pop_pc)
-                        # # case 2: the _safeMint is in the last for loop of the function
-                        # end_src_for = ""
-                        # if global_state["ERC721_reentrancy"]["key"]!=None:
-                        #     pc = global_state["ERC721_reentrancy"]["key"]
-                        #     end_pc = blocks[pc]
-                        #     end_src_for = g_src_map.get_source_code(end_pc)
-                        # # *Not the end of the function
-                        # if not pop_src.startswith("function") and not end_src_for.startswith("function") and has_mapping:
-                        #     global_problematic_pcs["reentrancy_defect"].append(global_state['pc'])
+                                    solver = Solver()
+                                    solver.set("timeout", global_params.TIMEOUT)
+                                    solver.add(new_path_condition)
+                                    if not (solver.check() == unsat):
+                                        global_state["ERC721_reentrancy"]["var"].append(
+                                            var_name
+                                        )
 
                 # *Check mint and validate it
                 # find our focus function _mint/_safeMint
@@ -534,20 +462,17 @@ def semantic_analysis(
                     global_state["burn"]["pc"] = global_state["pc"]
 
     elif opcode == "CALL":
-        if global_state["ERC721_reentrancy"]["check"] is True:
+        if global_state["ERC721_reentrancy"]["pc"]:
             reentrancy_result = check_reentrancy_bug(
-                path_conditions_and_vars, stack, mem
+                g_src_map, global_state, stack, mem
             )
+            if reentrancy_result:
+                global_problematic_pcs["reentrancy_defect"] = global_state[
+                    "ERC721_reentrancy"
+                ]["pc"]
 
-            # *Also check the validity of mint
-            if reentrancy_result is True and global_state["mint"]["valid"]:
-                for pc in global_state["ERC721_reentrancy"]["pc"]:
-                    pass
 
-
-def check_reentrancy_bug(path_conditions_and_vars, stack, mem):
-    path_condition = path_conditions_and_vars["path_condition"]
-
+def check_reentrancy_bug(g_src_map, global_state, stack, mem):
     # onERC721Received() Selector: 150b7a02
     ret_val = False
     # stack[8] represents the hash of onERC721Received
@@ -559,13 +484,27 @@ def check_reentrancy_bug(path_conditions_and_vars, stack, mem):
         str(start_data_input) == "mem_64"
         or mem[start_data_input] == global_params.ONERC721RECEIVED_SELECTOR_SHL
     ):
-        # *check the feasibility of the path calling the ERC721Received and validate the intention of _safeMint/safeTransferFrom
-        solver = Solver()
-        solver.set("timeout", global_params.TIMEOUT)
-        solver.add(path_condition)
-        # *Should be feasible
-        ret_val = True
-
+        # *check the call location and aftwards operations from AST walker
+        location = g_src_map.get_location(global_state["ERC721_reentrancy"]["pc"][0])
+        ret_val = is_same_location(
+            global_state["ERC721_reentrancy"]["var"],
+            location,
+            g_src_map.safe_func_call_info,
+        )
+    # check the location and the determined variable are changed from the AST walker
     if global_params.DEBUG_MODE:
-        log.info("Reentrancy_bug? " + str(ret_val))
+        log.info("ERC721 Reentrancy_bug? " + str(ret_val))
     return ret_val
+
+
+def is_same_location(unchanged_vars, se_location, src_map_locations):
+    for loc, var_names in src_map_locations:
+        if (
+            loc["begin"]["line"] == se_location["begin"]["line"]
+            and loc["begin"]["column"] == se_location["begin"]["column"]
+        ):
+            for var in unchanged_vars:
+                for var_name in var_names:
+                    if var_name in var:
+                        return True
+    return False

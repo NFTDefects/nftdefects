@@ -2,9 +2,11 @@
 
 import argparse
 import logging
+import os
 import re
 import subprocess
 
+from crawler.crawl import crawl_contract
 import global_params
 from cfg_builder import sym_exec
 from cfg_builder.utils import run_command
@@ -191,8 +193,17 @@ def main():
         "-s",
         "--source",
         type=str,
+        default="",
         help="local source file name. Solidity by default. Use -b to process evm instead. Use stdin to read from stdin.",
     )
+
+    # group.add_argument(
+    #     "-caddress",
+    #     "--contract-address",
+    #     type=str,
+    #     help="The address of the tested contract (Ethereum mainnet supported now).",
+    #     dest="contract_address",
+    # )
 
     parser.add_argument(
         "-ap",
@@ -219,6 +230,13 @@ def main():
         type=str,
         nargs="+",
         help="The name of targeted contracts. If specified, only the specified contracts in the source code will be processed. By default, all contracts in Solidity code are processed.",
+    )
+
+    parser.add_argument(
+        "-fselector",
+        "--target-fselector",
+        type=str,
+        help="The target function to be tested.",
     )
 
     parser.add_argument(
@@ -306,6 +324,12 @@ def main():
         help="Generate test cases each branch of symbolic execution tree",
         action="store_true",
     )
+    parser.add_argument(
+        "-as",
+        "--automated-solc-version-switch",
+        help="Automatically switch to the required Solidity version of the contract",
+        action="store_true",
+    )
 
     args = parser.parse_args()
     args.allow_paths = args.allow_paths if args.allow_paths else ""
@@ -328,11 +352,13 @@ def main():
     global_params.DEBUG_MODE = 1 if args.debug else 0
     global_params.GENERATE_TEST_CASES = 1 if args.generate_test_cases else 0
     global_params.PARALLEL = 1 if args.parallel else 0
+    global_params.SOLC_SWITCH = 1 if args.automated_solc_version_switch else 0
     # for writing contract address
     if args.address:
         global_params.CONTRACT_ADDRESS = args.address
 
     global_params.TARGET_CONTRACTS = args.target_contracts
+    global_params.TARGET_FUNCTION = args.target_fselector
 
     global_params.SOURCE = args.source
 
@@ -343,9 +369,8 @@ def main():
         global_params.GAS_LIMIT = args.gas_limit
     if args.loop_limit:
         global_params.LOOP_LIMIT = args.loop_limit
-    else:
-        if args.global_timeout:
-            global_params.GLOBAL_TIMEOUT = args.global_timeout
+    if args.global_timeout:
+        global_params.GLOBAL_TIMEOUT = args.global_timeout
 
     if not has_dependencies_installed():
         return
