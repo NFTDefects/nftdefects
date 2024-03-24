@@ -64,10 +64,10 @@ docker pull ghcr.io/nftdefects/nftdefects:latest # remote pull
 
 ### Local
 
-For one solidity file.
+To test one solidity file, use `-cnames` to specify contract name.
 
 ```sh
-python3 tool.py -s test/token.sol -cnames token -j -glt 200 -ll 50 -dl 500
+python3 tool.py -s test/token.sol -cnames token -j -glt 200 -ll 100 -dl 500
 ```
 
 To test a specifc function, use `-fselector` to specifiy the function selector (`-as` option is provided for automatical solc version switch).
@@ -81,13 +81,19 @@ For solidity project (supports newest version crytic-compile toolset). Remember 
 ```sh
 python3 tool.py -s "path/to/.sol" -rmp "remapping/import_lib/path" -cnames "contract name"
 # example
-python3 tool.py -s test/8liens/contracts/8liens/8liensMinter.sol -rmp erc721a=test/8liens/erc721a @openzeppelin=test/8liens/@openzeppelin -cnames \$8liensMinter
+python3 tool.py -s test/8liens/contracts/8liens/8liensMinter.sol -rmp erc721a=test/8liens/erc721a @openzeppelin=test/8liens/@openzeppelin -cnames \$8liensMinter -ll 50 -glt 60
 ```
 
 Other utils: contract/project source code crawler (with complete code structure) from EtherScan. See <a href='./crawler/crawl.py'>crawler.py</a>. The utils can help recover the original structure of the DApp contracts to be fed into NFTGuard with remap configuration.
 
 ```sh
 python3 crawl.py --dir ./0x --caddress 0x # 0x is the contract address
+```
+
+Usage in the NFTGuard CLI.
+
+```sh
+python3 tool.py -caddress 0xa4631a191044096834ce65d1ee86b16b171d8080 -cnames CreatureToadz -fselector 40c10f19
 ```
 
 ### Docker

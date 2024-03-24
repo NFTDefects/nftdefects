@@ -174,7 +174,7 @@ def analyze_solidity(input_type="solidity"):
     inputs = helper.get_inputs(global_params.TARGET_CONTRACTS)
 
     _, exit_code = run_solidity_analysis(inputs)
-    # helper.rm_tmp_files()
+    helper.rm_tmp_files()
 
     return exit_code
 
@@ -197,13 +197,13 @@ def main():
         help="local source file name. Solidity by default. Use -b to process evm instead. Use stdin to read from stdin.",
     )
 
-    # group.add_argument(
-    #     "-caddress",
-    #     "--contract-address",
-    #     type=str,
-    #     help="The address of the tested contract (Ethereum mainnet supported now).",
-    #     dest="contract_address",
-    # )
+    group.add_argument(
+        "-caddress",
+        "--contract-address",
+        type=str,
+        help="The address of the tested contract (Ethereum mainnet supported now).",
+        dest="contract_address",
+    )
 
     parser.add_argument(
         "-ap",
@@ -360,7 +360,17 @@ def main():
     global_params.TARGET_CONTRACTS = args.target_contracts
     global_params.TARGET_FUNCTION = args.target_fselector
 
-    global_params.SOURCE = args.source
+    if args.source:
+        global_params.SOURCE = args.source
+    elif args.contract_address:
+        target_path = os.path.join(
+            global_params.CRAWL_DIR, args.contract_address, args.contract_address
+        )
+        if not os.path.exists(target_path + ".sol"):
+            crawl_contract(global_params.CRAWL_DIR, args.contract_address)
+
+        global_params.SOURCE = target_path + ".sol"
+        args.source = global_params.SOURCE
 
     # set limit to set execution bounds
     if args.depth_limit:
