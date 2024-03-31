@@ -289,6 +289,15 @@ def main():
     )
 
     parser.add_argument(
+        "-sv",
+        "--solc-version",
+        help="Specify solc version",
+        dest="solc_version",
+        action="store",
+        type=str,
+    )
+
+    parser.add_argument(
         "-e", "--evm", help="Do not remove the .evm file.", action="store_true"
     )
     parser.add_argument(
@@ -353,7 +362,10 @@ def main():
     global_params.GENERATE_TEST_CASES = 1 if args.generate_test_cases else 0
     global_params.PARALLEL = 1 if args.parallel else 0
     global_params.SOLC_SWITCH = 1 if args.automated_solc_version_switch else 0
-    # for writing contract address
+
+    if args.solc_version:
+        global_params.SOLC_VERSION = args.solc_version
+    # for writing current tested contract address in json result file
     if args.address:
         global_params.CONTRACT_ADDRESS = args.address
 

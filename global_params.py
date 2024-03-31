@@ -42,6 +42,8 @@ PARALLEL = 0
 
 SOLC_SWITCH = 0
 
+SOLC_VERSION = None
+
 # Iterable of targeted smart contract names
 TARGET_CONTRACTS = None
 
