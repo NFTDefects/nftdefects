@@ -92,6 +92,11 @@ opcodes = {
     "CHAINID": [0x46, 0, 1],
     "SELFBALANCE": [0x47, 1, 1],
     "BASEFEE": [0x48, 0, 1],
+    "TLOAD": [0x5D, 1, 1],
+    "TSTORE": [0x5C, 2, 0],
+    # ref: https://hackmd.io/@shemnon/CancunOpcodeAllocation#
+    # todo: some change of old opcode sequence
+    # need adapt to different evm version
     "---END---": [0x00, 0, 0],
 }
 
@@ -157,6 +162,8 @@ Wbase = (
     "GAS",
     "BASEFEE",
     "CHAINID",
+    "TSTORE",
+    "TLOAD",
 )
 
 Wverylow = (

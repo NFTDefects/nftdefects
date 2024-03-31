@@ -4,12 +4,6 @@ import global_params
 from cfg_builder.opcodes import *
 from cfg_builder.utils import *
 
-# magic value
-HASH_TO_HEX = 353073666
-OWNER = "owner"
-BOOL_ACTIVE = "ACTIVE"
-BOOL_START = "START"
-
 log = logging.getLogger(__name__)
 
 
@@ -183,8 +177,8 @@ def semantic_analysis(
         if g_src_map:
             if stored_address in g_slot_map.proxy_index and current_func_name:
                 if (
-                    BOOL_ACTIVE not in current_func_name.upper()
-                    and BOOL_START not in current_func_name.upper()
+                    "ACTIVE" not in current_func_name.upper()
+                    and "START" not in current_func_name.upper()
                     and "SETPROXY" in current_func_name.upper()
                 ):
                     solver = Solver()
@@ -246,10 +240,10 @@ def semantic_analysis(
                                 if pos in g_slot_map.simpler_slot_map:
                                     var_names = g_slot_map.simpler_slot_map[pos]
                                     for var_name in var_names:
-                                        if OWNER in var_name:
+                                        if "owner" in var_name.lower():
                                             owner = True
                             else:
-                                if OWNER in var_name:
+                                if "owner" in var_name:
                                     owner = True
                             if pos in g_slot_map.supply_index:
                                 check = True

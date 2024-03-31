@@ -13,8 +13,6 @@ from inputter.source_map import SourceMap
 
 
 class InputHelper:
-    # not support bytecode yet
-    BYTECODE = 0
     SOLIDITY = 1
 
     def __init__(self, input_type, **kwargs):
@@ -123,6 +121,9 @@ class InputHelper:
 
     def _compile_solidity(self):
         try:
+            if global_params.SOLC_VERSION:
+                switcher = SolidityVersionSwitcher(self.target)
+                switcher.switch_solc_version(global_params.SOLC_VERSION)
             if global_params.SOLC_SWITCH:
                 switcher = SolidityVersionSwitcher(self.target)
                 switcher.run()
