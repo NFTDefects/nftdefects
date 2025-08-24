@@ -2,22 +2,52 @@ import time
 import global_params
 import json
 import logging
-from rich.console import Console
-from rich.table import Table
-from defect_identifier.defect import (
-    PublicBurnDefect,
-    ReentrancyDefect,
-    RiskyProxyDefect,
-    UnlimitedMintingDefect,
-    ViolationDefect,
-)
+from typing import Dict, Any, Tuple
+from defect_identifier.registry import DefectRegistry
+from reporting.reporter import AnalysisReporter
 
 log = logging.getLogger(__name__)
 
 
+class AnalysisContext:
+    """Context object for passing analysis parameters."""
+    
+    def __init__(self, instructions=None, g_src_map=None, visited_pcs=None,
+                 global_problematic_pcs=None, begin_time=None, g_disasm_file=None):
+        self.instructions = instructions
+        self.g_src_map = g_src_map
+        self.visited_pcs = visited_pcs or set()
+        self.global_problematic_pcs = global_problematic_pcs or {}
+        self.begin_time = begin_time or time.time()
+        self.g_disasm_file = g_disasm_file
+
+
 class Identifier:
-    @classmethod
+    """Main class for defect identification and analysis coordination."""
+    
+    def __init__(self):
+        self.registry = DefectRegistry()
+        self.reporter = AnalysisReporter()
+    
+    @classmethod 
     def detect_defects(
+        cls,
+        instructions,
+        results,
+        g_src_map,
+        visited_pcs,
+        global_problematic_pcs,
+        begin,
+        g_disasm_file,
+    ) -> Tuple[Dict[str, Any], int]:
+        """Analyzes defects and reports the final results."""
+        identifier = cls()
+        return identifier._run_analysis(
+            instructions, results, g_src_map, visited_pcs,
+            global_problematic_pcs, begin, g_disasm_file
+        )
+    
+    def _run_analysis(
         self,
         instructions,
         results,
@@ -26,178 +56,76 @@ class Identifier:
         global_problematic_pcs,
         begin,
         g_disasm_file,
-    ):
-        """Analyzes defects and reports the final results."""
+    ) -> Tuple[Dict[str, Any], int]:
+        """Internal method to run the complete analysis."""
+        end = time.time()
+        
         if instructions:
+            # Calculate coverage statistics
             evm_code_coverage = float(len(visited_pcs)) / len(instructions.keys()) * 100
             results["evm_code_coverage"] = str(round(evm_code_coverage, 1))
             results["instructions"] = str(len(instructions.keys()))
-
-            end = time.time()
-
-            # *All Defects to be detectd...
-            self.detect_violation(self, results, g_src_map, global_problematic_pcs)
-            self.detect_reentrancy(self, results, g_src_map, global_problematic_pcs)
-            self.detect_proxy(self, results, g_src_map, global_problematic_pcs)
-            self.detect_unlimited_minting(
-                self, results, g_src_map, global_problematic_pcs
-            )
-            self.detect_public_burn(self, results, g_src_map, global_problematic_pcs)
-
-            defect_table = Table()
-
-            defect_table.add_column(
-                "Defect", justify="right", style="dim", no_wrap=True
-            )
-            defect_table.add_column("Status", style="green")
-            defect_table.add_column("Location", justify="left", style="cyan")
-
-            defect_table.add_row(
-                "Risky Mutable Proxy", str(proxy.is_defective()), str(proxy)
-            )
-            defect_table.add_row(
-                "ERC-721 Reentrancy", str(reentrancy.is_defective()), str(reentrancy)
-            )
-            defect_table.add_row(
-                "Unlimited Minting",
-                str(unlimited_minting.is_defective()),
-                str(unlimited_minting),
-            )
-            defect_table.add_row(
-                "Missing Requirements", str(violation.is_defective()), str(violation)
-            )
-            defect_table.add_row(
-                "Public Burn", str(public_burn.is_defective()), str(public_burn)
-            )
-
-            param_table = Table()
-            param_table.add_column("Time", justify="left", style="cyan", no_wrap=True)
-            param_table.add_column(
-                "Code Coverage", justify="left", style="yellow", no_wrap=True
-            )
-            param_table.add_row(
-                str(round(end - begin, 1)), str(round(evm_code_coverage, 1))
-            )
-
-            instruct = Table()
-            instruct.add_column(
-                "Total Instructions",
-                justify="left",
-                style="cyan",
-                no_wrap=True,
-                width=20,
-            )
-
-            instruct.add_row(results["instructions"])
-
-            state_table = Table.grid(expand=True)
-            state_table.add_column(justify="center")
-            state_table.add_row(param_table)
-            state_table.add_row(instruct)
-
-            reporter = Table(title="NFTGuard GENESIS v0.0.1")
-            reporter.add_column("Defect Detection", justify="center")
-            reporter.add_column("Execution States", justify="center")
-            reporter.add_row(defect_table, state_table)
-
-            console = Console()
-            console.print(reporter)
-
+            
+            # Run defect detection using registry
+            detection_results = self.registry.detect_all(g_src_map, global_problematic_pcs)
+            
+            # Update results with detection information
+            self._update_results_with_detections(results, detection_results, g_src_map)
+            
+            # Create analysis statistics
+            analysis_stats = {
+                'execution_time': end - begin,
+                'evm_code_coverage': round(evm_code_coverage, 1),
+                'instructions': len(instructions.keys())
+            }
+            
+            # Print final report
+            self.reporter.print_final_report(self.registry, analysis_stats)
+            self.reporter.log_defect_summary(self.registry)
+            
         else:
             log.info("\t  No Instructions \t")
             results["evm_code_coverage"] = "0/0"
-        self.closing_message(begin, g_disasm_file, results, end)
-        return results, self.defect_found(g_src_map)
+            
+        self._finalize_results(begin, g_disasm_file, results, end)
+        return results, self._get_exit_code()
+    
+    def _update_results_with_detections(self, results: Dict[str, Any], 
+                                       detection_results: Dict[str, Any], 
+                                       g_src_map) -> None:
+        """Update results dictionary with detection information."""
+        if "analysis" not in results:
+            results["analysis"] = {}
+        if "bool_defect" not in results:
+            results["bool_defect"] = {}
+            
+        # Map detector names to result keys
+        key_mapping = {
+            "ERC721 Standard Violation": "violation",
+            "ERC721 Reentrancy": "reentrancy",
+            "Risky Mutable Proxy": "proxy", 
+            "Unlimited Minting": "unlimited_minting",
+            "Public Burn": "burn"
+        }
+        
+        for detector_name, result in detection_results.items():
+            key = key_mapping.get(detector_name, detector_name.lower().replace(" ", "_"))
+            
+            if g_src_map:
+                results["analysis"][key] = result.warnings
+            else:
+                results["analysis"][key] = result.is_defective
+                
+            results["bool_defect"][key] = result.is_defective
+    
+    def _get_exit_code(self) -> int:
+        """Get exit code based on detection results."""
+        return 1 if self.registry.has_any_defects() else 0
 
-    def detect_violation(self, results, g_src_map, global_problematic_pcs):
-        global violation
+    # Legacy methods removed - functionality moved to DefectRegistry
 
-        pcs = global_problematic_pcs["violation_defect"]
-        violation = ViolationDefect(g_src_map, pcs)
-
-        if g_src_map:
-            results["analysis"]["violation"] = violation.get_warnings()
-        else:
-            results["analysis"]["violation"] = violation.is_defective()
-        results["bool_defect"]["violation"] = violation.is_defective()
-
-    def detect_reentrancy(self, results, g_src_map, global_problematic_pcs):
-        global reentrancy
-
-        pcs = global_problematic_pcs["reentrancy_defect"]
-        reentrancy = ReentrancyDefect(g_src_map, pcs)
-
-        if g_src_map:
-            results["analysis"]["reentrancy"] = reentrancy.get_warnings()
-        else:
-            results["analysis"]["reentrancy"] = reentrancy.is_defective()
-        results["bool_defect"]["reentrancy"] = reentrancy.is_defective()
-
-    def detect_proxy(self, results, g_src_map, global_problematic_pcs):
-        global proxy
-
-        pcs = global_problematic_pcs["proxy_defect"]
-        proxy = RiskyProxyDefect(g_src_map, pcs)
-
-        if g_src_map:
-            results["analysis"]["proxy"] = proxy.get_warnings()
-        else:
-            results["analysis"]["proxy"] = proxy.is_defective()
-        results["bool_defect"]["proxy"] = proxy.is_defective()
-
-    def detect_unlimited_minting(self, results, g_src_map, global_problematic_pcs):
-        global unlimited_minting
-
-        pcs = global_problematic_pcs["unlimited_minting_defect"]
-        unlimited_minting = UnlimitedMintingDefect(g_src_map, pcs)
-
-        if g_src_map:
-            results["analysis"]["unlimited_minting"] = unlimited_minting.get_warnings()
-        else:
-            results["analysis"]["unlimited_minting"] = unlimited_minting.is_defective()
-        results["bool_defect"]["unlimited_minting"] = unlimited_minting.is_defective()
-
-    def detect_public_burn(self, results, g_src_map, global_problematic_pcs):
-        global public_burn
-
-        pcs = global_problematic_pcs["burn_defect"]
-        public_burn = PublicBurnDefect(g_src_map, pcs)
-
-        if g_src_map:
-            results["analysis"]["burn"] = public_burn.get_warnings()
-        else:
-            results["analysis"]["burn"] = public_burn.is_defective()
-        results["bool_defect"]["burn"] = public_burn.is_defective()
-
-    def log_info():
-        global reentrancy
-        global violation
-        global proxy
-        global unlimited_minting
-        global public_burn
-
-        defects = [reentrancy, violation, proxy, unlimited_minting, public_burn]
-
-        for defect in defects:
-            s = str(defect)
-            if s:
-                log.info(s)
-
-    def defect_found(g_src_map):
-        global reentrancy
-        global violation
-        global proxy
-        global unlimited_minting
-        global public_burn
-
-        defects = [reentrancy, violation, proxy, unlimited_minting, public_burn]
-
-        for defect in defects:
-            if defect.is_defective():
-                return 1
-        return 0
-
-    def closing_message(begin, g_disasm_file, results, end):
+    def _finalize_results(self, begin, g_disasm_file, results, end):
+        """Finalize analysis results and save to file if requested."""
         results["time"] = str(end - begin)
         # write down extra contract info...
         results["address"] = global_params.CONTRACT_ADDRESS
@@ -208,6 +136,9 @@ class Identifier:
         log.info("\t====== Analysis Completed ======")
         if global_params.STORE_RESULT:
             result_file = g_disasm_file.split(".evm.disasm")[0] + ".json"
-            with open(result_file, "w") as of:
-                of.write(json.dumps(results, indent=1))
-            log.info("Wrote results to %s.", result_file)
+            try:
+                with open(result_file, "w") as of:
+                    of.write(json.dumps(results, indent=1))
+                log.info("Wrote results to %s.", result_file)
+            except IOError as e:
+                log.error(f"Failed to write results to {result_file}: {e}")

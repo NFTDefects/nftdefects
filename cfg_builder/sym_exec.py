@@ -1,5 +1,6 @@
 import base64
 import errno
+import logging
 import pickle
 import signal
 import time
@@ -22,6 +23,8 @@ from cfg_builder.utils import *
 from cfg_builder.vargenerator import *
 from defect_identifier.defect import *
 from defect_identifier.identifier import Identifier
+from defect_identifier.registry import DefectRegistry
+from reporting.reporter import AnalysisReporter
 from feature_detector.semantic_analysis import *
 
 # Initiate table for live print.
@@ -61,7 +64,7 @@ def dynamic_defect_identification(g_src_map, global_problematic_pcs):
 
 
 def generate_table(
-    opcode, block_cov, pc, perc, g_src_map, global_problematic_pcs, current_func_name
+    opcode, block_cov, pc, perc, g_src_map, global_problematic_pcs, current_func_name, begin_time=None
 ) -> Table:
     (
         proxy,
@@ -97,6 +100,10 @@ def generate_table(
         "Public Burn", str(public_burn.is_defective()), str(public_burn)
     )
     end = time.time()
+    if begin_time is None:
+        # Fallback to global variable if begin_time not provided
+        global begin
+        begin_time = begin if 'begin' in globals() else end
 
     time_coverage_table = Table(box=box.SIMPLE)
     time_coverage_table.add_column(
@@ -109,7 +116,7 @@ def generate_table(
         "Block Coverage", justify="left", style="yellow", no_wrap=True
     )
     time_coverage_table.add_row(
-        str(round(end - begin, 1)), str(round(perc, 1)), str(round(block_cov, 1))
+        str(round(end - begin_time, 1)), str(round(perc, 1)), str(round(block_cov, 1))
     )
 
     block_table = Table(box=box.SIMPLE)
@@ -133,6 +140,28 @@ def generate_table(
     reporter.add_column("Execution States", justify="center")
     reporter.add_row(defect_table, state_table)
     return reporter
+
+
+def generate_live_table(
+    opcode, block_cov, pc, perc, registry: DefectRegistry, current_func_name
+) -> Table:
+    """Generate table for live presentation using DefectRegistry (alternative implementation).
+    
+    Args:
+        opcode: Current opcode
+        block_cov: Block coverage percentage
+        pc: Program counter
+        perc: Overall percentage
+        registry: DefectRegistry instance
+        current_func_name: Current function name
+        
+    Returns:
+        Table for live display
+    """
+    reporter = AnalysisReporter()
+    return reporter.create_live_table(
+        opcode, block_cov, pc, perc, registry, current_func_name
+    )
 
 
 class Parameter:
@@ -1052,6 +1081,7 @@ def sym_exec_ins(params, block, instr, func_call, current_func_name):
                 g_src_map,
                 global_problematic_pcs,
                 current_func_name,
+                begin,
             ),
             refresh=True,
         )

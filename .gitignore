@@ -29,3 +29,5 @@ web/vendor/
 __pycache__
 
 local_test/
+
+CLAUDE.md
