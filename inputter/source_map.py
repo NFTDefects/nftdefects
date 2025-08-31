@@ -1,5 +1,6 @@
 import ast
 import json
+import logging
 
 import six
 
@@ -197,7 +198,7 @@ class SourceMap:
             cls.parent_filename,
             " ".join(remap),
         )
-        print(cmd)
+        logging.debug(cmd)
         out = run_command(cmd)
         out = json.loads(out)
         return out["contracts"]

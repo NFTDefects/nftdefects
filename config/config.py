@@ -37,10 +37,10 @@ class AnalysisConfig:
     
     # Paths and files
     source: Optional[str] = None
-    crawl_dir: str = \"./test/\"
+    crawl_dir: str = "./test/"
     
     # Contract metadata
-    contract_address: str = \"\"
+    contract_address: str = ""
     contract_count: int = 0
     storage_var_count: int = 0
     pub_fun_count: int = 0
@@ -51,7 +51,7 @@ class AnalysisConfig:
     
     @classmethod
     def from_args(cls, args) -> 'AnalysisConfig':
-        \"\"\"Create configuration from command line arguments.\"\"\"
+        """Create configuration from command line arguments."""
         config = cls()
         
         # Update from args if provided
@@ -95,7 +95,7 @@ class AnalysisConfig:
         return config
     
     def to_dict(self) -> dict:
-        \"\"\"Convert configuration to dictionary.\"\"\"
+        """Convert configuration to dictionary."""
         return {
             'timeout': self.timeout,
             'global_timeout': self.global_timeout,
@@ -122,7 +122,7 @@ _global_config: Optional[AnalysisConfig] = None
 
 
 def get_config() -> AnalysisConfig:
-    \"\"\"Get the global configuration instance.\"\"\"
+    """Get the global configuration instance."""
     global _global_config
     if _global_config is None:
         _global_config = AnalysisConfig()
@@ -130,12 +130,12 @@ def get_config() -> AnalysisConfig:
 
 
 def set_config(config: AnalysisConfig) -> None:
-    \"\"\"Set the global configuration instance.\"\"\"
+    """Set the global configuration instance."""
     global _global_config
     _global_config = config
 
 
 def reset_config() -> None:
-    \"\"\"Reset the global configuration to defaults.\"\"\"
+    """Reset the global configuration to defaults."""
     global _global_config
     _global_config = AnalysisConfig()

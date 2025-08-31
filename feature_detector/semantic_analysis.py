@@ -1,4 +1,5 @@
 import logging
+import math
 
 import global_params
 from cfg_builder.opcodes import *
@@ -152,7 +153,7 @@ def semantic_analysis(
                     global_state["approve"]["MSTORE_1"] = True
                 elif value in g_slot_map.owner_index:
                     global_state["approve"]["MSTORE_owner"] = True
-                elif value in g_slot_map.owner_index:
+                elif value in g_slot_map.approval_index:
                     global_state["approve"]["MSTORE_2"] = True
 
             if global_state["burn"]["trigger"] is True:
@@ -176,10 +177,11 @@ def semantic_analysis(
         # *Risky Mutable Proxy DEFECT
         if g_src_map:
             if stored_address in g_slot_map.proxy_index and current_func_name:
+                name_upper = current_func_name.upper()
                 if (
-                    "ACTIVE" not in current_func_name.upper()
-                    and "START" not in current_func_name.upper()
-                    and "SETPROXY" in current_func_name.upper()
+                    "ACTIVE" not in name_upper
+                    and "START" not in name_upper
+                    and "SETPROXY" in name_upper
                 ):
                     solver = Solver()
                     solver.set("timeout", global_params.TIMEOUT)
@@ -348,10 +350,9 @@ def semantic_analysis(
                 for var in list_vars:
                     if str(var) == str(global_state["sender_address"]):
                         check = True
-            if check == False:
+            if not check:
                 global_problematic_pcs["burn_defect"].append(global_state["burn"]["pc"])
     elif opcode.startswith("PUSH", 0):
-        position = int(opcode[4:], 10)
         source_code = g_src_map.get_source_code(global_state["pc"])
         if source_code.strip().startswith("_safeMint"):
             # find 4 pc count before to find the exit of the for loop to judge the end of the function (for _safeMint)
@@ -473,7 +474,7 @@ def check_reentrancy_bug(g_src_map, global_state, stack, mem):
     # *Read memory from 160 to 224/mem_64 => 160, 164 + mem_mem_64 => 224
     # *The values should be the shift-lefted value of OnERC721Received selector
     start_data_input = stack[3]
-    size_data_input = stack[4]
+    _ = stack[4]
     if (
         str(start_data_input) == "mem_64"
         or mem[start_data_input] == global_params.ONERC721RECEIVED_SELECTOR_SHL

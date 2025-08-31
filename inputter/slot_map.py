@@ -1,4 +1,5 @@
 import re
+import logging
 
 from inputter.ast.ast_helper import AstHelper
 
@@ -110,7 +111,7 @@ class SlotMap:
                     simpler_slot_map[slots[id]].append({key: type})
                 else:
                     simpler_slot_map[slots[id]] = [key]
-        print(simpler_slot_map)
+        logging.debug(simpler_slot_map)
         return id_to_state_vars, simpler_slot_map, name_to_type
 
     def calculate_slot(self):

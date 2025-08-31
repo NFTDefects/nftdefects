@@ -1,5 +1,6 @@
 import re
 import subprocess
+import logging
 
 
 def install_and_use_solc_version(version_info):
@@ -8,16 +9,16 @@ def install_and_use_solc_version(version_info):
     ).decode()
 
     if version_info in installed_versions_output:
-        print(f"Version {version_info} is already installed.")
+        logging.info(f"Version {version_info} is already installed.")
     else:
-        print(f"Installing version {version_info}...")
+        logging.info(f"Installing version {version_info}...")
         subprocess.run(["solc-select", "install", version_info], check=True)
-        print(f"Version {version_info} installed successfully.")
+        logging.info(f"Version {version_info} installed successfully.")
     # else:
     #     raise ValueError(f"Version {version_info} is not available for installation.")
 
     subprocess.run(["solc-select", "use", version_info], check=True)
-    print(f"Switched to version {version_info}.")
+    logging.info(f"Switched to version {version_info}.")
 
 
 class SolidityVersionSwitcher:
@@ -41,9 +42,9 @@ class SolidityVersionSwitcher:
     def switch_solc_version(self, version_info):
         try:
             subprocess.run(["solc-select", "use", version_info], check=True)
-            print(f"Successfully switched to Solidity version {version_info}.")
+            logging.info(f"Successfully switched to Solidity version {version_info}.")
         except subprocess.CalledProcessError as e:
-            print(f"Failed to switch to Solidity version {version_info}. Error: {e}")
+            logging.error(f"Failed to switch to Solidity version {version_info}. Error: {e}")
 
     def run(self):
         solidity_code = self.load_solidity_code()

@@ -2,18 +2,13 @@ import argparse
 import json
 import os
 from time import sleep
+import logging
 
 import requests as rq
 
 
 def make_dir(path):
-    folders = []
-    while not os.path.isdir(path):
-        path, suffix = os.path.split(path)
-        folders.append(suffix)
-    for folder in folders[::-1]:
-        path = os.path.join(path, folder)
-        os.mkdir(path)
+    os.makedirs(path, exist_ok=True)
 
 
 def is_json(myjson):
@@ -36,14 +31,13 @@ def crawl_contract(rootdir, c_address):
     root = rootdir
     contract_address = c_address
     # contract_name = row[2]
-    curl_link = (
-        "https://api.etherscan.io/api?module=contract&action=getsourcecode&address="
-        + c_address
-        + "&apikey=HPB1MEZ5YEJ7GZJF7ASQDJ4MPU7YEUTIUT"
-    )
-    print(curl_link)
-
-    output = rq.get(curl_link, headers=send_headers)
+    api_key = os.getenv("ETHERSCAN_API_KEY")
+    params = {"module": "contract", "action": "getsourcecode", "address": c_address}
+    if api_key:
+        params["apikey"] = api_key
+    else:
+        logging.warning("ETHERSCAN_API_KEY not set; proceeding without API key")
+    output = rq.get("https://api.etherscan.io/api", headers=send_headers, params=params)
 
     # sleep to avoid ban
     sleep(2)
@@ -54,34 +48,27 @@ def crawl_contract(rootdir, c_address):
         if is_json(source_code):
             res = json.loads(source_code)
             for key in res:
-                print(key)
-                sol_file = open(
-                    root + contract_address + "/" + key, "w", encoding="UTF-8"
-                )
-                sol_file.write(res[key]["content"])
-                sol_file.close()
+                logging.debug(key)
+                with open(root + contract_address + "/" + key, "w", encoding="UTF-8") as sol_file:
+                    sol_file.write(res[key]["content"])
         elif source_code[0] == source_code[1] == "{":
             new_code = source_code[1:-1]
             res = json.loads(new_code)
             sources = res["sources"]
             for name in sources:
-                print(name)
+                logging.debug(name)
                 _dir, _file = os.path.split(root + contract_address + "/" + name)
-                print(_dir)
+                logging.debug(_dir)
                 make_dir(_dir)
-                sol_file = open(
-                    root + contract_address + "/" + name, "w", encoding="UTF-8"
-                )
-                sol_file.write(sources[name]["content"])
-                sol_file.close()
+                with open(root + contract_address + "/" + name, "w", encoding="UTF-8") as sol_file:
+                    sol_file.write(sources[name]["content"])
         else:
-            sol_file = open(
+            with open(
                 root + contract_address + "/" + contract_address + ".sol",
                 "w",
                 encoding="UTF-8",
-            )
-            sol_file.write(source_code)
-            sol_file.close()
+            ) as sol_file:
+                sol_file.write(source_code)
 
 
 if __name__ == "__main__":
